@@ -1,0 +1,77 @@
+﻿@model Domain.Entidades.Cadastro.Cliente
+
+@{
+    ViewBag.Title = "Detalhes";
+}
+
+<h2>Detalhes</h2>
+
+<div>
+    <h4>Cliente</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome).ToString().ToUpper()
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome).ToString().ToUpper()
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CpfCnpj).ToString().ToUpper()
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CpfCnpj).ToString().ToUpper()
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RgIe).ToString().ToUpper()
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RgIe).ToString().ToUpper()
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Sexo).ToString().ToUpper()
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sexo).ToString().ToUpper()
+        </dd>
+        <dt>
+            TIPO
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TipoPessoa).ToString().ToUpper()
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email).ToString().ToUpper()
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataNascimento).ToString().ToUpper()
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataNascimento).ToString().ToUpper()
+        </dd>
+
+        <dt>
+           DATA DE CADASTRO
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataCadastro).ToString().ToUpper()
+        </dd>
+
+    </dl>
+</div>
+<p>
+
+    @Html.ActionLink("Voltar", "Index")
+</p>

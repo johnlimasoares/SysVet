@@ -1,0 +1,58 @@
+﻿@model Domain.Entidades.Cadastro.Peso
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Peso</h4>
+</div>
+
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+
+    <div class="modal-body">
+        <div class="form-horizontal">
+
+            @Html.ValidationSummary(true)
+            @Html.HiddenFor(model => model.ID)
+
+            <div style="display: none">
+                @Html.DropDownList("AnimalID", String.Empty)
+                @Html.ValidationMessageFor(model => model.AnimalID)
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.PesoAnimal, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.PesoAnimal, new { @class = "form-control right" })
+                    @Html.ValidationMessageFor(model => model.PesoAnimal)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Data", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DataCadastro, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.DataCadastro)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Observações", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Observacao, new { @class = "form-control", style = "width: 300px; max-width: 455px; height: 300px; max-height:500px " })
+                    @Html.ValidationMessageFor(model => model.Observacao)
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <input class="btn btn-success" type="submit" value="Confirmar" />
+        <button class="btn " data-dismiss="modal">Cancelar</button>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

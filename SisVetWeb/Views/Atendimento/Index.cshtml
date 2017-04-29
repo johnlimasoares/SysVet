@@ -1,0 +1,106 @@
+﻿@using System.Data.SqlClient
+@using SisVetWeb.Helpers
+@using PagedList.Mvc;
+@model PagedList.IPagedList<Domain.Entidades.Operacao.Atendimento>
+
+@{
+    ViewBag.Title = "Atendimentos";
+}
+
+<h3>Lista de Atendimentos</h3>
+<p>
+
+
+    @using (Html.BeginForm("Index", "Atendimento", FormMethod.Get)) {
+        <div class="row">
+            <div class="pull-right col-md-2">
+                @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-random'> Atendimento</span>", "Novo Atendimento", "Create", "Atendimento", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
+            </div>
+            <div class="col-md-2" align="left">
+                @Html.DropDownList("TypeSearch",
+             new List<SelectListItem>{
+                    new SelectListItem{Text = "Nome Animal",Value = "NomeAnimal",Selected = true},
+                    new SelectListItem{Text = "Nome Cliente",Value = "NomeCliente"},
+                    new SelectListItem{Text = "Cpf",Value = "Cpf"},
+                    new SelectListItem{Text = "Atendimento",Value = "Atendimento"},
+                    new SelectListItem{Text = "Fone",Value = "Fone"}}, new { @class = "form-control" })
+            </div>
+            <div class="col-md-3">
+                @Html.TextBox("SearchString", "", new { placeholder = "Pesquise...", @class = "form-control" })
+            </div>
+            <div class="col-md-2">
+                <input type="submit" value="Filtrar" class="btn btn-primary pull-left" />
+            </div>
+        </div>
+    }
+
+</p>
+<table class="table table-condensed table-hover">
+    <tr class="active">
+        <th>
+            @Html.DisplayName("Id")
+        </th>
+        <th>
+            @Html.DisplayName("Animal")
+        </th>
+        <th>
+            @Html.DisplayName("Cliente")
+        </th>
+        <th class="text-center">
+            @Html.DisplayName("Situação")
+        </th>
+        <th class="text-center">
+            @Html.DisplayName("Data")
+        </th>
+        <th class="text-center">
+            @Html.DisplayName("Hora")
+        </th>
+        <th class="text-right">
+            @Html.DisplayName("Valor")
+        </th>
+       
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td class="col-sm-1">
+            @Html.DisplayFor(modelItem => item.ID)
+        </td>
+        <td class="col-sm-2">
+             @Html.DisplayFor(modelItem => item.Animal.Nome)
+        </td>
+        <td class="col-sm-2">
+            @Html.DisplayFor(modelItem => item.Animal.Cliente.Nome)
+        </td>
+        <td class="col-sm-1 text-center">
+            @Html.DisplayFor(modelItem => item.Situacao)
+        </td>
+        <td class="col-sm-1 text-center">
+            @Html.FormatValue(Convert.ChangeType(item.DataEntrada, typeof(object)), "{0:dd/MM/yyyy}")
+        </td>
+        <td class="col-sm-1 text-center">
+            @Html.DisplayFor(modelItem => item.HoraAtendimento)
+        </td>
+        <td class="col-sm-1 text-right">
+            @Html.DisplayFor(modelItem => item.ValorAtendimento)
+        </td>
+       
+        <td class="col-sm-2">
+            <div class="pull-right">
+                @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-retweet'></span>", "Gerenciar", "Edit", "Atendimento", routeValues: new { ID = item.ID }, htmlAttributes: new { data_modal = "", @class = "btn btn-info" })
+                &nbsp;
+                @if(item.Situacao == "Fechado"){
+                    @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-ok-sign'></span>", "Finalizar Atendimento", "Details", "Atendimento", routeValues: new {ID = item.ID}, htmlAttributes: new {data_modal = "", @class = "btn btn-warning"})
+                }
+                else{
+                 @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-ok-sign'></span>", "Finalizar Atendimento", "Details", "Atendimento", routeValues: new { ID = item.ID }, htmlAttributes: new { data_modal = "", @class = "btn btn-warning" })   
+                }
+            </div>
+        </td>
+    </tr>
+}
+
+</table>
+Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentiFilter = ViewBag.CurrentFilter }))

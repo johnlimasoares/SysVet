@@ -1,0 +1,26 @@
+﻿@model Domain.Entidades.Cadastro.Contato.TipoTelefone
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h3>Detalhes</h3>
+
+<div>
+    <h4>Tipo de Telefone</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Voltar", "Index")
+</p>

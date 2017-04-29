@@ -1,0 +1,61 @@
+﻿@using System.Collections
+@using Domain.Entidades.Operacao
+@model Domain.Entidades.Operacao.Vacinacao
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Vacina</h4>
+</div>
+@using (Html.BeginForm()) {
+    <div class="modal-body">
+    @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+
+            @*<div class="form-group">
+        @Html.LabelFor(model => model.DataPrevisao, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.DataPrevisao)
+            @Html.ValidationMessageFor(model => model.DataPrevisao)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DataVacinacao, new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.DataVacinacao)
+            @Html.ValidationMessageFor(model => model.DataVacinacao)
+        </div>
+    </div>
+*@
+            @*<div class="form-group" >
+                @Html.LabelFor(model => model.AnimalId, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("AnimalId", String.Empty)
+                    @Html.ValidationMessageFor(model => model.AnimalId)
+                </div>
+            </div>*@
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.VacinaId, "Vacina", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("VacinaId",(IEnumerable<SelectListItem>) ViewBag.VacinaId,"Selecione",new{@class = "form-control ",required = true})
+                    @Html.ValidationMessageFor(model => model.VacinaId)
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="modal-footer">
+        <input class="btn btn-success" type="submit" value="Confirmar" />
+        <button class="btn" data-dismiss="modal">Cancelar</button>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}

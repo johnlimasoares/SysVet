@@ -1,0 +1,40 @@
+﻿@model Domain.Entidades.Cadastro.Localidade.Cidade
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h3>Deletar</h3>
+
+<h3>Deseja realmente deletar o registro?</h3>
+<div>
+    <h4>Cidade</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Nome")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("UF")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SiglaUnidadeFederativa)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Excluir" class="btn btn-danger " /> |
+            @Html.ActionLink("Voltar", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,119 @@
+﻿@model Domain.Entidades.Cadastro.Cliente
+
+@{ ViewBag.Title = "Edição";}
+
+<h3>Edição</h3>
+
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+
+        <div class="row" style="padding-left: 10px">
+            @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-danger" })
+            <input type="submit" value="Salvar" class="btn btn-success" />
+        </div>
+        <hr />
+
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nome, new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="width: 500px">
+                @Html.TextBoxFor(model => model.Nome, new { @class = "form-control", id = "input" })
+                @Html.ValidationMessageFor(model => model.Nome)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Cpf", new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="width: 500px">
+                @Html.TextBoxFor(model => model.CpfCnpj, new { @class = "form-control", id = "cpf" })
+                @Html.ValidationMessageFor(model => model.CpfCnpj)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Rg", new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="width: 500px">
+                @Html.TextBoxFor(model => model.RgIe, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.RgIe)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Tipo Pessoa", new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="width: 500px">
+                @Html.DropDownListFor(model => model.TipoPessoa,
+                    new List<SelectListItem>{
+                        new SelectListItem{Text = "Física",Value = "F",  Selected = true},
+                        new SelectListItem{Text = "Jurídica",Value = "J"}
+                    }, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Sexo", new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="width: 500px">
+                @Html.DropDownListFor(model => model.Sexo,
+                new List<SelectListItem>{
+                    new SelectListItem{Text = "Masculino",Value = "M",Selected = true},
+                    new SelectListItem{Text = "Feminino",Value="F"}
+                }, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="width: 500px">
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DataNascimento, new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="width: 500px">
+                <div>
+                    @Html.EditorFor(model => model.DataNascimento)
+                    @Html.ValidationMessageFor(model => model.DataNascimento)
+                </div>
+
+                @*<input class="form-control" data-val="true" data-val-date="O campo Data de Nascimento não é uma data!." data-val-required="O campo Data de Nascimento é obrigatório." id="DataNascimento" name="DataNascimento" type="date" value="13/08/2015">*@
+                @*@Html.ValidationMessageFor(model => model.DataNascimento)*@
+            </div>
+        </div>
+
+
+    </div>
+
+
+}
+<div class="row">
+    <div class="col-md-offset-2 col-md-5">
+        @{ Html.RenderAction("Index", "Telefone", new { id = Model.ID }); }
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-offset-2 col-md-8">
+        @{ Html.RenderAction("Index", "Endereco", new { id = Model.ID }); }
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+    <script type="text/javascript">
+        (function () {
+            $.validator.methods.date = function (value, element) {
+                return this.optional(element) || Globalize.parseDate(value, 'dd/MM/yyyy') !== null;
+            }
+        })();
+    </script>
+}
+

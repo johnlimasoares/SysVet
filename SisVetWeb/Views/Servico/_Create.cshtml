@@ -1,0 +1,43 @@
+﻿@model Domain.Entidades.Cadastro.Servico
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Serviços</h4>
+</div>
+
+
+@using (Html.BeginForm()) 
+{
+    <div class="modal-body">
+    @Html.AntiForgeryToken()
+    
+        <div class="form-horizontal">        
+            @Html.ValidationSummary(true)
+
+            <div class="form-group">
+                @Html.Label("Serviço", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("TipoServicoID",(IEnumerable<SelectListItem>)ViewBag.TipoServicoID , new {@class = "form-control"})
+                    @*@Html.DropDownList("TipoServicoID",(IEnumerable<SelectListItem>)ViewBag.TipoServicoID,"Selecione..." , new {@class = "form-control"})*@
+                </div>
+            </div>       
+
+            <div class="form-group">
+                @Html.Label("Descrição", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Observacao, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Observacao)
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal-footer">
+        <input class="btn btn-success" type="submit" value="Confirmar" />
+        <button class="btn " data-dismiss="modal">Cancelar</button>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

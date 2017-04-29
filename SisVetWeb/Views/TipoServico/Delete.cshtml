@@ -1,0 +1,31 @@
+﻿@model Domain.Entidades.Cadastro.TipoServico
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+<h3>Deseja realmente excluir o registro?</h3>
+<div>
+    <h4>Tipo de Serviço</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Descrição")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Excluir" class="btn btn-danger" /> |
+            @Html.ActionLink("Voltar", "Index")
+        </div>
+    }
+</div>

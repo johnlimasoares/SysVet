@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SisVet - Green Téc.</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container" style="height: 90%">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Anjos de Patas", "Index", "Home", null, new { @class = "navbar-brand" })
+            </div>
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cadastros<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                            <li>@Html.ActionLink("Cliente", "Index", "Cliente")</li>
+                            <li>@Html.ActionLink("Animal", "Index", "Animal")</li>
+                            <li>@Html.ActionLink("Espécie", "Index", "Especie")</li>
+                            <li>@Html.ActionLink("Raça", "Index", "Raca")</li>
+                            <li>@Html.ActionLink("Medicamento", "Index", "Medicamento")</li>
+                            <li>@Html.ActionLink("Vacinas", "Index", "Vacina")</li>
+                            <li>@Html.ActionLink("Tipo Telefone", "Index", "TipoTelefone")</li>
+                            <li>@Html.ActionLink("Tipo Serviço", "Index", "TipoServico")</li>
+                            <li>@Html.ActionLink("Município", "Index", "Cidade")</li>
+
+
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Operações<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                            <li>@Html.ActionLink("Atendimento", "Index", "Atendimento")</li>
+                        </ul>
+                    </li>
+
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content" >
+        @RenderBody()
+        
+        <div id="rodape" style="display: none">
+            <hr />
+            <footer>
+                <p>&copy; Green Tecnologia</p>
+            </footer>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/mascaras")
+    @Scripts.Render("~/bundles/validacao")
+    @Scripts.Render("~/bundles/utils")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

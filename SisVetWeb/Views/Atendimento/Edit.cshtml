@@ -1,0 +1,84 @@
+﻿@model Domain.Entidades.Operacao.Atendimento
+           
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/modalform")
+    <script type="text/javascript">
+        (function () {
+            $.validator.methods.date = function (value, element) {
+                return this.optional(element) || Globalize.parseDate(value, 'dd/MM/yyyy') !== null;
+            }
+        })();
+    </script>
+}
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Gerenciamento de Atendimento</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <div class="row">
+            @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-danger" })
+            <input type="submit" value="Salvar" class="btn btn-success" />
+        </div>
+        <hr />
+        
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.ID)
+        
+        <div class="form-group" style="display: none">
+            @Html.DropDownList("AnimalId", String.Empty)
+            @Html.ValidationMessageFor(model => model.AnimalId)
+        </div>
+        
+        <div class="form-group" style="display: none">
+            @Html.LabelFor(model => model.DataEntrada, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DataEntrada, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DataEntrada)
+            </div>
+        </div>
+        <div class="form-group" style="display: none">
+            @Html.LabelFor(model => model.DataSaida, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DataSaida, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DataSaida)
+            </div>
+        </div>
+        <div class="form-group" style="display: none">
+            @Html.LabelFor(model => model.Situacao, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Situacao, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Situacao)
+            </div>
+        </div>
+        <div class="form-group" style="display: none">
+            @Html.LabelFor(model => model.HoraAtendimento, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.HoraAtendimento, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.HoraAtendimento)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Observações", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Observacao, new { @class = "form-control", style = "width: 500px; max-width: 455px; height: 300px; max-height:500px " })
+                @Html.ValidationMessageFor(model => model.Observacao)
+            </div>
+        </div>
+
+    </div>
+}
+
+
+<div class="row">
+    <div class="col-md-offset-2 col-md-6">
+        @{ Html.RenderAction("Index", "Servico", new { id = Model.ID }); }
+    </div>
+</div>

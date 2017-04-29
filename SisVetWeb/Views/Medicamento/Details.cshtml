@@ -1,0 +1,58 @@
+﻿@model Domain.Entidades.Cadastro.Medicamento
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h3>Detalhes</h3>
+
+<div>
+    <h4>Medicamento</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Marca)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Marca)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Categoria)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Categoria)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Intervalo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Intervalo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lote)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lote)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Voltar", "Index")
+</p>

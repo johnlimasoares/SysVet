@@ -1,0 +1,43 @@
+﻿@model Domain.Entidades.Cadastro.Vacina
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalhes</h2>
+
+    <div>
+        <h4>Vacina</h4>
+    	<hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayName("Descrição")
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Descricao)
+            </dd>
+    
+            <dt>
+                @Html.DisplayName("Intervalo em dias")
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.IntervaloDias)
+            </dd>
+    
+            <dt>
+                @Html.DisplayName("Doses")
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Doses)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+
+        @Html.ActionLink("Voltar", "Index")
+    </p>
+

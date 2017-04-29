@@ -1,0 +1,21 @@
+﻿@model Domain.Entidades.Operacao.Vacinacao
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="myModalLabel">Vacina</h4>
+</div>
+
+@using (Html.BeginForm()) {
+    <div class="modal-body">
+        <h3>Deseja realmente excluir o registro?</h3>
+        @Html.AntiForgeryToken()
+    </div>
+
+    <div class="modal-footer">
+        <input class="btn btn-danger" type="submit" value="Excluir" />
+        <button class="btn " data-dismiss="modal">Cancelar</button>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

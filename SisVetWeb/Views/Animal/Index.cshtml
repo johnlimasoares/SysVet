@@ -1,0 +1,105 @@
+﻿@model PagedList.IPagedList<Domain.Entidades.Animal>
+@using SisVetWeb.Helpers;
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h3>Lista de Animais</h3>
+
+<p>
+    
+
+    @using (Html.BeginForm("Index","Animal",FormMethod.Get)){
+    <div class="row">
+        <div class="pull-right col-md-1">
+            @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Cadastrar Animal", "Create", "Animal", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
+        </div>
+        <div class="col-md-2" align="left">
+            @Html.DropDownList("TypeSearch",
+             new List<SelectListItem>{
+                    new SelectListItem{Text = "Id",Value = "Id",Selected = true},
+                    new SelectListItem{Text = "Nome",Value = "Nome"},
+                    new SelectListItem{Text = "Cpf",Value = "Cpf"},
+                    new SelectListItem{Text = "Fone",Value = "Fone"}}, new { @class = "form-control" })
+        </div>  
+        <div class="col-md-3">
+            @Html.TextBox("SearchString", "", new { placeholder = "Pesquise...", @class = "form-control" })
+        </div> 
+        <div class="col-md-2">
+            <input type="submit" value="Filtrar" class="btn btn-primary pull-left" />
+        </div>
+    </div>
+    }
+    
+</p>
+
+
+<table class="table table-condensed table-hover">
+    <tr class="active">
+        <th>
+            @Html.ActionLink("Id","Index",new{sortOrder = ViewBag.IdParam})
+        </th>
+        <th>
+            @Html.ActionLink("Nome", "Index", new { sortOrder = ViewBag.NomeParam })
+        </th>
+        <th>
+            Proprietário
+        </th>
+        <th>
+            Raça
+        </th>
+        <th>
+            Data Nasc.
+        </th>
+        <th class="text-center">
+            Sexo
+        </th>
+        <th class="text-center">
+            Castrado
+        </th>
+       
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td class="col-sm-1">
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td class="col-sm-2">
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td class="col-sm-3">
+                 @Html.DisplayFor(modelItem => item.Cliente.Nome)
+            </td>
+            <td class="col-sm-1" >              
+                @Html.DisplayFor(modelItem => item.Raca.Descricao)
+            </td>
+
+            <td class="col-sm-1">
+                @Html.FormatValue(Convert.ChangeType(item.DataNascimento, typeof(object)),
+                            "{0: dd/MM/yyyy}")
+            </td>
+           
+            <td class="col-sm-1 text-center">
+                @Html.DisplayFor(modelItem => item.Sexo).ToString().ToUpper()
+            </td>
+            
+            <td class="col-sm-1 text-center">
+                @Html.DisplayFor(modelItem => item.Castrado)
+            </td>  
+            <td class="col-sm-2">
+                <div class="pull-right">
+                    @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-pencil'></span>", "Editar", "Edit", "Animal", routeValues: new { ID = item.ID }, htmlAttributes: new { data_modal = "", @class = "btn btn-default" })
+                    &nbsp;
+                    @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-search'></span>", "Detalhar", "Details", "Animal", routeValues: new { ID = item.ID }, htmlAttributes: new { data_modal = "", @class = "btn btn-default" })
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>
+Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentiFilter = ViewBag.CurrentFilter }))

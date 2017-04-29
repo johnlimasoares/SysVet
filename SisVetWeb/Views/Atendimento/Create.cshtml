@@ -1,0 +1,76 @@
+﻿@model Domain.Entidades.Operacao.Atendimento
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Atendimento</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        
+        <div class="form-group">
+            @Html.Label("Animal", new {@class = "control-label col-md-2"})
+            <div class="col-md-10">
+                @Html.DropDownList("AnimalID",(IEnumerable<SelectListItem>)ViewBag.AnimalID,"Selecione...",new {@class = "form-control",required = true})
+            </div>
+            
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.DataEntrada, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DataEntrada)
+                @Html.ValidationMessageFor(model => model.DataEntrada)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DataSaida, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DataSaida)
+                @Html.ValidationMessageFor(model => model.DataSaida)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Situacao, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Situacao)
+                @Html.ValidationMessageFor(model => model.Situacao)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ValorAtendimento, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ValorAtendimento)
+                @Html.ValidationMessageFor(model => model.ValorAtendimento)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Observacao, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Observacao)
+                @Html.ValidationMessageFor(model => model.Observacao)
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Confirmar" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Voltar", "Index")
+</div>

@@ -1,0 +1,73 @@
+﻿@model Domain.Entidades.Cadastro.Cliente
+
+@{
+    Layout = null;
+}
+
+<div>
+    <h4>Dados do Proprietário</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Nome:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome).ToString().ToUpper()
+        </dd>
+
+        <dt>
+            Cpf:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CpfCnpj).ToString().ToUpper()
+        </dd>
+
+        <dt>
+            Rg:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RgIe).ToString().ToUpper()
+        </dd>
+        <dt>
+            Sexo:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sexo).ToString().ToUpper()
+        </dd>        
+      
+        <dt>
+            Endereço:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Enderecos.FirstOrDefault().Logradouro).ToString() 
+        </dd>
+        <dt>
+            Número:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Enderecos.FirstOrDefault().Numero).ToString()
+        </dd>
+        <dt>
+            Município:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Enderecos.FirstOrDefault().cidade.Descricao).ToString()
+        </dd>
+
+       
+        @foreach (var item in Model.Telefones) {
+            <dt>
+                @Html.DisplayFor(modelItem => item.TipoTelefone.Descricao)
+            </dt>
+            <dd>
+                @Html.DisplayFor(modelItem => item.Numero)
+            </dd>
+        }
+
+    </dl>
+</div>
+<p>

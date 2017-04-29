@@ -1,0 +1,54 @@
+﻿@using SisVetWeb.Helpers
+@using Utils
+@model IEnumerable<Domain.WidGet.VacinacaoAVencerWidGet>
+
+
+<div class="panel panel-info">
+    <div class="panel-heading" style="color:green">
+        <strong>A vacinar nos próximos 10 dias</strong>
+    </div>
+
+    <table class="table table-hover table-condensed">
+        <tr>
+            <th>
+                @Html.DisplayName("Animal")
+            </th>
+
+            <th>
+                @Html.DisplayName("Cliente")
+            </th>
+            <th class="text-center">
+                @Html.DisplayName("Fone")
+            </th>
+            <th class="text-center">
+                @Html.DisplayName("Vacina")
+            </th>
+            <th class="text-center">
+                @Html.DisplayName("Previsão")
+            </th>
+        </tr>
+
+        @foreach (var item in Model) {
+            <tr>
+                <td class="col-md-2">
+                    @Html.DisplayFor(modelItem => item.NomeAnimal)
+                </td>
+                <td class="col-md-4">
+                    @Html.DisplayFor(modelItem => item.NomeCliente)
+                </td>
+                <td class="col-md-2 text-center ">
+                    @Html.DisplayFor(modelItem => item.NumeroTelefone)
+            </td>
+            <td class="col-md-2 text-center">
+                @Html.DisplayFor(modelItem => item.DescricaoVacina)
+            </td>
+            <td class="col-md-1 ; text-center" style="color: green ;white-space: nowrap; text-overflow: ellipsis">
+                @Html.FormatValue(Convert.ChangeType(item.DataPrevisao, typeof(object)),
+                        "{0: dd/MM/yyyy}")
+            </td>
+
+        </tr>
+        }
+
+    </table>
+</div>

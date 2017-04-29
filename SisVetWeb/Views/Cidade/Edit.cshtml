@@ -1,0 +1,44 @@
+﻿@model Domain.Entidades.Cadastro.Localidade.Cidade
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h3>Editar</h3>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="form-group">
+            @Html.Label("Nome", new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="width: 500px">
+                @Html.TextBoxFor(model => model.Descricao, new { @class = "form-control", id = "input" })
+                @Html.ValidationMessageFor(model => model.Descricao)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("UF", new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="width: 500px">
+                @Html.TextBoxFor(model => model.SiglaUnidadeFederativa, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.SiglaUnidadeFederativa)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Salvar" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Voltar", "Index")
+</div>

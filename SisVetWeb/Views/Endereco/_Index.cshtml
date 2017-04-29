@@ -1,0 +1,70 @@
+﻿@using SisVetWeb.Helpers
+@model IEnumerable<Domain.Entidades.Cadastro.Localidade.Endereco>
+
+<div id='myModal' class='modal fade in'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id='myModalContent'></div>
+        </div>
+    </div>
+</div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <strong>Lista de Endereços</strong>
+    </div>
+    
+    <div>@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Adicionar Endereço", "Create", "Endereco", routeValues: new { ClienteID = ViewBag.ClienteID }, htmlAttributes: new { data_modal = "", @class = "btn btn-primary pull-right" })</div>
+
+    <table class="table table-hover">
+        <tr>
+            <th>
+                Cep
+            </th>
+            <th>
+                Logradouro
+            </th>
+            <th>
+                Número
+            </th>
+            <th>
+                Complemento
+            </th>
+            <th>
+                Município
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model){
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cep)
+                </td>
+             
+                <td>
+                    @Html.DisplayFor(modelItem => item.Logradouro)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Numero)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Complemento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.cidade.Descricao) @Html.DisplayFor(modelItem => item.cidade.SiglaUnidadeFederativa)
+                </td>
+                <td>
+                    <div class="pull-right">
+                        <div class="pull-right">
+                            @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-pencil'></span>", "Edit", "Edit", "Endereco", routeValues: new { id = item.ID }, htmlAttributes: new { data_modal = "", @class = "btn btn-default" })
+                            &nbsp;
+                            @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-trash'></span>", "Delete", "Delete", "Endereco", routeValues: new { id = item.ID }, htmlAttributes: new { data_modal = "", @class = "btn btn-danger" })
+
+                        </div>
+                    </div>
+               </td>
+            </tr>
+        }
+
+    </table>
+</div>

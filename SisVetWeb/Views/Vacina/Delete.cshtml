@@ -1,0 +1,42 @@
+﻿@model Domain.Entidades.Cadastro.Vacina
+
+
+<h3>Deseja realmente excluir o registro?</h3>
+    <div>
+        <h4>Vacina</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayName("Descrição")
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Descricao)
+            </dd>
+
+            <dt>
+                @Html.DisplayName("Intervalo em dias")
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.IntervaloDias)
+            </dd>
+
+            <dt>
+                @Html.DisplayName("Doses")
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Doses)
+            </dd>
+
+        </dl>
+        @using (Html.BeginForm()) {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Excluir" class="btn btn-danger" /> |
+                @Html.ActionLink("Voltar", "Index")
+            </div>
+        }
+    </div>

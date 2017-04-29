@@ -1,0 +1,74 @@
+﻿@model Domain.Entidades.Cadastro.Medicamento
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h3>Edição</h3>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Medicamento</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nome, new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="width: 500px">
+                @Html.TextBoxFor(model => model.Nome, new { @class = "form-control", id = "input" })
+                @Html.ValidationMessageFor(model => model.Nome)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Marca, new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="width: 500px">
+                @Html.TextBoxFor(model => model.Marca, new { @class = "form-control", id = "input" })
+                @Html.ValidationMessageFor(model => model.Marca)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Categoria, new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="width: 500px">
+                @Html.TextBoxFor(model => model.Categoria, new { @class = "form-control", id = "input" })
+                @Html.ValidationMessageFor(model => model.Categoria)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Intervalo, new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="width: 500px">
+                @Html.TextBoxFor(model => model.Intervalo, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Intervalo)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Lote, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Lote, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Lote)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Salvar" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Voltar", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,102 @@
+﻿@model Domain.Entidades.Cadastro.Cliente
+
+@{
+    ViewBag.Title = "Cadastro";
+}
+
+<h2>Cadastro Cliente</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+       
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nome, new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="width: 500px">
+                @Html.TextBoxFor(model => model.Nome, new { @class = "form-control" ,id = "input"})
+                @Html.ValidationMessageFor(model => model.Nome)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Cpf", new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="width: 500px">
+                @Html.TextBoxFor(model => model.CpfCnpj, new { @class = "form-control", id = "cpf" })
+                @Html.ValidationMessageFor(model => model.CpfCnpj)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Rg", new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="width: 500px">
+                @Html.TextBoxFor(model => model.RgIe, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.RgIe)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Tipo Pessoa", new{@class = "control-label col-md-2"})
+            <div class="col-md-10" style="width: 500px">
+                @Html.DropDownListFor(model => model.TipoPessoa,
+             new List<SelectListItem>{
+                    new SelectListItem{Text = "Física",Value = "F",  Selected = true},
+                    new SelectListItem{Text = "Jurídica",Value = "J"}
+                    }, new { @class = "form-control" })
+            </div>
+        </div>
+        
+        <div class="form-group">
+            @Html.Label("Sexo",new{@class="control-label col-md-2"})
+            <div class="col-md-10" style="width: 500px">
+                @Html.DropDownListFor(model => model.Sexo,
+                new List<SelectListItem>{
+                    new SelectListItem{Text = "Masculino",Value = "M",Selected = true},
+                    new SelectListItem{Text = "Feminino",Value="F"}
+                }, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email , new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="width: 500px">
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DataNascimento, new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="width: 500px">
+                @*@Html.EditorFor(model => model.DataNascimento, new { @class = "form-control form-control" })*@
+                <input class="form-control" data-val="true" data-val-date="Formato incorreto no campo Data de Nascimento." data-val-required="O campo Data de Nascimento é obrigatório." id="DataNascimento" name="DataNascimento" type="date" value="13/08/2015">
+                @Html.ValidationMessageFor(model => model.DataNascimento)
+            </div>
+        </div>
+              
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Salvar" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Voltar", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        (function() {
+            $.validator.methods.date = function(value, element) {
+                return this.optional(element) || Globalize.parseDate(value, 'dd/MM/yyyy') !== null;
+            }
+        })();
+    </script>
+}
