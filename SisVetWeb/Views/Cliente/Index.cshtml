@@ -1,7 +1,7 @@
 ﻿@using SisVetWeb.Helpers
 @using PagedList.Mvc;
 
-@model PagedList.IPagedList<Domain.Entidades.Cadastro.Cliente>
+@model PagedList.IPagedList<Domain.EntidadesLeitura.Cadastro.ClienteDapper>
 
 @{
     ViewBag.Title = "Clientes";
@@ -10,40 +10,40 @@
 <h3>Lista de Clientes</h3>
 
 <p>
-    
+
 
     @using (Html.BeginForm("Index", "Cliente", FormMethod.Get)) {
-    <div class="row">
-        <div class="pull-right col-md-1">
-            @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Adicionar Cliente", "Create", "Cliente", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
-        </div>
-        <div class="col-md-2" align="left">
-            @Html.DropDownList("TypeSearch",
+        <div class="row">
+            <div class="pull-right col-md-1">
+                @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Adicionar Cliente", "Create", "Cliente", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
+            </div>
+            <div class="col-md-2" align="left">
+                @Html.DropDownList("tipoPesquisa",
              new List<SelectListItem>{
                     new SelectListItem{Text = "Nome",Value = "Nome",Selected = true},
                     new SelectListItem{Text = "Cpf",Value = "Cpf"},
                     new SelectListItem{Text = "Fone",Value = "Fone"}}, new { @class = "form-control" })
-        </div>  
-        <div class="col-md-3">
-            @Html.TextBox("SearchString", "", new { placeholder = "Pesquise...", @class = "form-control" })
+            </div>
+            <div class="col-md-3">
+                @Html.TextBox("pesquisa", "", new { placeholder = "Pesquise...", @class = "form-control" })
+            </div>
+            <div class="col-md-2">
+                <input type="submit" value="Filtrar" class="btn btn-primary pull-left" />
+            </div>
         </div>
-        <div class="col-md-2">
-            <input type="submit" value="Filtrar" class="btn btn-primary pull-left" />
-        </div>
-    </div>
-}
+    }
 
 </p>
 <table class="table table-condensed table-hover">
     <tr class="active">
         <th>
-            @Html.ActionLink("Id", "Index", new { sortOrder = ViewBag.IdParam })
+            @Html.ActionLink("Id", "Index", new { ordenacao = ViewBag.IdParam, tipoPesquisa = ViewBag.tipoPesquisa, pesquisa = ViewBag.pesquisaCorrente })
         </th>
         <th>
-            @Html.ActionLink("Nome", "Index", new { sortOrder = ViewBag.NomeParam })
+            @Html.ActionLink("Nome", "Index", new { ordenacao = ViewBag.NomeParam, tipoPesquisa = ViewBag.tipoPesquisa, pesquisa = ViewBag.pesquisaCorrente })
         </th>
         <th class="text-center">
-            Cpf   
+            Cpf
         </th>
         <th class="text-center">
             Sexo
@@ -60,7 +60,7 @@
         <th></th>
     </tr>
 
-    @foreach (var item in Model ) {
+    @foreach (var item in Model) {
         <tr>
             <td class="col-sm-1">
                 @Html.DisplayFor(modelItem => item.ID)
@@ -83,7 +83,7 @@
             </td>
             <td class="col-sm-1 text-center">
                 @Html.DisplayFor(modelItem => item.DataCadastro)
-               
+
             </td>
             <td class="col-sm-2">
                 <div class="pull-right">
@@ -98,4 +98,4 @@
 </table>
 
 Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
-@Html.PagedListPager(Model,page => Url.Action("Index",new {page,sortOrder = ViewBag.CurrentSort,currentiFilter = ViewBag.CurrentFilter}))
+@Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina, ordenacao = ViewBag.ordenacaoCorrente, pesquisa = ViewBag.pesquisaCorrente }))

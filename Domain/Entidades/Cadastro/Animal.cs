@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Domain.Entidades.Cadastro;
 using Domain.Entidades.Operacao;
 
-
-namespace Domain.Entidades
+namespace Domain.Entidades.Cadastro
 {
     public class Animal
     {

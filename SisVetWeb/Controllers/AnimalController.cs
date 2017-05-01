@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -13,116 +14,54 @@ using PagedList;
 using Repository.Context;
 using Repository;
 using Repository.Repositories;
+using SisVetWeb.Models;
 
-namespace SisVetWeb.Controllers
-{
-    public class AnimalController : Controller
-    {
+namespace SisVetWeb.Controllers {
+    public class AnimalController : Controller {
         private readonly AnimalRepository repoAnimal = new AnimalRepository();
         private RacaRepository repoRaca = new RacaRepository();
         private ClienteRepository repoCliente = new ClienteRepository();
-        private TelefoneRepository repoFone = new TelefoneRepository();
 
-        // GET: /Animal/
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page, string typeSearch)
-        {
+        public ActionResult Index(string ordenacao, string pesquisa, string tipoPesquisa, int pagina = 1) {
 
-            if (String.IsNullOrEmpty(sortOrder))
-                sortOrder = "Id";
+            int totalRegistros = 20;
+            ViewBag.IdParam = ordenacao == "Id" ? "Id_Desc" : "Id";
+            ViewBag.NomeParam = ordenacao == "Nome" ? "Nome_Desc" : "Nome";
 
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.IdParam = sortOrder == "Id" ? "Id_Desc" : "Id";
-            ViewBag.NomeParam = sortOrder == "Nome" ? "Nome_Desc" : "Nome";
+            ViewBag.ordenacaoCorrente = ordenacao;
+            ViewBag.tipoPesquisa = tipoPesquisa;
+            ViewBag.pesquisaCorrente = pesquisa;
 
-            if (searchString != null) {
-                page = 1;
-            } else {
-                searchString = currentFilter;
-            }
+            var animais = repoAnimal.GetAllAnimais(ordenacao, pesquisa, tipoPesquisa);
 
-            ViewBag.CurrentFilter = searchString;
+            var quantidadeRegistros = animais.Count();
+            if (!string.IsNullOrEmpty(pesquisa) && quantidadeRegistros > 0)
+                totalRegistros = quantidadeRegistros;
 
-            var animais = from m in repoAnimal.GetAll().ToList()
-                           select m;
-
-            switch (typeSearch)
-            {
-                case "Id" :
-                    animais = animais.Where(s => s.ID.ToString().ToUpper().Contains(searchString.ToString().ToUpper()));
-                    break;
-                case "Nome":
-                    animais = animais.Where(s => s.Nome.ToUpper().Contains(searchString.ToUpper()));
-                    break;
-                case "Cpf":
-                    animais = animais.Where(s => s.Cliente.CpfCnpj.Contains(searchString));
-                    break;
-                case "Fone":
-                    animais = from animal in repoAnimal.GetAll().ToList()
-                        join prop in repoCliente.GetAll().ToList() on animal.ClienteId equals prop.ID
-                        join fone in repoFone.GetAll().ToList() on prop.ID equals fone.ClienteID
-                        where fone.Numero.Contains(searchString)
-                        select animal;
-                    
-                    break;
-                default:
-                   // animais = animais.Where(s => s.Nome.ToUpper().Contains(searchString.ToUpper()));
-                    break;
-
-            }
-           
-
-            switch (sortOrder) {
-                case "Id":
-                     animais = animais.OrderBy(x => x.ID);
-                    break;
-                case "Id_Desc":
-                    animais = animais.OrderByDescending(x => x.ID);
-                    break;
-                case "Nome":
-                    animais = animais.OrderBy(x => x.Nome);
-                    break;
-                case "Nome_Desc":
-                    animais = animais.OrderByDescending(x => x.Nome);
-                    break;
-                default:
-                    animais = animais.OrderBy(x => x.ID);
-                    break;
-
-            }
-            
-            int pageSize = 20;
-            int pageNumber = (page ?? 1);
-
-            return View(animais.ToPagedList(pageNumber, pageSize));
+            return View(animais.ToPagedList(pagina, totalRegistros));
         }
 
-        // GET: /Animal/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
+        public ActionResult Details(int? id) {
+            if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             //Animal animal = db.Animais.Find(id);
             Animal animal = repoAnimal.Find(id);
-            if (animal == null)
-            {
+            if (animal == null) {
                 return HttpNotFound();
             }
             return View(animal);
         }
 
-        // GET: /Animal/Create
-        public ActionResult Create()
-        {
+        public ActionResult Create() {
             ViewBag.RacaID = new SelectList(
-                repoRaca.GetAll(),
+                repoRaca.GetAll().OrderBy(x => x.Descricao),
                 "ID",
                 "Descricao"
                 );
 
             ViewBag.ClienteID = new SelectList(
-                repoCliente.GetAll().OrderByDescending(a => a.ID),
+                repoCliente.GetAll().OrderBy(a => a.Nome),
                 "ID",
                 "Nome"
                 );
@@ -131,12 +70,11 @@ namespace SisVetWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Nome,Pelagem,Observacao,DataNascimento,Castrado,Obito,Sexo")] Animal animal,int racaId,int clienteId)
-        {
-            var racaID = new Raca() {ID = racaId};
-            var clienteID = new Cliente() {ID = clienteId};
-            if (ModelState.IsValid){
-                using (var ctx = new BancoContexto()){
+        public ActionResult Create([Bind(Include = "ID,Nome,Pelagem,Observacao,DataNascimento,Castrado,Obito,Sexo")] Animal animal, int racaId, int clienteId) {
+            var racaID = new Raca() { ID = racaId };
+            var clienteID = new Cliente() { ID = clienteId };
+            if (ModelState.IsValid) {
+                using (var ctx = new BancoContexto()) {
                     ctx.Entry(racaID).State = EntityState.Unchanged;
                     ctx.Entry(clienteID).State = EntityState.Unchanged;
                     animal.Raca = racaID;
@@ -150,20 +88,17 @@ namespace SisVetWeb.Controllers
             return View(animal);
         }
 
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
+        public ActionResult Edit(int? id) {
+            if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            
+
             Animal animal = repoAnimal.Find(id);
-            if (animal == null)
-            {
+            if (animal == null) {
                 return HttpNotFound();
             }
-            ViewBag.Racas = repoRaca.GetAll().Select(g => new SelectListItem { Text = g.Descricao, Value = g.ID.ToString(), Selected = animal.RacaId == g.ID });
-            ViewBag.Clientes = repoCliente.GetAll().Select(g => new SelectListItem { Text = g.Nome, Value = g.ID.ToString(), Selected = animal.ClienteId == g.ID });
+            ViewBag.Racas = repoRaca.GetAll().OrderBy(x => x.Descricao).Select(g => new SelectListItem { Text = g.Descricao, Value = g.ID.ToString(), Selected = animal.RacaId == g.ID });
+            ViewBag.Clientes = repoCliente.GetAll().OrderBy(x => x.Nome).Select(g => new SelectListItem { Text = g.Nome, Value = g.ID.ToString(), Selected = animal.ClienteId == g.ID });
 
             //ViewBag.RacaID = new SelectList(
             //        repoRaca.GetAll(),
@@ -171,7 +106,7 @@ namespace SisVetWeb.Controllers
             //        "Descricao",
             //        animal.RacaId
             //    );
-          
+
             //ViewBag.ClienteID = new SelectList(
             //    repoCliente.GetAll(),
             //    "ID",
@@ -192,45 +127,36 @@ namespace SisVetWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Nome,Pelagem,Observacao,DataNascimento,Castrado,Obito,Sexo")] Animal animal, int racaId, int clienteId)
-        {
-            if (ModelState.IsValid)
-            {
+        public ActionResult Edit([Bind(Include = "ID,Nome,Pelagem,Observacao,DataNascimento,Castrado,Obito,Sexo")] Animal animal, int racaId, int clienteId) {
+            if (ModelState.IsValid) {
 
-                using (var ctx = new BancoContexto())
-                {
+                using (var ctx = new BancoContexto()) {
                     animal.RacaId = racaId;
                     animal.ClienteId = clienteId;
                     ctx.Entry(animal).State = EntityState.Modified;
                     ctx.SaveChanges();
                 }
-                
+
                 return RedirectToAction("Index");
             }
             return View(animal);
         }
 
-        // GET: /Animal/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
+        public ActionResult Delete(int? id) {
+            if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             //Animal animal = db.Animais.Find(id);
             Animal animal = repoAnimal.Find(id);
-            if (animal == null)
-            {
+            if (animal == null) {
                 return HttpNotFound();
             }
             return View(animal);
         }
 
-        // POST: /Animal/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
+        public ActionResult DeleteConfirmed(int id) {
             //Animal animal = db.Animais.Find(id);
             Animal animal = repoAnimal.Find(id);
             //db.Animais.Remove(animal);
@@ -240,10 +166,8 @@ namespace SisVetWeb.Controllers
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
+        protected override void Dispose(bool disposing) {
+            if (disposing) {
                 repoAnimal.Dispose();
             }
             base.Dispose(disposing);

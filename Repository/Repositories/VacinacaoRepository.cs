@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Data;
 using Dapper;
 using Domain.Entidades;
@@ -30,10 +31,20 @@ namespace Repository.Repositories {
                         V.DataVacinacao IS NULL
                         ORDER BY V.DataPrevisao ";
             using (var db = ctx.Database.Connection) {
-                db.Open();
-                var vacinacao = db.Query<VacinacaoAVencerWidGet>(sql);
-                return vacinacao;
+                try {
+                    db.Open();
+                    var vacinacao = db.Query<VacinacaoAVencerWidGet>(sql);
+                    return vacinacao;
+                } catch (Exception ex) {
+                    throw ex;
+                } finally {
+                    db.Close();
+                }
+
             }
+
+
+
         }
 
         public IEnumerable GetAllVacinacoesVencidasDapper() {
@@ -55,9 +66,16 @@ namespace Repository.Repositories {
                         V.DataVacinacao IS NULL
                         ORDER BY V.DataPrevisao DESC ";
             using (var db = ctx.Database.Connection) {
-                db.Open();
-                var vacinacao = db.Query<VacinacaoVencidasWidGet>(sql);
-                return vacinacao;
+                try {
+                    db.Open();
+                    var vacinacao = db.Query<VacinacaoVencidasWidGet>(sql);
+                    return vacinacao;
+                } catch (Exception ex) {
+                    throw ex;
+                } finally {
+                    db.Close();
+                }
+
             }
         }
     }

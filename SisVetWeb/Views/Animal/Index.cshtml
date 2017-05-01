@@ -1,6 +1,8 @@
-﻿@model PagedList.IPagedList<Domain.Entidades.Animal>
+﻿@*@model SisVetWeb.Models.AnimalViewModel*@
+@model PagedList.IPagedList<Domain.EntidadesLeitura.Cadastro.AnimalDapper>
 @using SisVetWeb.Helpers;
 @using PagedList.Mvc
+@using SisVetWeb.Models
 
 @{
     ViewBag.Title = "Index";
@@ -9,40 +11,40 @@
 <h3>Lista de Animais</h3>
 
 <p>
-    
 
-    @using (Html.BeginForm("Index","Animal",FormMethod.Get)){
-    <div class="row">
-        <div class="pull-right col-md-1">
-            @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Cadastrar Animal", "Create", "Animal", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
-        </div>
-        <div class="col-md-2" align="left">
-            @Html.DropDownList("TypeSearch",
+
+    @using (Html.BeginForm("Index", "Animal", FormMethod.Get)) {
+        <div class="row">
+            <div class="pull-right col-md-1">
+                @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Cadastrar Animal", "Create", "Animal", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
+            </div>
+            <div class="col-md-2" align="left">
+                @Html.DropDownList("tipoPesquisa",
              new List<SelectListItem>{
                     new SelectListItem{Text = "Id",Value = "Id",Selected = true},
                     new SelectListItem{Text = "Nome",Value = "Nome"},
                     new SelectListItem{Text = "Cpf",Value = "Cpf"},
                     new SelectListItem{Text = "Fone",Value = "Fone"}}, new { @class = "form-control" })
-        </div>  
-        <div class="col-md-3">
-            @Html.TextBox("SearchString", "", new { placeholder = "Pesquise...", @class = "form-control" })
-        </div> 
-        <div class="col-md-2">
-            <input type="submit" value="Filtrar" class="btn btn-primary pull-left" />
+            </div>
+            <div class="col-md-3">
+                @Html.TextBox("pesquisa", "", new { placeholder = "Pesquise...", @class = "form-control" })
+            </div>
+            <div class="col-md-2">
+                <input type="submit" value="Filtrar" class="btn btn-primary pull-left" />
+            </div>
         </div>
-    </div>
     }
-    
+
 </p>
 
 
 <table class="table table-condensed table-hover">
     <tr class="active">
         <th>
-            @Html.ActionLink("Id","Index",new{sortOrder = ViewBag.IdParam})
+            @Html.ActionLink("Id", "Index", new { ordenacao = ViewBag.IdParam, pesquisa = ViewBag.pesquisaCorrente, tipoPesquisa = ViewBag.tipoPesquisa })
         </th>
         <th>
-            @Html.ActionLink("Nome", "Index", new { sortOrder = ViewBag.NomeParam })
+            @Html.ActionLink("Nome", "Index", new { ordenacao = ViewBag.NomeParam, pesquisa = ViewBag.pesquisaCorrente, tipoPesquisa = ViewBag.tipoPesquisa })
         </th>
         <th>
             Proprietário
@@ -59,7 +61,7 @@
         <th class="text-center">
             Castrado
         </th>
-       
+
         <th></th>
     </tr>
 
@@ -72,24 +74,24 @@
                 @Html.DisplayFor(modelItem => item.Nome)
             </td>
             <td class="col-sm-3">
-                 @Html.DisplayFor(modelItem => item.Cliente.Nome)
+                @Html.DisplayFor(modelItem => item.ClienteNome)
             </td>
-            <td class="col-sm-1" >              
-                @Html.DisplayFor(modelItem => item.Raca.Descricao)
+            <td class="col-sm-1">
+                @Html.DisplayFor(modelItem => item.RacaDescricao)
             </td>
 
             <td class="col-sm-1">
                 @Html.FormatValue(Convert.ChangeType(item.DataNascimento, typeof(object)),
                             "{0: dd/MM/yyyy}")
             </td>
-           
+
             <td class="col-sm-1 text-center">
                 @Html.DisplayFor(modelItem => item.Sexo).ToString().ToUpper()
             </td>
-            
+
             <td class="col-sm-1 text-center">
                 @Html.DisplayFor(modelItem => item.Castrado)
-            </td>  
+            </td>
             <td class="col-sm-2">
                 <div class="pull-right">
                     @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-pencil'></span>", "Editar", "Edit", "Animal", routeValues: new { ID = item.ID }, htmlAttributes: new { data_modal = "", @class = "btn btn-default" })
@@ -101,5 +103,6 @@
     }
 
 </table>
+@*@Html.PageLinks(Model.Paginacao, x => Url.Action("Index", new { pagina = x }))*@
 Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
-@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentiFilter = ViewBag.CurrentFilter }))
+@Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina, ordenacao = ViewBag.ordenacaoCorrente, pesquisa = ViewBag.pesquisaCorrente }))

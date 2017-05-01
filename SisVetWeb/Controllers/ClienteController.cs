@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
-using Domain.Entidades;
 using Domain.Entidades.Cadastro;
 using PagedList;
 using Repository;
-using Repository.Context;
 using Repository.Repositories;
 using Utils;
 
@@ -22,64 +15,23 @@ namespace SisVetWeb.Controllers {
         private readonly TelefoneRepository repoFone = new TelefoneRepository();
 
 
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page, string typeSearch) {
+        public ActionResult Index(string ordenacao, string pesquisa, string tipoPesquisa, int pagina = 1) {
 
-            if (String.IsNullOrEmpty(sortOrder))
-                sortOrder = "Id";
+            int totalRegistros = 20;
+            ViewBag.IdParam = ordenacao == "Id" ? "Id_Desc" : "Id";
+            ViewBag.NomeParam = ordenacao == "Nome" ? "Nome_Desc" : "Nome";
 
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.IdParam = sortOrder == "Id" ? "Id_Desc" : "Id";
-            ViewBag.NomeParam = sortOrder == "Nome" ? "Nome_Desc" : "Nome";
+            ViewBag.ordenacaoCorrente = ordenacao;
+            ViewBag.tipoPesquisa = tipoPesquisa;
+            ViewBag.pesquisaCorrente = pesquisa;
 
-            if (searchString != null) {
-                page = 1;
-            } else {
-                searchString = currentFilter;
-            }
+            var clientes = repoCliente.GetAllClientes(ordenacao, pesquisa, tipoPesquisa);
 
-            ViewBag.CurrentFilter = searchString;
+            var quantidadeRegistros = clientes.Count();
+            if (!string.IsNullOrEmpty(pesquisa) && quantidadeRegistros > 0)
+                totalRegistros = quantidadeRegistros;
 
-            var clientes = from m in repoCliente.GetAll().ToList()
-                           select m;
-
-            switch (typeSearch) {
-                case "Nome":
-                    clientes = clientes.Where(s => s.Nome.ToUpper().Contains(searchString.ToUpper()));
-                    break;
-                case "Cpf":
-                    clientes = clientes.Where(s => s.CpfCnpj.Contains(searchString));
-                    break;
-                case "Fone":
-                    clientes = from cliente in repoCliente.GetAll().ToList()
-                               join fone in repoFone.GetAll().ToList() on cliente.ID equals fone.ClienteID
-                               where fone.Numero.Contains(searchString)
-                               select cliente;
-                    break;
-            }
-
-            switch (sortOrder) {
-                case "Id":
-                    clientes = clientes.OrderBy(x => x.ID);
-                    break;
-                case "Id_Desc":
-                    clientes = clientes.OrderByDescending(x => x.ID);
-                    break;
-                case "Nome":
-                    clientes = clientes.OrderBy(x => x.Nome);
-                    break;
-                case "Nome_Desc":
-                    clientes = clientes.OrderByDescending(x => x.Nome);
-                    break;
-                default:
-                    clientes = clientes.OrderBy(x => x.ID);
-                    break;
-
-            }
-
-            int pageSize = 20;
-            int pageNumber = (page ?? 1);
-
-            return View(clientes.ToPagedList(pageNumber, pageSize));
+            return View(clientes.ToPagedList(pagina, totalRegistros));
         }
 
 

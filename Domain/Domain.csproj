@@ -43,8 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entidades Leitura\WidGet\VacinacaoVencidasWidGet.cs" />
-    <Compile Include="Entidades Leitura\WidGet\VacinacaoAVencerWidGet.cs" />
+    <Compile Include="EntidadesLeitura\Cadastro\AnimalDapper.cs" />
+    <Compile Include="EntidadesLeitura\Cadastro\ClienteDapper.cs" />
+    <Compile Include="EntidadesLeitura\WidGet\VacinacaoVencidasWidGet.cs" />
+    <Compile Include="EntidadesLeitura\WidGet\VacinacaoAVencerWidGet.cs" />
     <Compile Include="Entidades\Cadastro\Animal.cs" />
     <Compile Include="Entidades\Operacao\Atendimento.cs" />
     <Compile Include="Entidades\Cadastro\Localidade\Cidade.cs" />
