@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using Domain.Entidades;
 using Domain.Entidades.Cadastro;
 using PagedList;
 using Repository.Context;
@@ -20,31 +15,26 @@ namespace SisVetWeb.Controllers
         private TipoServicoRepository repoTipoServico = new TipoServicoRepository();
 
 
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
+        public ActionResult Index(string ordenacao, string pesquisa, string tipoPesquisa, int pagina = 1)
         {
-            if (String.IsNullOrEmpty(sortOrder))
-                sortOrder = "Descricao";
+           int totalRegistros = 20;
+            ViewBag.IdParam = ordenacao == "Id" ? "Id_Desc" : "Id";
+            ViewBag.NomeParam = ordenacao == "Descricao" ? "Descricao_Desc" : "Descricao";
+            ViewBag.ValorParam = ordenacao == "Valor" ? "Valor_Desc" : "Valor";
 
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.IdParam = sortOrder == "Id" ? "Id_Desc" : "Id";
-            ViewBag.ValorParam = sortOrder == "Valor" ? "Valor_Desc" : "Valor";
-            ViewBag.NomeParam = sortOrder == "Descricao" ? "Descricao_Desc" : "Descricao";
-
-            if (searchString != null) {
-                page = 1;
-            } else {
-                searchString = currentFilter;
-            }
-
-            ViewBag.CurrentFilter = searchString;
+            ViewBag.ordenacaoCorrente = ordenacao;
+            ViewBag.tipoPesquisa = tipoPesquisa;
+            ViewBag.pesquisaCorrente = pesquisa;
 
             var tipoServico = from m in repoTipoServico.GetAll().ToList()
-                           select m;
-            if (!String.IsNullOrEmpty(searchString)) {
-                tipoServico = tipoServico.Where(s => s.Descricao.ToUpper().Contains(searchString.ToUpper()));
+                        select m;
+
+            if (!String.IsNullOrEmpty(pesquisa)) {
+                tipoServico = tipoServico.Where(s => s.Descricao.ToUpper().Contains(pesquisa.ToUpper()));
             }
 
-            switch (sortOrder) {
+
+            switch (ordenacao) {
                 case "Id":
                     tipoServico = tipoServico.OrderBy(x => x.ID);
                     break;
@@ -64,15 +54,17 @@ namespace SisVetWeb.Controllers
                     tipoServico = tipoServico.OrderByDescending(x => x.Valor);
                     break;    
                 default:
-                    tipoServico = tipoServico.OrderBy(x => x.Descricao);
+                    tipoServico = tipoServico.OrderBy(x => x.ID);
                     break;
 
             }
 
-            int pageSize = 20;
-            int pageNumber = (page ?? 1);
+            var quantidadeRegistros = tipoServico.Count();
+            if (!string.IsNullOrEmpty(pesquisa) && quantidadeRegistros > 0)
+                totalRegistros = quantidadeRegistros;
 
-            return View(tipoServico.ToPagedList(pageNumber, pageSize));
+
+            return View(tipoServico.ToPagedList(pagina, totalRegistros));
         }
 
         

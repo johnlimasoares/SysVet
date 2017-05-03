@@ -16,7 +16,7 @@
             </div>
 
             <div class="col-md-3">
-                @Html.TextBox("SearchString", "", new { placeholder = "Pesquise...", @class = "form-control" })
+                @Html.TextBox("pesquisa", "", new { placeholder = "Pesquise...", @class = "form-control" })
             </div>
             <div class="col-md-2">
                 <input type="submit" value="Filtrar" class="btn btn-primary pull-left" />
@@ -29,13 +29,13 @@
 <table class="table table-hover table-condensed">
     <tr class="active">
         <th>
-            @Html.ActionLink("Id", "Index", new { sortOrder = ViewBag.IdParam })
+            @Html.ActionLink("Id", "Index", new { ordenacao = ViewBag.IdParam, pesquisa = ViewBag.pesquisaCorrente, tipoPesquisa = ViewBag.tipoPesquisa })
         </th>
         <th>
-            @Html.ActionLink("Descrição", "Index", new { sortOrder = ViewBag.NomeParam })
+            @Html.ActionLink("Descrição", "Index", new { ordenacao = ViewBag.NomeParam, pesquisa = ViewBag.pesquisaCorrente, tipoPesquisa = ViewBag.tipoPesquisa })
         </th>
         <th>
-            @Html.ActionLink("Valor", "Index", new { sortOrder = ViewBag.ValorParam })
+            @Html.ActionLink("Valor", "Index", new { ordenacao = ViewBag.ValorParam, pesquisa = ViewBag.pesquisaCorrente, tipoPesquisa = ViewBag.tipoPesquisa })
         </th>
         <th></th>
     </tr>
@@ -63,4 +63,4 @@
 
 </table>
 Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
-@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentiFilter = ViewBag.CurrentFilter }))
+@Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina, ordenacao = ViewBag.ordenacaoCorrente, pesquisa = ViewBag.pesquisaCorrente }))

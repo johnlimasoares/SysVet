@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using Domain.Entidades;
 using Domain.Entidades.Cadastro;
 using PagedList;
-using Repository.Context;
 using Repository.Repositories;
 
 namespace SisVetWeb.Controllers
@@ -18,33 +12,46 @@ namespace SisVetWeb.Controllers
     {
         private readonly VacinaRepository repoVacina = new VacinaRepository();
 
-  
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
+
+        public ActionResult Index(string ordenacao, string pesquisa, string tipoPesquisa, int pagina = 1)
         {
-            ViewBag.CurrentSort = sortOrder;
+            int totalRegistros = 20;
+            ViewBag.IdParam = ordenacao == "Id" ? "Id_Desc" : "Id";
+            ViewBag.NomeParam = ordenacao == "Nome" ? "Nome_Desc" : "Nome";
 
-            if (searchString != null)
-            {
-                page = 1;
-            }
-            else
-            {
-                searchString = currentFilter;
-            }
+            ViewBag.ordenacaoCorrente = ordenacao;
+            ViewBag.tipoPesquisa = tipoPesquisa;
+            ViewBag.pesquisaCorrente = pesquisa;
 
-            ViewBag.CurrentFilter = searchString;
+            var vacinas = from m in repoVacina.GetAll().ToList()
+                        select m;
 
-            var vacina= from m in repoVacina.GetAll().ToList()
-                select m;
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                vacina = vacina.Where(s => s.Descricao.ToUpper().Contains(searchString.ToUpper()));
+            if (!String.IsNullOrEmpty(pesquisa)) {
+                vacinas = vacinas.Where(s => s.Descricao.ToUpper().Contains(pesquisa.ToUpper()));
             }
 
-            int pageSize = 20;
-            int pageNumber = (page ?? 1);
+            switch (ordenacao) {
+                case "Nome_Desc":
+                    vacinas = vacinas.OrderByDescending(x => x.Descricao);
+                    break;
+                case "Nome":
+                    vacinas = vacinas.OrderBy(x => x.Descricao);
+                    break;
+                case "Id_Desc":
+                    vacinas = vacinas.OrderByDescending(x => x.ID);
+                    break;
+                default:
+                    vacinas = vacinas.OrderBy(x => x.ID);
+                    break;
 
-            return View(vacina.ToPagedList(pageNumber, pageSize));
+            }
+
+            var quantidadeRegistros = vacinas.Count();
+            if (!string.IsNullOrEmpty(pesquisa) && quantidadeRegistros > 0)
+                totalRegistros = quantidadeRegistros;
+
+
+            return View(vacinas.ToPagedList(pagina, totalRegistros));
         }
         public ActionResult Details(int? id) {
             if (id == null) {

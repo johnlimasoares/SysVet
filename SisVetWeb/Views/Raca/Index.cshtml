@@ -16,7 +16,7 @@
             </div>
 
             <div class="col-md-3">
-                @Html.TextBox("SearchString", "", new { placeholder = "Pesquise...", @class = "form-control" })
+                @Html.TextBox("pesquisa", "", new { placeholder = "Pesquise...", @class = "form-control" })
             </div>
             <div class="col-md-2">
                 <input type="submit" value="Filtrar" class="btn btn-primary pull-left" />
@@ -30,7 +30,10 @@
 <table class="table table-hover table-condensed">
     <tr class="active">
         <th>
-             Descrição
+            @Html.ActionLink("Id", "Index", new { ordenacao = ViewBag.IdParam, pesquisa = ViewBag.pesquisaCorrente, tipoPesquisa = ViewBag.tipoPesquisa })
+        </th>
+        <th>
+            @Html.ActionLink("Raça", "Index", new { ordenacao = ViewBag.NomeParam, pesquisa = ViewBag.pesquisaCorrente, tipoPesquisa = ViewBag.tipoPesquisa })
         </th>
         <th>
             Espécie
@@ -39,24 +42,27 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Descricao)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Especie.Descricao)
-        </td>
-        <td>
-            <div class="pull-right">
-                @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-pencil'></span>", "Editar", "Edit", "Raca", routeValues: new { Id = item.ID }, htmlAttributes: new { data_modal = "", @class = "btn btn-default" })
-                &nbsp;
-                @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-search'></span>", "Detalhar", "Details", "Raca", routeValues: new { Id = item.ID }, htmlAttributes: new { data_modal = "", @class = "btn btn-default" })
-            </div>
-        </td>
-    </tr>
-}
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Especie.Descricao)
+            </td>
+            <td>
+                <div class="pull-right">
+                    @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-pencil'></span>", "Editar", "Edit", "Raca", routeValues: new { Id = item.ID }, htmlAttributes: new { data_modal = "", @class = "btn btn-default" })
+                    &nbsp;
+                    @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-search'></span>", "Detalhar", "Details", "Raca", routeValues: new { Id = item.ID }, htmlAttributes: new { data_modal = "", @class = "btn btn-default" })
+                </div>
+            </td>
+        </tr>
+    }
 
 </table>
 Página @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) de @Model.PageCount
-@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentiFilter = ViewBag.CurrentFilter }))
+@Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina, ordenacao = ViewBag.ordenacaoCorrente, pesquisa = ViewBag.pesquisaCorrente }))
