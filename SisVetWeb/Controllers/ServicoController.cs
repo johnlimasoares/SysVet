@@ -25,7 +25,7 @@ namespace SisVetWeb.Controllers
         public ActionResult Index(int id)
         {
             ViewBag.AtendimentoID = id;
-            var atendimentos = repoServico.GetAll().Where(a => a.AtendimentoID == id);
+            var atendimentos = repoServico.GetAll().Where(a => a.AtendimentoId == id);
             return PartialView("_Index",atendimentos.ToList());
         }
 
@@ -46,7 +46,7 @@ namespace SisVetWeb.Controllers
         public ActionResult Create(int atendimentoID)
         {
             Servico servico = new Servico();
-            servico.AtendimentoID = atendimentoID;
+            servico.AtendimentoId = atendimentoID;
             ViewBag.TipoServicoID = new SelectList(repoTipoServico.GetAll(), "ID", "Descricao");
             return PartialView("_Create", servico);
         }
@@ -85,8 +85,8 @@ namespace SisVetWeb.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.AtendimentoID = new SelectList(repoAtendimento.GetAll(), "ID", "ID",servico.AtendimentoID);
-            ViewBag.TipoServicoID = new SelectList(repoTipoServico.GetAll(), "ID", "Descricao", servico.TipoServicoID);
+            ViewBag.AtendimentoID = new SelectList(repoAtendimento.GetAll(), "ID", "ID",servico.AtendimentoId);
+            ViewBag.TipoServicoID = new SelectList(repoTipoServico.GetAll(), "ID", "Descricao", servico.TipoServicoId);
             return PartialView("_Edit",servico);
         }
 
@@ -105,7 +105,7 @@ namespace SisVetWeb.Controllers
                     return Json(new {success = true});
                 }
             }
-            ViewBag.AtendimentoID = new SelectList(repoAtendimento.GetAll(), "ID", "ID", servico.AtendimentoID);
+            ViewBag.AtendimentoID = new SelectList(repoAtendimento.GetAll(), "ID", "ID", servico.AtendimentoId);
             return PartialView("_Edit",servico);
 
         }

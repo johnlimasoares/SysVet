@@ -25,7 +25,7 @@ namespace Repository {
                     break;
                 case "Fone":
                     clientes = from cliente in clientes
-                               join fone in new TelefoneRepository().GetAll().ToList() on cliente.ID equals fone.ClienteID
+                               join fone in new TelefoneRepository().GetAll().ToList() on cliente.ID equals fone.ClienteId
                                where fone.Numero.Contains(pesquisa)
                                select cliente;
                     break;

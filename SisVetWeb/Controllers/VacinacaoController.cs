@@ -99,8 +99,8 @@ namespace SisVetWeb.Controllers {
                         a =>
                             new SelectListItem() {
                                 Text = a.Descricao,
-                                Value = a.ID.ToString(),
-                                Selected = a.ID == vacinacao.VacinaId
+                                Value = a.Id.ToString(),
+                                Selected = a.Id == vacinacao.VacinaId
                             });
             return PartialView("_Edit", vacinacao);
         }

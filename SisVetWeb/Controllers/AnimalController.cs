@@ -71,8 +71,8 @@ namespace SisVetWeb.Controllers {
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Nome,Pelagem,Observacao,DataNascimento,Castrado,Obito,Sexo")] Animal animal, int racaId, int clienteId) {
-            var racaID = new Raca() { ID = racaId };
-            var clienteID = new Cliente() { ID = clienteId };
+            var racaID = new Raca() { Id = racaId };
+            var clienteID = new Cliente() { Id = clienteId };
             if (ModelState.IsValid) {
                 using (var ctx = new BancoContexto()) {
                     ctx.Entry(racaID).State = EntityState.Unchanged;
@@ -97,8 +97,8 @@ namespace SisVetWeb.Controllers {
             if (animal == null) {
                 return HttpNotFound();
             }
-            ViewBag.Racas = repoRaca.GetAll().OrderBy(x => x.Descricao).Select(g => new SelectListItem { Text = g.Descricao, Value = g.ID.ToString(), Selected = animal.RacaId == g.ID });
-            ViewBag.Clientes = repoCliente.GetAll().OrderBy(x => x.Nome).Select(g => new SelectListItem { Text = g.Nome, Value = g.ID.ToString(), Selected = animal.ClienteId == g.ID });
+            ViewBag.Racas = repoRaca.GetAll().OrderBy(x => x.Descricao).Select(g => new SelectListItem { Text = g.Descricao, Value = g.Id.ToString(), Selected = animal.RacaId == g.Id });
+            ViewBag.Clientes = repoCliente.GetAll().OrderBy(x => x.Nome).Select(g => new SelectListItem { Text = g.Nome, Value = g.Id.ToString(), Selected = animal.ClienteId == g.Id });
 
             //ViewBag.RacaID = new SelectList(
             //        repoRaca.GetAll(),

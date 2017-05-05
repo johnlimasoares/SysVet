@@ -136,6 +136,7 @@
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\EnderecoController.cs" />
     <Compile Include="Controllers\EspecieController.cs" />
+    <Compile Include="Controllers\FinanceiroCentroDeCustoGrupoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MedicamentoController.cs" />
     <Compile Include="Controllers\PesoController.cs" />
@@ -303,6 +304,8 @@
     <Content Include="Views\Vacinacao\WidGet\_WidGetListVacinacao.cshtml" />
     <Content Include="Views\Cliente\ListaAnimaisPorCliente.cshtml" />
     <Content Include="Views\Vacinacao\WidGet\_WidGetListVacinacaoVencidas.cshtml" />
+    <Content Include="Views\FinanceiroCentroDeCustoGrupo\Index.cshtml" />
+    <Content Include="Views\FinanceiroCentroDeCustoGrupo\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -5,7 +5,7 @@ using Domain.Entidades.Cadastro;
 namespace Domain.Entidades.Operacao {
     public class Vacinacao {
         [Key]
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [Display(Name = "Data Previsão")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]

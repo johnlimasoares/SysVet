@@ -4,9 +4,9 @@ namespace Domain.Entidades.Cadastro.Contato {
     public class Telefone {
 
         [Key]
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string Numero { get; set; }
-        public virtual int ClienteID { get; set; }
+        public virtual int ClienteId { get; set; }
         public virtual Cliente Cliente { get; set; }
 
         public virtual int TipoTelefoneId { get; set; }

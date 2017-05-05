@@ -42,10 +42,10 @@ namespace SisVetWeb.Controllers {
                     racas = racas.OrderBy(x => x.Descricao);
                     break;
                 case "Id_Desc":
-                    racas = racas.OrderByDescending(x => x.ID);
+                    racas = racas.OrderByDescending(x => x.Id);
                     break;
                 default:
-                    racas = racas.OrderBy(x => x.ID);
+                    racas = racas.OrderBy(x => x.Id);
                     break;
 
             }
@@ -78,7 +78,7 @@ namespace SisVetWeb.Controllers {
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Descricao")] Raca raca, int especieId) {
-            var especieID = new Especie() { ID = especieId };
+            var especieID = new Especie() { Id = especieId };
 
 
 
@@ -111,8 +111,8 @@ namespace SisVetWeb.Controllers {
                         g =>
                             new SelectListItem {
                                 Text = g.Descricao,
-                                Value = g.ID.ToString(),
-                                Selected = raca.EspecieId == g.ID
+                                Value = g.Id.ToString(),
+                                Selected = raca.EspecieId == g.Id
                             });
             return View(raca);
         }

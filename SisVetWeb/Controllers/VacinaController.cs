@@ -38,10 +38,10 @@ namespace SisVetWeb.Controllers
                     vacinas = vacinas.OrderBy(x => x.Descricao);
                     break;
                 case "Id_Desc":
-                    vacinas = vacinas.OrderByDescending(x => x.ID);
+                    vacinas = vacinas.OrderByDescending(x => x.Id);
                     break;
                 default:
-                    vacinas = vacinas.OrderBy(x => x.ID);
+                    vacinas = vacinas.OrderBy(x => x.Id);
                     break;
 
             }
@@ -131,7 +131,7 @@ namespace SisVetWeb.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Vacina vacina = repoVacina.Find(id);
-            repoVacina.Excluir(x => x.ID == vacina.ID);
+            repoVacina.Excluir(x => x.Id == vacina.Id);
             repoVacina.SalvarTodos();
             return RedirectToAction("Index");
         }

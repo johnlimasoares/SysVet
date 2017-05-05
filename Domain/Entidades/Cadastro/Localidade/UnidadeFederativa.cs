@@ -2,7 +2,7 @@
 {
     public class UnidadeFederativa
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string Descrica { get; set; }
     }
 }

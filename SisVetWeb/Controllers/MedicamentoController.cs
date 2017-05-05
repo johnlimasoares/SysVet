@@ -46,7 +46,7 @@ namespace SisVetWeb.Controllers
                     break;
 
                 default:
-                    medicamentos = medicamentos.OrderByDescending(x => x.ID);
+                    medicamentos = medicamentos.OrderByDescending(x => x.Id);
                     break;
 
             }

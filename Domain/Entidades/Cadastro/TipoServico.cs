@@ -6,7 +6,7 @@ namespace Domain.Entidades.Cadastro {
     public class TipoServico {
 
         [Key]
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [MaxLength(100,ErrorMessage = "Máximo de 100 caractéres!")]

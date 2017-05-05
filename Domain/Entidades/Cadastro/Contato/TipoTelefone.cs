@@ -6,7 +6,7 @@ namespace Domain.Entidades.Cadastro.Contato
     public class TipoTelefone
     {
         [Key]
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         public string Descricao { get; set; }
 

@@ -7,7 +7,7 @@ namespace Domain.Entidades.Operacao
 {
     public class Atendimento
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         public int AnimalId { get; set; }
         public virtual Animal Animal { get; set; }

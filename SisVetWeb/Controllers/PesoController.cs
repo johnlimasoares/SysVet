@@ -18,7 +18,7 @@ namespace SisVetWeb.Controllers
          [ChildActionOnly]
         public ActionResult Index(int id) {
             ViewBag.AnimalID = id;
-             var peso = repoPeso.GetAll().Where(a => a.AnimalID == id);
+             var peso = repoPeso.GetAll().Where(a => a.AnimalId == id);
 
             return PartialView("_Index", peso.ToList());
         }
@@ -40,7 +40,7 @@ namespace SisVetWeb.Controllers
 
       
         public ActionResult Create(int animalId) {
-            var peso = new Peso {AnimalID = animalId};
+            var peso = new Peso {AnimalId = animalId};
             return PartialView("_Create", peso);
         }
 
@@ -70,7 +70,7 @@ namespace SisVetWeb.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.AnimalID = new SelectList(repoAnimal.GetAll(),"ID","Nome",peso.AnimalID);
+            ViewBag.AnimalID = new SelectList(repoAnimal.GetAll(),"ID","Nome",peso.AnimalId);
             return PartialView("_Edit",peso);
         }
 

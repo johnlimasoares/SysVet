@@ -14,11 +14,11 @@
         <div class="form-horizontal">
 
             @Html.ValidationSummary(true, "", new {@class = "text-danger"})
-            @Html.HiddenFor(model => model.ID)
+            @Html.HiddenFor(model => model.Id)
 
             <div style="display: none">
                 @Html.DropDownList("ClienteID", String.Empty)
-                @Html.ValidationMessageFor(model => model.ClienteID)
+                @Html.ValidationMessageFor(model => model.ClienteId)
             </div>
 
             <div class="form-group">

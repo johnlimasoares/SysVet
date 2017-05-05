@@ -36,10 +36,10 @@ namespace SisVetWeb.Controllers
 
             switch (ordenacao) {
                 case "Id":
-                    tipoServico = tipoServico.OrderBy(x => x.ID);
+                    tipoServico = tipoServico.OrderBy(x => x.Id);
                     break;
                 case "Id_Desc":
-                    tipoServico = tipoServico.OrderByDescending(x => x.ID);
+                    tipoServico = tipoServico.OrderByDescending(x => x.Id);
                     break;
                 case "Descricao":
                     tipoServico = tipoServico.OrderBy(x => x.Descricao);
@@ -54,7 +54,7 @@ namespace SisVetWeb.Controllers
                     tipoServico = tipoServico.OrderByDescending(x => x.Valor);
                     break;    
                 default:
-                    tipoServico = tipoServico.OrderBy(x => x.ID);
+                    tipoServico = tipoServico.OrderBy(x => x.Id);
                     break;
 
             }

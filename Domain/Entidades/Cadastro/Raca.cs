@@ -8,7 +8,7 @@ namespace Domain.Entidades.Cadastro
 
  
         [Key] 
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [StringLength(50,ErrorMessage = "A Descrição deve ser entre 2 e 50 caracteres!")]
         public string Descricao { get; set; }

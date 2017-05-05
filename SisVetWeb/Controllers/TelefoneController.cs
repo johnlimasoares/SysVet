@@ -18,7 +18,7 @@ namespace SisVetWeb.Controllers {
         [ChildActionOnly]
         public ActionResult Index(int id) {
             ViewBag.ClienteID = id;
-            var listTelefone = repoFone.GetAll().Where(a => a.ClienteID == id).ToList();
+            var listTelefone = repoFone.GetAll().Where(a => a.ClienteId == id).ToList();
             for (var index = 0; index <= listTelefone.Count - 1; index++) {
                 listTelefone[index].Numero = listTelefone[index].Numero.FormatFone();
             }
@@ -46,14 +46,14 @@ namespace SisVetWeb.Controllers {
                 "Descricao"
                 );
             Telefone telefone = new Telefone();
-            telefone.ClienteID = clienteID;
+            telefone.ClienteId = clienteID;
             return PartialView("_Create", telefone);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Numero,ClienteID")] Telefone telefone, int tipoTelefoneId) {
-            var tipoTelefoneID = new TipoTelefone() { ID = tipoTelefoneId };
+            var tipoTelefoneID = new TipoTelefone() { Id = tipoTelefoneId };
             if (ModelState.IsValid) {
                 using (var ctx = new BancoContexto()) {
                     telefone.Numero = telefone.Numero.ApenasNumeros(); ;
@@ -81,15 +81,15 @@ namespace SisVetWeb.Controllers {
                 fone = fone.PadLeft(10, '4');
 
             telefone.Numero = fone;
-            ViewBag.ClienteID = new SelectList(repoCliente.GetAll(), "ID", "Nome", telefone.ClienteID);
+            ViewBag.ClienteID = new SelectList(repoCliente.GetAll(), "ID", "Nome", telefone.ClienteId);
             ViewBag.TipoTelefones =
                 repoTipoFone.GetAll()
                     .Select(
                         x =>
                             new SelectListItem {
                                 Text = x.Descricao,
-                                Value = x.ID.ToString(),
-                                Selected = telefone.TipoTelefoneId == x.ID
+                                Value = x.Id.ToString(),
+                                Selected = telefone.TipoTelefoneId == x.Id
                             });
             return PartialView("_Edit", telefone);
         }
@@ -107,7 +107,7 @@ namespace SisVetWeb.Controllers {
                 }
 
             }
-            ViewBag.ClienteID = new SelectList(repoFone.GetAll(), "ID", "Numero", telefone.ClienteID);
+            ViewBag.ClienteID = new SelectList(repoFone.GetAll(), "ID", "Numero", telefone.ClienteId);
             return PartialView("_Edit", telefone);
 
         }

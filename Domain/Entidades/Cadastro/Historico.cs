@@ -5,7 +5,7 @@ namespace Domain.Entidades.Cadastro
 {
     public class Historico
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         public Atendimento Atendimento { get; set; }
 

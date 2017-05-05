@@ -6,11 +6,11 @@ namespace Domain.Entidades.Cadastro
     public class Peso
     {
         [Key]
-        public int ID { get; set; }
+        public int Id { get; set; }
         [Display(Name = "Peso")]
         public double PesoAnimal { get; set; }
 
-        public int AnimalID{ get; set; }
+        public int AnimalId{ get; set; }
         public virtual Animal Animal { get; set; }
 
         [Display(Name = "Data Pesagem")]

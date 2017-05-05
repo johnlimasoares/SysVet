@@ -5,7 +5,7 @@ namespace Domain.Entidades.Cadastro
 {
     public class Especie {
         [Key]
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [StringLength(50, ErrorMessage = "O tamanho máximo são 50 caracteres!")]
         public string Descricao { get; set; }

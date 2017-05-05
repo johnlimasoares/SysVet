@@ -3,11 +3,11 @@
     public class Email
     {
 
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         public string Descricao { get; set; }
 
-        public Cliente ClienteID { get; set; }
+        public Cliente ClienteId { get; set; }
 
         
 

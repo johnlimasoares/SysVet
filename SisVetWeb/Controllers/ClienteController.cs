@@ -131,7 +131,7 @@ namespace SisVetWeb.Controllers {
 
         public ActionResult ListaAnimaisPorCliente(int id, int? page, string currentFilter, string searchString) {
 
-            var animaisCliente = repoAnimal.GetAll().Where(x => x.Cliente.ID == id).ToList();
+            var animaisCliente = repoAnimal.GetAll().Where(x => x.Cliente.Id == id).ToList();
 
             int pageSize = 20;
             int pageNumber = (page ?? 1);

@@ -34,41 +34,41 @@ namespace SisVetWeb.Controllers
 
             ViewBag.CurrentFilter = searchString;
 
-            var atendimentos = from m in repoAtendimento.GetAll().ToList().OrderBy(c => c.ID)
+            var atendimentos = from m in repoAtendimento.GetAll().ToList().OrderBy(c => c.Id)
                           select m;
 
           if(!string.IsNullOrEmpty(typeSearch))
             switch (typeSearch) {
                 case "NomeAnimal":
-                    atendimentos = atendimentos.Where(s => s.Animal.Nome.ToUpper().Contains(searchString.ToUpper())).OrderBy(s => s.ID);
+                    atendimentos = atendimentos.Where(s => s.Animal.Nome.ToUpper().Contains(searchString.ToUpper())).OrderBy(s => s.Id);
                     break;
                 case "Cpf":
                     atendimentos = from atendimento in repoAtendimento.GetAll().ToList()
-                        join animal in repoAnimal.GetAll().ToList() on atendimento.AnimalId equals animal.ID
-                        join cliente in repoCliente.GetAll().ToList() on animal.ClienteId equals cliente.ID
+                        join animal in repoAnimal.GetAll().ToList() on atendimento.AnimalId equals animal.Id
+                        join cliente in repoCliente.GetAll().ToList() on animal.ClienteId equals cliente.Id
                         where cliente.CpfCnpj.Contains(searchString)
                         select atendimento;                   
                    break;
                 case "Fone":
                     atendimentos = from atendimento in repoAtendimento.GetAll().ToList()
-                        join animal in repoAnimal.GetAll().ToList() on atendimento.AnimalId equals animal.ID
-                        join cliente in repoCliente.GetAll().ToList() on animal.ClienteId equals cliente.ID
-                        join fone in repoFone.GetAll().ToList() on cliente.ID equals fone.ClienteID
+                        join animal in repoAnimal.GetAll().ToList() on atendimento.AnimalId equals animal.Id
+                        join cliente in repoCliente.GetAll().ToList() on animal.ClienteId equals cliente.Id
+                        join fone in repoFone.GetAll().ToList() on cliente.Id equals fone.ClienteId
                         where fone.Numero.Contains(searchString)
                         select atendimento;
                     break;
                 case "Atendimento":
-                    atendimentos = atendimentos.Where(s => s.ID.ToString().Equals(searchString));
+                    atendimentos = atendimentos.Where(s => s.Id.ToString().Equals(searchString));
                     break;
                 case "NomeCliente":
-                    atendimentos = atendimentos.Where(s => s.Animal.Cliente.Nome.ToUpper().Contains(searchString.ToUpper())).OrderBy(s => s.ID);
+                    atendimentos = atendimentos.Where(s => s.Animal.Cliente.Nome.ToUpper().Contains(searchString.ToUpper())).OrderBy(s => s.Id);
                     break;
                 default:
                     break;
 
             }
 
-            atendimentos = atendimentos.OrderByDescending(x => x.ID);
+            atendimentos = atendimentos.OrderByDescending(x => x.Id);
             int pageSize = 15;
             int pageNumber = (page ?? 1);
 
@@ -117,7 +117,7 @@ namespace SisVetWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,DataEntrada,DataSaida,HoraAtendimento,Situacao,ValorAtendimento,ValorDesconto,Observacao")] Atendimento atendimento, int animalId)
         {
-            var Animal= new Animal() {ID = animalId};
+            var Animal= new Animal() {Id = animalId};
 
             if (ModelState.IsValid)
             {
@@ -158,7 +158,7 @@ namespace SisVetWeb.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,DataEntrada,DataSaida,HoraAtendimento,Situacao,ValorAtendimento,ValorDesconto,Observacao")] Atendimento atendimento, int animalId)
         {
-            List<Servico> totalVenda = repoServico.GetAll().Where(x => x.AtendimentoID == atendimento.ID).ToList();
+            List<Servico> totalVenda = repoServico.GetAll().Where(x => x.AtendimentoId == atendimento.Id).ToList();
             var totalAtendimento = totalVenda.Sum(soma => soma.TipoServico.Valor);
             if (ModelState.IsValid)
             {

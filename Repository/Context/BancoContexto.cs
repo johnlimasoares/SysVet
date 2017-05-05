@@ -8,6 +8,7 @@ using Domain.Entidades.Cadastro;
 using Domain.Entidades.Cadastro.Contato;
 using Domain.Entidades.Cadastro.Localidade;
 using Domain.Entidades.Operacao;
+using Domain.Entidades.Operacao.Financeiro;
 
 namespace Repository.Context {
 
@@ -34,6 +35,7 @@ namespace Repository.Context {
         public DbSet<Peso> Pesos { get; set; }
         public DbSet<Vacina> Vacinas { get; set; }
         public DbSet<Vacinacao> Vacinacoes { get; set; }
+        public DbSet<FinanceiroCentroDeCustoGrupo> FinaceiroCentroDeCustoGrupos { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder) {

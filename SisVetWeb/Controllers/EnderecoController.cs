@@ -25,7 +25,7 @@ namespace SisVetWeb.Controllers
         public ActionResult Index(int id)
         {
             ViewBag.ClienteID = id;
-            var endereco = db.Enderecos.Where(a => a.ClienteID == id);
+            var endereco = db.Enderecos.Where(a => a.ClienteId == id);
 
             return PartialView("_Index", endereco.ToList());
         }
@@ -47,7 +47,7 @@ namespace SisVetWeb.Controllers
        
         public ActionResult Create(int clienteId)
         {
-            var endereco = new Endereco() {Cep = "86990000",ClienteID = clienteId};
+            var endereco = new Endereco() {Cep = "86990000",ClienteId = clienteId};
             ViewBag.CidadeID = new SelectList(repoCidade.GetAll().ToList().OrderBy(x => x.Descricao), "ID", "Descricao");
             return PartialView("_Create",endereco);
         }
@@ -82,8 +82,8 @@ namespace SisVetWeb.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Cidades = repoCidade.GetAll().Select(x => new SelectListItem{Text = x.Descricao,Value = x.ID.ToString(),Selected = x.ID == endereco.CidadeId});
-            ViewBag.ClienteID = new SelectList(db.Clientes, "ID", "Nome", endereco.ClienteID);
+            ViewBag.Cidades = repoCidade.GetAll().Select(x => new SelectListItem{Text = x.Descricao,Value = x.Id.ToString(),Selected = x.Id == endereco.CidadeId});
+            ViewBag.ClienteID = new SelectList(db.Clientes, "ID", "Nome", endereco.ClienteId);
             return PartialView("_Edit",endereco);
         }
 
@@ -99,7 +99,7 @@ namespace SisVetWeb.Controllers
                 await db.SaveChangesAsync();
                 return Json(new { success = true });
             }
-            ViewBag.ClienteID = new SelectList(db.Clientes, "ID", "Nome", endereco.ClienteID);
+            ViewBag.ClienteID = new SelectList(db.Clientes, "ID", "Nome", endereco.ClienteId);
             return PartialView("_Edit",endereco);
         }
 

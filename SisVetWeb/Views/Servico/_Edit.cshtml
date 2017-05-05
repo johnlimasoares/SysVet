@@ -13,18 +13,18 @@
         <div class="form-horizontal">
         
             @Html.ValidationSummary(true,"",new{@class = "text-danger"})
-            @Html.HiddenFor(model => model.ID)
+            @Html.HiddenFor(model => model.Id)
             
             <div style="display: none">
                 @Html.DropDownList("AtendimentoID", String.Empty)
-                @Html.ValidationMessageFor(model => model.AtendimentoID)
+                @Html.ValidationMessageFor(model => model.AtendimentoId)
             </div>
 
             <div class="form-group">
                 @Html.Label("Tipo Serviço", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.DropDownList("TipoServicoID", (IEnumerable<SelectListItem>)ViewBag.TipoServicoID,  new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.TipoServicoID)
+                    @Html.ValidationMessageFor(model => model.TipoServicoId)
 
                 </div>
             </div>

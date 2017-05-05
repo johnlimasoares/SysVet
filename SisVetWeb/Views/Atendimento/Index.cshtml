@@ -65,7 +65,7 @@
 @foreach (var item in Model) {
     <tr>
         <td class="col-sm-1">
-            @Html.DisplayFor(modelItem => item.ID)
+            @Html.DisplayFor(modelItem => item.Id)
         </td>
         <td class="col-sm-2">
              @Html.DisplayFor(modelItem => item.Animal.Nome)
@@ -88,13 +88,13 @@
        
         <td class="col-sm-2">
             <div class="pull-right">
-                @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-retweet'></span>", "Gerenciar", "Edit", "Atendimento", routeValues: new { ID = item.ID }, htmlAttributes: new { data_modal = "", @class = "btn btn-info" })
+                @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-retweet'></span>", "Gerenciar", "Edit", "Atendimento", routeValues: new { ID = item.Id }, htmlAttributes: new { data_modal = "", @class = "btn btn-info" })
                 &nbsp;
                 @if(item.Situacao == "Fechado"){
-                    @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-ok-sign'></span>", "Finalizar Atendimento", "Details", "Atendimento", routeValues: new {ID = item.ID}, htmlAttributes: new {data_modal = "", @class = "btn btn-warning"})
+                    @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-ok-sign'></span>", "Finalizar Atendimento", "Details", "Atendimento", routeValues: new {ID = item.Id}, htmlAttributes: new {data_modal = "", @class = "btn btn-warning"})
                 }
                 else{
-                 @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-ok-sign'></span>", "Finalizar Atendimento", "Details", "Atendimento", routeValues: new { ID = item.ID }, htmlAttributes: new { data_modal = "", @class = "btn btn-warning" })   
+                 @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-ok-sign'></span>", "Finalizar Atendimento", "Details", "Atendimento", routeValues: new { ID = item.Id }, htmlAttributes: new { data_modal = "", @class = "btn btn-warning" })   
                 }
             </div>
         </td>
