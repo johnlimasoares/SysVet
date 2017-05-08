@@ -306,6 +306,7 @@
     <Content Include="Views\Vacinacao\WidGet\_WidGetListVacinacaoVencidas.cshtml" />
     <Content Include="Views\FinanceiroCentroDeCustoGrupo\Index.cshtml" />
     <Content Include="Views\FinanceiroCentroDeCustoGrupo\Create.cshtml" />
+    <Content Include="Views\FinanceiroCentroDeCustoGrupo\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

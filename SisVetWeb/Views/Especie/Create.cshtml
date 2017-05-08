@@ -1,15 +1,11 @@
 ﻿@model Domain.Entidades.Cadastro.Especie
 
-
 <h3>Cadastro Espécie</h3>
 
-
-@using (Html.BeginForm()) 
-{
+@using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-    
         <hr />
         @Html.ValidationSummary(true)
 

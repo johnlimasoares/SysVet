@@ -18,12 +18,19 @@ namespace SisVetWeb.Helpers {
 
             UrlHelper urlHelper = new UrlHelper(htmlHelper.ViewContext.RequestContext);
             TagBuilder builder = new TagBuilder("a");
-            builder.InnerHtml = text;
+            builder.InnerHtml = text.SetTituloBotaoNovoCadastro();
             builder.Attributes["title"] = title;
             builder.Attributes["href"] = urlHelper.Action(action, controller, routeValues);
             builder.MergeAttributes(new RouteValueDictionary(HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes)));
 
             return MvcHtmlString.Create(builder.ToString());
+        }
+
+        private static string SetTituloBotaoNovoCadastro(this string value){
+            if (value.Contains("glyphicon-plus")){
+                return value.Replace("><", "> Adicionar<");
+            }
+            return value;
         }
 
         public static MvcHtmlString PageLinks(this HtmlHelper html, Paginacao paginacao, Func<int, string> paginaUrl) {

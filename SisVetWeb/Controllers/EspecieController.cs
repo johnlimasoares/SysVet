@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using Domain.Entidades;
 using Domain.Entidades.Cadastro;
 using PagedList;
-using Repository.Context;
 using Repository;
 
 
@@ -19,7 +13,6 @@ namespace SisVetWeb.Controllers
     {
         private readonly EspecieRepository repoEspecie = new EspecieRepository();
 
-        // GET: /Especie/
         public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page) {
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NomeParam = String.IsNullOrEmpty(sortOrder) ? "Nome_desc" : "";
@@ -44,7 +37,6 @@ namespace SisVetWeb.Controllers
             return View(especies.ToPagedList(pageNumber, pageSize));
         }
 
-        // GET: /Especie/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -59,15 +51,11 @@ namespace SisVetWeb.Controllers
             return View(especie);
         }
 
-        // GET: /Especie/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: /Especie/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include="ID,descricao")] Especie especie)
@@ -82,7 +70,6 @@ namespace SisVetWeb.Controllers
             return View(especie);
         }
 
-        // GET: /Especie/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -97,9 +84,7 @@ namespace SisVetWeb.Controllers
             return View(especie);
         }
 
-        // POST: /Especie/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include="ID,descricao")] Especie especie)
@@ -113,7 +98,6 @@ namespace SisVetWeb.Controllers
             return View(especie);
         }
 
-        // GET: /Especie/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -128,7 +112,6 @@ namespace SisVetWeb.Controllers
             return View(especie);
         }
 
-        // POST: /Especie/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
