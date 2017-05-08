@@ -6,6 +6,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using Domain.Entidades.Cadastro;
 using Domain.Entidades.Cadastro.Contato;
+using Domain.Entidades.Cadastro.Financeiro;
 using Domain.Entidades.Cadastro.Localidade;
 using Domain.Entidades.Operacao;
 using Domain.Entidades.Operacao.Financeiro;
@@ -36,6 +37,8 @@ namespace Repository.Context {
         public DbSet<Vacina> Vacinas { get; set; }
         public DbSet<Vacinacao> Vacinacoes { get; set; }
         public DbSet<FinanceiroCentroDeCustoGrupo> FinaceiroCentroDeCustoGrupos { get; set; }
+        public DbSet<FinanceiroCentroDeCusto> FinanceiroCentroDeCusto { get; set; }
+        public DbSet<FinanceiroContasReceber> FinanceiroContasReceber { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder) {
@@ -44,6 +47,7 @@ namespace Repository.Context {
             //modelBuilder.Conventions.Remove<ManyToManyCascadeDeleteConvention>();
             modelBuilder.Properties<string>().Configure(x => x.HasColumnType("varchar"));
             modelBuilder.Properties<string>().Configure(x => x.HasMaxLength(100));
+            modelBuilder.Properties<decimal>().Configure(c => c.HasPrecision(12, 4));
         }
 
 

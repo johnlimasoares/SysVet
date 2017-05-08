@@ -1,4 +1,4 @@
-﻿using Domain.Entidades.Operacao.Financeiro;
+﻿using Domain.Entidades.Cadastro.Financeiro;
 using Repository.Repositories.Base;
 
 namespace Repository.Repositories {

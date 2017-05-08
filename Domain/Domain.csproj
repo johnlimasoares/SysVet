@@ -48,6 +48,7 @@
     <Compile Include="EntidadesLeitura\WidGet\VacinacaoVencidasWidGet.cs" />
     <Compile Include="EntidadesLeitura\WidGet\VacinacaoAVencerWidGet.cs" />
     <Compile Include="Entidades\Cadastro\Animal.cs" />
+    <Compile Include="Entidades\Cadastro\Financeiro\FinanceiroCentroDeCusto.cs" />
     <Compile Include="Entidades\Operacao\Atendimento.cs" />
     <Compile Include="Entidades\Cadastro\Localidade\Cidade.cs" />
     <Compile Include="Entidades\Cadastro\Cliente.cs" />
@@ -64,10 +65,12 @@
     <Compile Include="Entidades\Cadastro\Contato\TipoTelefone.cs" />
     <Compile Include="Entidades\Cadastro\Localidade\UnidadeFederativa.cs" />
     <Compile Include="Entidades\Cadastro\Vacina.cs" />
-    <Compile Include="Entidades\Operacao\Financeiro\FinanceiroCentroDeCustoGrupo.cs" />
+    <Compile Include="Entidades\Cadastro\Financeiro\FinanceiroCentroDeCustoGrupo.cs" />
+    <Compile Include="Entidades\Operacao\Financeiro\FinanceiroContasReceber.cs" />
     <Compile Include="Entidades\Operacao\Vacinacao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\EnumSituacao.cs" />
+    <Compile Include="Utils\SituacaoParcelaContasReceberEnum.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

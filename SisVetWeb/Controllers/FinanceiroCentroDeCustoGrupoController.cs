@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using Domain.Entidades.Operacao.Financeiro;
+using Domain.Entidades.Cadastro.Financeiro;
 using PagedList;
 using Repository.Repositories;
 
