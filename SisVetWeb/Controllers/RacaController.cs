@@ -71,17 +71,15 @@ namespace SisVetWeb.Controllers {
 
         public ActionResult Create() {
 
-            ViewBag.EspecieId = new SelectList(repoEspecie.GetAll(), "ID", "Descricao");
+            ViewBag.EspecieId = new SelectList(repoEspecie.GetAll(), "Id", "Descricao");
             return View();
         }
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Descricao")] Raca raca, int especieId) {
+        public ActionResult Create([Bind(Include = "Id,Descricao")] Raca raca, int especieId) {
             var especieID = new Especie() { Id = especieId };
-
-
-
+            
             if (ModelState.IsValid) {
 
                 using (var ctx = new BancoContexto()) {
@@ -119,7 +117,7 @@ namespace SisVetWeb.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Descricao")] Raca raca, int especieId) {
+        public ActionResult Edit([Bind(Include = "Id,Descricao")] Raca raca, int especieId) {
             if (ModelState.IsValid) {
                 using (var ctx = new BancoContexto()) {
                     raca.EspecieId = especieId;

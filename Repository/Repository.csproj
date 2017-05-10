@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Repositories\FinanceiroCentroDeCustoGrupoRepository.cs" />
+    <Compile Include="Repositories\FinanceiroCentroDeCustoRepository.cs" />
     <Compile Include="Repositories\VacinacaoRepository.cs" />
     <Compile Include="Repositories\VacinaRepository.cs" />
     <Compile Include="Repositories\AtendimentoRepository.cs" />

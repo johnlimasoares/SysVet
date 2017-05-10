@@ -1,35 +1,33 @@
-﻿@model Domain.Entidades.Cadastro.Raca
+﻿@model Domain.Entidades.Cadastro.Financeiro.FinanceiroCentroDeCusto
 
 @{
     ViewBag.Title = "Editar";
 }
 
+<h2>Edição</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h3>Raca</h3>
+        <h3>Centro de Custo</h3>
         <hr />
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
             @Html.Label("Descrição", new { @class = "control-label col-md-2" })
-            <div class="col-md-10" style="width: 500px">
+            <div class="col-md-10"  style= "width :500px">
                 @Html.TextBoxFor(model => model.Descricao, new { @class = "form-control", id = "input" })
                 @Html.ValidationMessageFor(model => model.Descricao)
             </div>
         </div>
-        @*<div class="form-group">
-            @Html.DropDownList("EspecieId",String.Empty)
-            @Html.ValidationMessageFor(model => model.EspecieId)
-        </div>*@
+
         <div class="form-group">
-            @Html.Label("Espécie", new { @class = "control-label col-md-2" })
+            @Html.Label("Grupo", new { @class = "control-label col-md-2" })
             <div class="col-md-10" style="width: 500px">
-                @Html.DropDownList("EspecieId", (IEnumerable<SelectListItem>)ViewBag.Especies, new { @class = "form-control" })
+                @Html.DropDownList("FinanceiroCentroDeCustoGrupoId", (IEnumerable<SelectListItem>)ViewBag.FinanceiroCentroDeCustoGrupos, new { @class = "form-control" })
             </div>
         </div>
 
@@ -48,3 +46,5 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+

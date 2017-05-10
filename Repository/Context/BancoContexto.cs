@@ -37,7 +37,7 @@ namespace Repository.Context {
         public DbSet<Vacina> Vacinas { get; set; }
         public DbSet<Vacinacao> Vacinacoes { get; set; }
         public DbSet<FinanceiroCentroDeCustoGrupo> FinaceiroCentroDeCustoGrupos { get; set; }
-        public DbSet<FinanceiroCentroDeCusto> FinanceiroCentroDeCusto { get; set; }
+        public DbSet<FinanceiroCentroDeCusto> FinanceiroCentroDeCustos { get; set; }
         public DbSet<FinanceiroContasReceber> FinanceiroContasReceber { get; set; }
 
 

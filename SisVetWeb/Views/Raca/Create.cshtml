@@ -2,34 +2,31 @@
 
 <h3>Cadastro de Raça</h3>
 
-
-@using (Html.BeginForm()) 
-{
+@using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true)
 
-        
-            <div class="form-group">
-                @Html.Label("Descrição", new { @class = "control-label col-md-2" })
-                <div class="col-md-10" style="width: 500px">
-                    @Html.TextBoxFor(model => model.Descricao, new { @class = "form-control", id = "input" })
-                    @Html.ValidationMessageFor(model => model.Descricao)
-                </div>
+        <div class="form-group">
+            @Html.Label("Descrição", new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="width: 500px">
+                @Html.TextBoxFor(model => model.Descricao, new { @class = "form-control", id = "input" })
+                @Html.ValidationMessageFor(model => model.Descricao)
             </div>
-            <div class="form-group">
-                @Html.Label("Espécie",new{@class="control-label col-md-2"})
-                <div class="col-md-10" style="width: 500px">
-                    @Html.DropDownList("EspecieID", (IEnumerable<SelectListItem>)ViewBag.EspecieID, "Selecione...", new { @class = "form-control" })
-                </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Espécie", new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="width: 500px">
+                @Html.DropDownList("EspecieId", (IEnumerable<SelectListItem>)ViewBag.EspecieId, "Selecione...", new { @class = "form-control" })
             </div>
-        
+        </div>
+
         @*<div class="form-group">
-            <label>Espécie</label>
-            @Html.DropDownList("EspecieID", ViewBag.Roles as SelectList, "Selecione...", new { onchange = "this.form.submit (); " })
-        </div>*@
+                <label>Espécie</label>
+                @Html.DropDownList("EspecieID", ViewBag.Roles as SelectList, "Selecione...", new { onchange = "this.form.submit (); " })
+            </div>*@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Salvar" class="btn btn-success" />
