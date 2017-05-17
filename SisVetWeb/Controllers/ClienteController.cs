@@ -107,25 +107,24 @@ namespace SisVetWeb.Controllers {
         }
 
 
-        public ActionResult Delete(int? id) {
-            if (id == null) {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Cliente cliente = repoCliente.Find(id);
-            if (cliente == null) {
-                return HttpNotFound();
-            }
-            return View(cliente);
-        }
+        //public ActionResult Delete(int? id) {
+        //    if (id == null) {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Cliente cliente = repoCliente.Find(id);
+        //    if (cliente == null) {
+        //        return HttpNotFound();
+        //    }
+        //    return View(cliente);
+        //}
 
 
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id) {
-            Cliente cliente = repoCliente.Find(id);
-            repoCliente.Excluir(c => c == cliente);
-            repoCliente.SalvarTodos();
-            return RedirectToAction("Index");
+        [HttpPost]
+        public JsonResult Delete(int id) {
+            string mensagem = string.Empty;
+            var cliente = repoCliente.Excluir(id);
+            mensagem = string.Format("{0} excluido com sucesso", cliente.Nome);
+            return Json(mensagem, JsonRequestBehavior.AllowGet);
         }
 
 

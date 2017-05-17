@@ -34,9 +34,8 @@ namespace SisVetWeb.Controllers {
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,descricao")] FinanceiroCentroDeCustoGrupo financeiroCentroDeCustoGrupo) {
-            if (ModelState.IsValid) {
-                repoCentroCusto.Adicionar(financeiroCentroDeCustoGrupo);
-                repoCentroCusto.SalvarTodos();
+            if (ModelState.IsValid) {               
+                repoCentroCusto.Salvar(financeiroCentroDeCustoGrupo);
                 return RedirectToAction("Index");
             }
 
@@ -58,9 +57,8 @@ namespace SisVetWeb.Controllers {
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,descricao")] FinanceiroCentroDeCustoGrupo financeiroCentroDeCustoGrupo) {
-            if (ModelState.IsValid) {
-                repoCentroCusto.Atualizar(financeiroCentroDeCustoGrupo);
-                repoCentroCusto.SalvarTodos();
+            if (ModelState.IsValid) {               
+                repoCentroCusto.Editar(financeiroCentroDeCustoGrupo);
                 return RedirectToAction("Index");
             }
             return View(financeiroCentroDeCustoGrupo);

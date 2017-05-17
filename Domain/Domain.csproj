@@ -49,6 +49,7 @@
     <Compile Include="EntidadesLeitura\WidGet\VacinacaoAVencerWidGet.cs" />
     <Compile Include="Entidades\Cadastro\Animal.cs" />
     <Compile Include="Entidades\Cadastro\Financeiro\FinanceiroCentroDeCusto.cs" />
+    <Compile Include="Entidades\Cadastro\Financeiro\FinanceiroPlanoDePagamento.cs" />
     <Compile Include="Entidades\Operacao\Atendimento.cs" />
     <Compile Include="Entidades\Cadastro\Localidade\Cidade.cs" />
     <Compile Include="Entidades\Cadastro\Cliente.cs" />

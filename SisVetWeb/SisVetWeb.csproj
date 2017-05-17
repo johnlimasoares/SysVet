@@ -311,6 +311,7 @@
     <Content Include="Views\FinanceiroCentroDeCusto\Index.cshtml" />
     <Content Include="Views\FinanceiroCentroDeCusto\Create.cshtml" />
     <Content Include="Views\FinanceiroCentroDeCusto\Edit.cshtml" />
+    <Content Include="Views\Cliente\ConfirmacaoExclusao.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

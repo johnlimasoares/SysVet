@@ -9,6 +9,7 @@ namespace SisVetWeb.Controllers {
     public class FinanceiroCentroDeCustoController : Controller {
         private FinanceiroCentroDeCustoRepository repoCentroCusto = new FinanceiroCentroDeCustoRepository();
         private FinanceiroCentroDeCustoGrupoRepository repoCentroCustoGrupo = new FinanceiroCentroDeCustoGrupoRepository();
+        
         public ActionResult Index(string pesquisa, int pagina = 1) {
 
             int totalRegistros = 20;
@@ -67,7 +68,6 @@ namespace SisVetWeb.Controllers {
 
             return View(financeiroCentroDeCusto);
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]

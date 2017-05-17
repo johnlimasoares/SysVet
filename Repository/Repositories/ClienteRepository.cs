@@ -79,5 +79,16 @@ namespace Repository {
 
         }
 
+
+        public Cliente Excluir(int id) {
+            var cliente = this.Find(id);
+            if (cliente != null) {
+                this.Excluir(c => c == cliente);
+                //this.SalvarTodos();
+                return cliente;
+            }
+
+            throw new Exception("Cliente inexistente no banco de dados");
+        }
     }
 }
