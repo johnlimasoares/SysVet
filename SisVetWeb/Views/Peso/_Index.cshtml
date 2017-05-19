@@ -14,8 +14,8 @@
     </div>
 
     <div>@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Adicionar Peso", "Create", "Peso", routeValues: new { AnimalID = ViewBag.AnimalID }, htmlAttributes: new { data_modal = "", @class = "btn btn-primary pull-right" })</div>
-    <table class="table">
-        <tr>
+    <table class="table table-condensed table-hover">
+        <tr class="active">
             <th>
                 @Html.DisplayName("Data")
             </th>

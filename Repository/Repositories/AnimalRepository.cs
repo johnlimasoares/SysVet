@@ -87,5 +87,16 @@ namespace Repository.Repositories {
             }
 
         }
+
+        public Animal Excluir(int id) {
+            var animal = this.Find(id);
+            if (animal != null) {
+                this.Excluir(c => c == animal);
+                //this.SalvarTodos();
+                return animal;
+            }
+
+            throw new Exception("Animal inexistente no banco de dados");
+        }
     }
 }

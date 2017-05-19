@@ -12,11 +12,11 @@
     <div class="panel-heading">
         <strong>Lista de Endereços</strong>
     </div>
-    
+
     <div>@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Adicionar Endereço", "Create", "Endereco", routeValues: new { ClienteID = ViewBag.ClienteID }, htmlAttributes: new { data_modal = "", @class = "btn btn-primary pull-right" })</div>
 
-    <table class="table table-hover">
-        <tr>
+    <table class="table table-condensed table-hover">
+        <tr class="active">
             <th>
                 Cep
             </th>
@@ -35,12 +35,12 @@
             <th></th>
         </tr>
 
-        @foreach (var item in Model){
+        @foreach (var item in Model) {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Cep)
                 </td>
-             
+
                 <td>
                     @Html.DisplayFor(modelItem => item.Logradouro)
                 </td>
@@ -62,7 +62,7 @@
 
                         </div>
                     </div>
-               </td>
+                </td>
             </tr>
         }
 

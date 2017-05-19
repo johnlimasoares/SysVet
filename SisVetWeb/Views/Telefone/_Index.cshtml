@@ -17,19 +17,18 @@
     </div>
 
     <div>@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Adicionar Telefone", "Create", "Telefone", routeValues: new { ClienteID = ViewBag.ClienteID }, htmlAttributes: new { data_modal = "", @class = "btn btn-primary pull-right", id = "btnInserir" })</div>
-    <table class="table table-hover table-condensed">
-        <tr>
+    <table class="table table-condensed table-hover">
+        <tr class="active">
             <th>
-               Número
+                Número
             </th>
             <th>
-               Tipo 
+                Tipo
             </th>
             <th></th>
         </tr>
 
-        @foreach (var item in Model)
-        {
+        @foreach (var item in Model) {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Numero)
@@ -49,3 +48,4 @@
 
     </table>
 </div>
+

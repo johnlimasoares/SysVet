@@ -142,28 +142,13 @@ namespace SisVetWeb.Controllers {
             return View(animal);
         }
 
-        public ActionResult Delete(int? id) {
-            if (id == null) {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            //Animal animal = db.Animais.Find(id);
-            Animal animal = repoAnimal.Find(id);
-            if (animal == null) {
-                return HttpNotFound();
-            }
-            return View(animal);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id) {
-            //Animal animal = db.Animais.Find(id);
-            Animal animal = repoAnimal.Find(id);
-            //db.Animais.Remove(animal);
-            repoAnimal.Excluir(c => c == animal);
-            //db.SaveChanges();
-            repoAnimal.SalvarTodos();
-            return RedirectToAction("Index");
+        [HttpPost]
+        public JsonResult Delete(int id) {
+            string mensagem = string.Empty;
+            var animal = repoAnimal.Excluir(id);
+            mensagem = string.Format("{0} excluido com sucesso", animal.Nome);
+            TempData["success"] = "Mensagem de sucesso!!";
+            return Json(mensagem, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing) {

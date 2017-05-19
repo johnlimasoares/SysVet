@@ -63,6 +63,8 @@ namespace Repository.Context {
             return base.SaveChanges();
         }
 
+        public System.Data.Entity.DbSet<Domain.Entidades.Cadastro.Financeiro.FinanceiroPlanoDePagamento> FinanceiroPlanosDePagamentos { get; set; }
+
     }
 }
 

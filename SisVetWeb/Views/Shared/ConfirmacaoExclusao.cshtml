@@ -1,4 +1,4 @@
-﻿<div id="divExcluir"></div>
+﻿<div id="divExcluir" ></div>
 
 <!-- Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel">
@@ -12,7 +12,7 @@
 
             <div class="modal-body">
                 <input type="hidden" />
-                <p>Deseja excluir o registro<em><strong>"<span></span>"</strong></em>&nbsp;?</p>
+                <p>Todos os registros associados a este será excluido.<br>Deseja excluir<em><strong>"<span></span>"</strong></em>&nbsp;?</p>
             </div>
 
             <div class="modal-footer">
@@ -26,39 +26,40 @@
 <script>
     $(function () {
 
-        $(".btn-danger").click(function (e) {
+        $(".btn.btn-default.btn-danger").click(function (e) {
             e.preventDefault();
             var id = this.id;
             var nome = this.name;
+            var url = location.pathname.replace("Index","Delete/");
             $("#deleteModal .modal-body input[type=hidden]").val(id);
             $("#deleteModal .modal-body span").text(nome);
             $("#deleteModal").modal('show');
-
+           
             $("#deleteModal .modal-footer button").click(function (e) {
                 e.preventDefault();
-                var url = "/Cliente/Delete/";
+
                 var rowId = "#row-" + id;
 
                 $.ajax({
-                        url: url,
-                        type: 'post',
-                        dataType: 'json',
-                        data: { id: id },
-                        beforeSend: function () {
-                            var loading = "<span><em>Excluindo</em>&nbsp;<i>glyphicon glyphicon-refresh icon-refresh-animate</i></span>";
-                            $('#deleteModal .modal-header h4').after(loading);
-                        },
-                        success: function () {
-                            $("#deleteModal").modal('hide');
-                            $(rowId).animate({ opacity: 0.0 }, 400, function() {
-                                $(rowId).remove();
-                            });
-                        },
-                        complete: function (data) {
-                            $("#divExcluir").empty();
-                            $("#divExcluir").addClass("alert alert-success");
-                            $("#divExcluir").data(data.responseText);
-                        }
+                    url: url,
+                    type: 'post',
+                    dataType: 'json',
+                    data: { id: id },
+                    beforeSend: function () {
+                        //var loading = "<span><em>Excluindo</em>&nbsp;<i>glyphicon glyphicon-refresh icon-refresh-animate</i></span>";
+                        //$('#deleteModal .modal-header h4').after(loading);
+                    },
+                    success: function () {
+                        $("#deleteModal").modal('hide');
+                        $(rowId).animate({ opacity: 0.0 }, 400, function() {
+                            $(rowId).remove();
+                        });
+                    },
+                    complete: function (data) {
+                        $("#divExcluir").empty();
+                        $("#divExcluir").addClass("alert alert-success");
+                        $("#divExcluir").data(data.responseText);
+                    }
                 });
             });
         });
