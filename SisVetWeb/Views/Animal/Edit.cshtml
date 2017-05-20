@@ -27,6 +27,7 @@
     ViewBag.Title = "Edit";
 }
 
+<link href="~/Content/combobox.css" rel="stylesheet" />
 <h3>Edição</h3>
 
 @using (Html.BeginForm()) {
@@ -67,14 +68,19 @@
                 @*<input class="form-control" data-val="true" data-val-date="Formato incorreto no campo Data de Nascimento." data-val-required="O campo Data de Nascimento é obrigatório." id="DataNascimento" name="DataNascimento" type="date">*@
                 @Html.ValidationMessageFor(model => model.DataNascimento)
             </div>
-            <div class="col-md-3 col-sm-pull-2" style="width:500px;">
-                @Html.Label(" D", new { @id = "idade" })
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Idade", new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="width:500px;">
+                @Html.TextBox("idade", "", new { @class = "form-control", @id = "idade", disabled = "disabled" })
             </div>
         </div>
+
         <div class="form-group">
             @Html.Label("Raça", new { @class = "control-label col-md-2" })
             <div class="col-md-10" style="width:500px;">
-                @Html.DropDownList("RacaID", (IEnumerable<SelectListItem>)ViewBag.Racas, new { @class = "form-control", required = true })
+                @Html.DropDownList("RacaID", (IEnumerable<SelectListItem>)ViewBag.Racas, new { @class = "form-control combobox", required = true })
                 @Html.ValidationMessageFor(model => model.RacaId)
             </div>
         </div>
@@ -84,7 +90,7 @@
             @Html.Label("Proprietário", new { @class = "control-label col-md-2" })
 
             <div class="col-md-5 col-lg-pull-0" style="width:500px;">
-                @Html.DropDownList("ClienteID", (IEnumerable<SelectListItem>)ViewBag.Clientes, new { @class = "form-control", required = true })
+                @Html.DropDownList("ClienteID", (IEnumerable<SelectListItem>)ViewBag.Clientes, new { @class = "form-control combobox", required = true })
                 @Html.ValidationMessageFor(model => model.ClienteId)
             </div>
             <div class="col-sm-pull-1">
@@ -146,6 +152,7 @@
 
 
 @section Scripts {
+    <script src="~/Scripts/jquery.combobox.js"></script>
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/modalform")
     @Scripts.Render("~/bundles/utilsMath")

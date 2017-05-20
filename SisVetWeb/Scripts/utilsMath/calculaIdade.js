@@ -11,7 +11,7 @@ function calculaIdade() {
         return;
     var dataNascimento = new Date(document.getElementById('DataNascimento').value.replace('-', ',').replace('-', ','));    
     var diferencaDiaMesAno = calculaDiferenca(dataNascimento,dataAtual);
-    document.getElementById('idade').innerHTML = diferencaDiaMesAno[0] +" Ano(s) "+ diferencaDiaMesAno[1] +" Mês(es) "+diferencaDiaMesAno[2]+" Dia(s)";
+    document.getElementById('idade').value = diferencaDiaMesAno[0] +" Ano(s) "+ diferencaDiaMesAno[1] +" Mês(es) "+diferencaDiaMesAno[2]+" Dia(s)";
 }
 
 function calculaDiferenca(dataNascimento,dataAtual) {

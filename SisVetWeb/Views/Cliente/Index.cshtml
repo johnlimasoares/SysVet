@@ -9,9 +9,10 @@
 
 <h3>Lista de Clientes</h3>
 
+@Html.Partial("ConfirmacaoExclusao")
+
 <p>
-
-
+    
     @using (Html.BeginForm("Index", "Cliente", FormMethod.Get)) {
         <div class="row">
             <div class="pull-right col-md-1">

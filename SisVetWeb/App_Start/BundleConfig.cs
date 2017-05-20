@@ -1,18 +1,18 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace SisVetWeb
-{
-    public class BundleConfig
-    {
+namespace SisVetWeb {
+    public class BundleConfig {
         // For more information on bundling, visit http://go.microsoft.com/fwlink/?LinkId=301862
-        public static void RegisterBundles(BundleCollection bundles)
-        {
+        public static void RegisterBundles(BundleCollection bundles) {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/jquery.globalize/globalize.js",
                         "~/Scripts/jquery.globalize/cultures/globalize.culture.pt-BR.js",
                         "~/Scripts/jquery.maskedinput*"));
+
+            bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
+                        "~/Scripts/jquery-ui-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*",
@@ -28,6 +28,7 @@ namespace SisVetWeb
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
+                      "~/Content/themes/base/all.css",
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
@@ -36,7 +37,7 @@ namespace SisVetWeb
 
             bundles.Add(new ScriptBundle("~/bundles/modalexclusao").Include(
                "~/Scripts/modalexclusao.js"));
-            
+
             bundles.Add(new ScriptBundle("~/bundles/mascaras").Include(
                 "~/Scripts/mascaras/mascaras.js"));
 

@@ -1,9 +1,13 @@
-﻿@using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder
+﻿@using System.Collections
+@using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder
+@using System.Web.UI.WebControls
 @model Domain.Entidades.Cadastro.Animal
 
 @{
     ViewBag.Title = "Create";
 }
+
+<link href="~/Content/combobox.css" rel="stylesheet" />
 
 <h2>Cadastro Animal</h2>
 
@@ -31,6 +35,7 @@
                 @Html.ValidationMessageFor(model => model.Pelagem)
             </div>
         </div>
+
         <div class="form-group">
             @Html.LabelFor(model => model.DataNascimento, new { @class = "control-label col-md-2" })
 
@@ -39,17 +44,19 @@
                 <input class="form-control" data-val="true" data-val-date="Formato incorreto no campo Data de Nascimento." data-val-required="O campo Data de Nascimento é obrigatório." id="DataNascimento" name="DataNascimento" type="date" value="13/08/2015" onblur="calculaIdade()">
                 @Html.ValidationMessageFor(model => model.DataNascimento)
             </div>
+        </div>
 
-            <div class="col-md-3 col-sm-pull-2">
-                @Html.Label(" ", new { @id = "idade" })
+        <div class="form-group">
+            @Html.Label("Idade", new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="width:500px;">
+                @Html.TextBox("idade", "", new { @class = "form-control", @id = "idade", disabled = "disabled" })
             </div>
-
         </div>
 
         <div class="form-group">
             @Html.Label("Raça", new { @class = "control-label col-md-2" })
-            <div class="col-md-10" style="width:500px;">
-                @Html.DropDownList("RacaID", (IEnumerable<SelectListItem>)ViewBag.RacaID, "Selecione...", new { @class = "form-control" })
+            <div class="col-md-10">
+                @Html.DropDownList("RacaID", (IEnumerable<SelectListItem>)ViewBag.RacaID, "Selecione...", new { @class = "form-control combobox" })
                 @Html.ValidationMessageFor(model => model.Raca)
             </div>
 
@@ -57,9 +64,10 @@
 
         <div class="form-group">
             @Html.Label("Proprietário", new { @class = "control-label col-md-2" })
-            <div class="col-md-10" style="width:500px;">
-                @Html.DropDownList("ClienteID", (IEnumerable<SelectListItem>)ViewBag.ClienteID, "Selecione...", new { @class = "form-control" })
+            <div class="col-md-10">
+                @Html.DropDownList("ClienteID", (IEnumerable<SelectListItem>)ViewBag.ClienteID, "Selecione...", new { @class = "form-control combobox" })
                 @Html.ValidationMessageFor(model => model.ClienteId)
+
             </div>
 
         </div>
@@ -71,7 +79,8 @@
                 @Html.DropDownListFor(model => model.Sexo,
                 new List<SelectListItem>{
                     new SelectListItem{Text = "Macho",Value = "M",Selected = true},
-                    new SelectListItem{Text = "Fêmea",Value="F"}
+                    new SelectListItem{Text = "Fêmea",Value="F"},
+
                 }, new { @class = "form-control" })
             </div>
         </div>
@@ -100,8 +109,6 @@
                 @Html.ValidationMessageFor(model => model.Observacao)
             </div>
         </div>
-
-
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Confirmar" class="btn btn-success" />
@@ -117,6 +124,7 @@
 </div>
 
 @section Scripts {
+    <script src="~/Scripts/jquery.combobox.js"></script>
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/utilsMath")
     <script type="text/javascript">
