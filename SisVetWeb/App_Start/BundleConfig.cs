@@ -33,6 +33,9 @@ namespace SisVetWeb
 
             bundles.Add(new ScriptBundle("~/bundles/modalform").Include(
                 "~/Scripts/modalform.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/modalexclusao").Include(
+               "~/Scripts/modalexclusao.js"));
             
             bundles.Add(new ScriptBundle("~/bundles/mascaras").Include(
                 "~/Scripts/mascaras/mascaras.js"));
