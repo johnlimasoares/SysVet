@@ -7,6 +7,7 @@ using Repository.Repositories;
 
 namespace SisVetWeb.Controllers {
     public class FinanceiroCentroDeCustoGrupoController : Controller {
+
         private FinanceiroCentroDeCustoGrupoRepository repoCentroCusto = new FinanceiroCentroDeCustoGrupoRepository();
         public ActionResult Index(string pesquisa, int pagina = 1) {
 
@@ -34,7 +35,7 @@ namespace SisVetWeb.Controllers {
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,descricao")] FinanceiroCentroDeCustoGrupo financeiroCentroDeCustoGrupo) {
-            if (ModelState.IsValid) {               
+            if (ModelState.IsValid) {
                 repoCentroCusto.Salvar(financeiroCentroDeCustoGrupo);
                 return RedirectToAction("Index");
             }
@@ -57,7 +58,7 @@ namespace SisVetWeb.Controllers {
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,descricao")] FinanceiroCentroDeCustoGrupo financeiroCentroDeCustoGrupo) {
-            if (ModelState.IsValid) {               
+            if (ModelState.IsValid) {
                 repoCentroCusto.Editar(financeiroCentroDeCustoGrupo);
                 return RedirectToAction("Index");
             }

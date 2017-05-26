@@ -44,7 +44,9 @@ namespace Domain.Entidades.Cadastro
         public string Sexo { get; set; }
 
         public virtual ICollection<Endereco> Enderecos { get; set; }
+
         public virtual ICollection<Telefone> Telefones { get; set; }
+
         public virtual ICollection<Animal> Animais { get; set; }
     }
 }

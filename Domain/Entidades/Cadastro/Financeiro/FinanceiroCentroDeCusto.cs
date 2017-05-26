@@ -15,5 +15,7 @@ namespace Domain.Entidades.Cadastro.Financeiro {
         public virtual FinanceiroCentroDeCustoGrupo FinanceiroCentroDeCustoGrupo { get; set; }
 
         public virtual ICollection<FinanceiroContasReceber> FinanceiroContasReceber { get; set; }
+
+        public virtual ICollection<FinanceiroMovimentacoes> FinanceiroMovimentacoes { get; set; }
     }
 }

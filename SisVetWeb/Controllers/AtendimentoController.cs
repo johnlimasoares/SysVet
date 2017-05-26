@@ -7,7 +7,7 @@ using System.Web.Mvc;
 using Domain.Entidades;
 using Domain.Entidades.Cadastro;
 using Domain.Entidades.Operacao;
-using Domain.Utils;
+using Domain.Enum;
 using PagedList;
 using Repository;
 using Repository.Context;
@@ -98,7 +98,7 @@ namespace SisVetWeb.Controllers
             if(ModelState.IsValid)
             {
                 atendimento.DataSaida = DateTime.Now.Date;
-                atendimento.Situacao = EnumSituacao.Fechado.ToString();
+                atendimento.Situacao = SituacaoAtendimento.Fechado.ToString();
                 repoAtendimento.Atualizar(atendimento);
                 repoAtendimento.SalvarTodos();
                 return RedirectToAction("Index");
@@ -129,7 +129,7 @@ namespace SisVetWeb.Controllers
                     atendimento.HoraAtendimento = new TimeSpan(DateTime.Now.Hour,DateTime.Now.Minute,DateTime.Now.Second);
                     atendimento.DataSaida = null;
                     atendimento.ValorAtendimento = 0.00;
-                    atendimento.Situacao = EnumSituacao.Aberto.ToString();
+                    atendimento.Situacao = SituacaoAtendimento.Aberto.ToString();
                     ctx.Atendimentos.Add(atendimento);
                     ctx.SaveChanges();
                 }

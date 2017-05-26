@@ -39,7 +39,8 @@ namespace Repository.Context {
         public DbSet<FinanceiroCentroDeCustoGrupo> FinaceiroCentroDeCustoGrupos { get; set; }
         public DbSet<FinanceiroCentroDeCusto> FinanceiroCentroDeCustos { get; set; }
         public DbSet<FinanceiroContasReceber> FinanceiroContasReceber { get; set; }
-
+        public DbSet<FinanceiroMovimentacoes> FinanceiroMovimentacoes { get; set; }
+        public DbSet<FinanceiroPlanoDePagamento> FinanceiroPlanosDePagamentos { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder) {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
@@ -63,7 +64,7 @@ namespace Repository.Context {
             return base.SaveChanges();
         }
 
-        public System.Data.Entity.DbSet<Domain.Entidades.Cadastro.Financeiro.FinanceiroPlanoDePagamento> FinanceiroPlanosDePagamentos { get; set; }
+        
 
     }
 }

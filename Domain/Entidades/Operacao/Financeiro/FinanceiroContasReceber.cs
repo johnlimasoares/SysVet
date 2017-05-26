@@ -2,13 +2,13 @@
 using System.ComponentModel.DataAnnotations;
 using Domain.Entidades.Cadastro;
 using Domain.Entidades.Cadastro.Financeiro;
-using Domain.Utils;
+using Domain.Enum;
 
 namespace Domain.Entidades.Operacao.Financeiro {
     public class FinanceiroContasReceber {
-        
+
         [Key]
-        public int Id { get; set; }
+        public Int64 Id { get; set; }
         public String NumeroDocumento { get; set; }
         public int Parcela { get; set; }
         public int TotalParcelas { get; set; }
@@ -24,8 +24,10 @@ namespace Domain.Entidades.Operacao.Financeiro {
         public Cliente Cliente { get; set; }
         public int FinanceiroCentroDeCustoId { get; set; }
         public FinanceiroCentroDeCusto FinanceiroCentroDeCusto { get; set; }
+        public int FinanceiroPlanoDePagamentoId { get; set; }
+        public FinanceiroPlanoDePagamento FinanceiroPlanoDePagamento { get; set; }
         public bool? IsGeradaPorAtendimento { get; set; }
-        public SituacaoParcelaContasReceberEnum SituacaoParcelaContasReceberEnum { get; set; }
+        public SituacaoParcelaContasReceber SituacaoParcelaContasReceberEnum { get; set; }
         public DateTime DataEmissao { get; set; }
         public TimeSpan HoraEmissao { get; set; }
         public DateTime DataVencimento { get; set; }
