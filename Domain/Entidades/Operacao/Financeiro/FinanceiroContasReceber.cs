@@ -7,6 +7,10 @@ using Domain.Enum;
 namespace Domain.Entidades.Operacao.Financeiro {
     public class FinanceiroContasReceber {
 
+        public FinanceiroContasReceber() {
+            DataEmissao = DateTime.Now;
+        }
+
         [Key]
         public Int64 Id { get; set; }
         public String NumeroDocumento { get; set; }

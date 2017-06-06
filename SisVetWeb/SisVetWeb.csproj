@@ -138,6 +138,7 @@
     <Compile Include="Controllers\EspecieController.cs" />
     <Compile Include="Controllers\FinanceiroCentroDeCustoController.cs" />
     <Compile Include="Controllers\FinanceiroCentroDeCustoGrupoController.cs" />
+    <Compile Include="Controllers\FinanceiroContasReceberController.cs" />
     <Compile Include="Controllers\FinanceiroPlanoDePagamentoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MedicamentoController.cs" />
@@ -364,6 +365,7 @@
     <Content Include="Views\FinanceiroPlanoDePagamento\Details.cshtml" />
     <Content Include="Views\FinanceiroPlanoDePagamento\Edit.cshtml" />
     <Content Include="Views\FinanceiroPlanoDePagamento\Index.cshtml" />
+    <Content Include="Views\FinanceiroContasReceber\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
