@@ -8,41 +8,41 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true)
+    <hr />
+    @Html.ValidationSummary(true)
 
-        <div class="form-group">
-            @Html.Label("Descrição", new { @class = "control-label col-md-2" })
-            <div class="col-md-10" style="width: 500px">
-                @Html.TextBoxFor(model => model.Descricao, new { @class = "form-control", id = "input" })
-                @Html.ValidationMessageFor(model => model.Descricao)
-            </div>
-        </div>
+    <div class="form-group">
+    @Html.Label("Descrição", new { @class = "control-label col-md-2" })
+    <div class="col-md-10" style="width: 500px">
+    @Html.TextBoxFor(model => model.Descricao, new { @class = "form-control", id = "input" })
+    @Html.ValidationMessageFor(model => model.Descricao)
+    </div>
+    </div>
 
-        <div class="form-group">
-            @Html.Label("Quantidade Parcelas", new { @class = "control-label col-md-2" })
-            <div class="col-md-10" style="width: 500px">
-                @Html.TextBoxFor(model => model.QuantidadeParcelas, new { @class = "form-control", id = "input" })
-                @Html.ValidationMessageFor(model => model.QuantidadeParcelas)
-            </div>
-        </div>
+    <div class="form-group">
+    @Html.Label("Quantidade Parcelas", new { @class = "control-label col-md-2" })
+    <div class="col-md-10" style="width: 500px">
+    @Html.TextBoxFor(model => model.QuantidadeParcelas, new { @class = "form-control", id = "input", @type = "number" })
+    @Html.ValidationMessageFor(model => model.QuantidadeParcelas)
+    </div>
+    </div>
 
-        <div class="form-group">
-            @Html.Label("Intervalo Dias", new { @class = "control-label col-md-2" })
-            <div class="col-md-10" style="width: 500px">
-                @Html.TextBoxFor(model => model.IntervaloDias, new { @class = "form-control", id = "input" })
-                @Html.ValidationMessageFor(model => model.IntervaloDias)
-            </div>
-        </div>
+    <div class="form-group">
+    @Html.Label("Intervalo Dias", new { @class = "control-label col-md-2" })
+    <div class="col-md-10" style="width: 500px">
+    @Html.TextBoxFor(model => model.IntervaloDias, new { @class = "form-control", id = "input", @type = "number" })
+    @Html.ValidationMessageFor(model => model.IntervaloDias)
+    </div>
+    </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Confirmar" class="btn btn-success" />
-            </div>
-        </div>
+    <div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+    <input type="submit" value="Confirmar" class="btn btn-success" />
+    </div>
+    </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Voltar", "Index")
+@Html.ActionLink("Voltar", "Index")
 </div>

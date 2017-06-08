@@ -42,11 +42,18 @@
 
             @*@Html.EditorFor(model => model.DataNascimento, new { @class = "form-control form-control" })*@
             <div class="col-md-5 col-lg-pull-0" style="width:500px;">
-                <input class="form-control" data-val="true" data-val-date="Formato incorreto no campo Data de Emissão." data-val-required="O campo Data de Emissão é obrigatório." id="DataEmissao" name="DataEmissao" type="date" onblur="calculaIdade()">
+                <input class="form-control" data-val="true" data-val-date="Formato incorreto no campo Data de Emissão." data-val-required="O campo Data de Emissão é obrigatório." id="DataEmissao" name="DataEmissao" type="date">
                 @Html.ValidationMessageFor(model => model.DataEmissao)
             </div>
         </div>
-        
+
+        <div class="form-group">
+            @Html.Label("Quantidade Parcelas", new { @class = "control-label col-md-2" })
+            <div class="col-md-10" style="width: 500px">
+                @Html.TextBox("quantidadeParcelas", "", new { @class = "form-control", @type = "number" })
+            </div>
+        </div>
+
         <div class="form-group">
             @Html.Label("Valor", new { @class = "control-label col-md-2" })
             <div class="col-md-10" style="width: 500px">
@@ -57,8 +64,8 @@
 
         <div class="form-group">
             @Html.Label("Obervações", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Observacoes, new { @class = "form-control" })
+            <div class="col-md-10" style="width: 500px">
+                @Html.TextAreaFor(model => model.Observacoes, new { @class = "form-control ", style = "width: 470px; max-width: 470px; height: 200px; max-height:200px " })
                 @Html.ValidationMessageFor(model => model.Observacoes)
             </div>
         </div>

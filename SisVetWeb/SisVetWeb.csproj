@@ -366,6 +366,7 @@
     <Content Include="Views\FinanceiroPlanoDePagamento\Edit.cshtml" />
     <Content Include="Views\FinanceiroPlanoDePagamento\Index.cshtml" />
     <Content Include="Views\FinanceiroContasReceber\Create.cshtml" />
+    <Content Include="Views\FinanceiroContasReceber\DemonstrativoParcelas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

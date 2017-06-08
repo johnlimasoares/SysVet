@@ -12,6 +12,7 @@ namespace SisVetWeb.Controllers {
         private ClienteRepository repoCliente = new ClienteRepository();
         private FinanceiroCentroDeCustoRepository centroCustoRepo = new FinanceiroCentroDeCustoRepository();
         private FinanceiroPlanoDePagamentoRepository planoPagamentoRepo = new FinanceiroPlanoDePagamentoRepository();
+
         public ActionResult Index() {
             return View();
         }
@@ -44,8 +45,9 @@ namespace SisVetWeb.Controllers {
         [HttpPost]
         public ActionResult Create(FormCollection collection) {
             try {
-
-                return RedirectToAction("Index");
+                var list = new List<FinanceiroContasReceber>();
+                list.Add(new FinanceiroContasReceber(){ClienteId = 2});
+                return View("DemonstrativoParcelas", list);
             } catch {
                 return View();
             }
