@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Domain.Entidades;
 using Domain.Entidades.Cadastro;
 using Domain.Entidades.Operacao;
+using Domain.Entidades.Operacao.Atendimento;
 using Domain.Enum;
 using PagedList;
 using Repository;

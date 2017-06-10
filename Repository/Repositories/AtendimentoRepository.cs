@@ -1,7 +1,7 @@
-﻿using Domain.Entidades;
-using Domain.Entidades.Operacao;
+﻿using Domain.Entidades.Operacao.Atendimento;
 using Repository.Repositories.Base;
-namespace Repository
+
+namespace Repository.Repositories
 {
     public class AtendimentoRepository : Repository<Atendimento>
     {

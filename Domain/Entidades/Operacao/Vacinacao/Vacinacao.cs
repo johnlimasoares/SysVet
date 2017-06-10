@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Domain.Entidades.Cadastro;
 
-namespace Domain.Entidades.Operacao {
+namespace Domain.Entidades.Operacao.Vacinacao {
     public class Vacinacao {
         [Key]
         public int Id { get; set; }

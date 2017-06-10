@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Domain.Entidades.Operacao;
+using Domain.Entidades.Operacao.Atendimento;
+using Domain.Entidades.Operacao.Vacinacao;
 
 namespace Domain.Entidades.Cadastro {
     public class Animal {

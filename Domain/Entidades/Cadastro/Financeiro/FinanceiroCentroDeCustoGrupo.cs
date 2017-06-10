@@ -11,6 +11,5 @@ namespace Domain.Entidades.Cadastro.Financeiro
         [StringLength(50, MinimumLength = 2, ErrorMessage = "A Descrição deve ser entre 2 e 20 caracteres!")]
         public string Descricao { get; set; }
 
-        public virtual ICollection<FinanceiroCentroDeCusto> FinanceiroCentroCustos { get; set; }
     }
 }

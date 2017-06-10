@@ -50,7 +50,7 @@
     <Compile Include="Entidades\Cadastro\Animal.cs" />
     <Compile Include="Entidades\Cadastro\Financeiro\FinanceiroCentroDeCusto.cs" />
     <Compile Include="Entidades\Cadastro\Financeiro\FinanceiroPlanoDePagamento.cs" />
-    <Compile Include="Entidades\Operacao\Atendimento.cs" />
+    <Compile Include="Entidades\Operacao\Atendimento\Atendimento.cs" />
     <Compile Include="Entidades\Cadastro\Localidade\Cidade.cs" />
     <Compile Include="Entidades\Cadastro\Cliente.cs" />
     <Compile Include="Entidades\Cadastro\Contato\Email.cs" />
@@ -67,9 +67,12 @@
     <Compile Include="Entidades\Cadastro\Localidade\UnidadeFederativa.cs" />
     <Compile Include="Entidades\Cadastro\Vacina.cs" />
     <Compile Include="Entidades\Cadastro\Financeiro\FinanceiroCentroDeCustoGrupo.cs" />
-    <Compile Include="Entidades\Operacao\Financeiro\FinanceiroContasReceber.cs" />
+    <Compile Include="Entidades\Operacao\Financeiro\FinanceiroContasReceberParcelas.cs" />
+    <Compile Include="Entidades\Operacao\Financeiro\FinanceiroTipoRecebimento.cs" />
     <Compile Include="Entidades\Operacao\Financeiro\FinanceiroMovimentacoes.cs" />
-    <Compile Include="Entidades\Operacao\Vacinacao.cs" />
+    <Compile Include="Entidades\Operacao\Generic\Operacao.cs" />
+    <Compile Include="Entidades\Operacao\Vacinacao\Vacinacao.cs" />
+    <Compile Include="Enum\TipoOperacaoFinanceira.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Enum\SituacaoAtendimento.cs" />
     <Compile Include="Enum\SituacaoParcelaContasReceber.cs" />

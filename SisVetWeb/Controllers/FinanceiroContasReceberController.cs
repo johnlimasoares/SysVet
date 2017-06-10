@@ -43,11 +43,9 @@ namespace SisVetWeb.Controllers {
         }
 
         [HttpPost]
-        public ActionResult Create(FormCollection collection) {
+        public ActionResult Create(FinanceiroContasReceberParcelas financeiroContasReceberParcelas) {
             try {
-                var list = new List<FinanceiroContasReceber>();
-                list.Add(new FinanceiroContasReceber(){ClienteId = 2});
-                return View("DemonstrativoParcelas", list);
+                return View("DemonstrativoParcelas", null);
             } catch {
                 return View();
             }

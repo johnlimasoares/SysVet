@@ -9,7 +9,10 @@ using Domain.Entidades.Cadastro.Contato;
 using Domain.Entidades.Cadastro.Financeiro;
 using Domain.Entidades.Cadastro.Localidade;
 using Domain.Entidades.Operacao;
+using Domain.Entidades.Operacao.Atendimento;
 using Domain.Entidades.Operacao.Financeiro;
+using Domain.Entidades.Operacao.Generic;
+using Domain.Entidades.Operacao.Vacinacao;
 
 namespace Repository.Context {
 
@@ -38,9 +41,10 @@ namespace Repository.Context {
         public DbSet<Vacinacao> Vacinacoes { get; set; }
         public DbSet<FinanceiroCentroDeCustoGrupo> FinaceiroCentroDeCustoGrupos { get; set; }
         public DbSet<FinanceiroCentroDeCusto> FinanceiroCentroDeCustos { get; set; }
-        public DbSet<FinanceiroContasReceber> FinanceiroContasReceber { get; set; }
+        public DbSet<FinanceiroContasReceberParcelas> FinanceiroContasReceberParcelas { get; set; }
         public DbSet<FinanceiroMovimentacoes> FinanceiroMovimentacoes { get; set; }
         public DbSet<FinanceiroPlanoDePagamento> FinanceiroPlanosDePagamentos { get; set; }
+        public DbSet<Operacao> Operacoes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder) {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();

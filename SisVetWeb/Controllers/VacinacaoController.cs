@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Domain.Entidades.Operacao;
+using Domain.Entidades.Operacao.Vacinacao;
 using Domain.WidGet;
 using Repository.Context;
 using Utils;

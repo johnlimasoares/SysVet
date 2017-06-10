@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Domain.Entidades.Operacao;
+using Domain.Entidades.Operacao.Atendimento;
 
 namespace Domain.Entidades.Cadastro
 {

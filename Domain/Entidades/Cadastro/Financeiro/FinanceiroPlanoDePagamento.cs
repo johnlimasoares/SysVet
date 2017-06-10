@@ -7,6 +7,5 @@ namespace Domain.Entidades.Cadastro.Financeiro {
         public string Descricao { get; set; }
         public int QuantidadeParcelas { get; set; }
         public int IntervaloDias { get; set; }
-        public virtual ICollection<FinanceiroContasReceber> FinanceiroContasReceber { get; set; }
     }
 }

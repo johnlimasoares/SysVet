@@ -1,5 +1,6 @@
 ﻿using System;
 using Domain.Entidades.Operacao;
+using Domain.Entidades.Operacao.Atendimento;
 
 namespace Domain.Entidades.Cadastro
 {

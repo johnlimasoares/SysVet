@@ -5,6 +5,7 @@ using Dapper;
 using Domain.Entidades;
 using Domain.Entidades.Cadastro;
 using Domain.Entidades.Operacao;
+using Domain.Entidades.Operacao.Vacinacao;
 using Domain.WidGet;
 using Repository.Context;
 using Repository.Repositories.Base;

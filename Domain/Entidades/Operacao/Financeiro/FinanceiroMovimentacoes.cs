@@ -6,8 +6,12 @@ namespace Domain.Entidades.Operacao.Financeiro {
     public class FinanceiroMovimentacoes {
         public Int64 Id { get; set; }
 
-        public int FinanceiroCentroDeCustoId { get; set; }
+        public Int64 FinanceiroCentroDeCustoId { get; set; }
         public FinanceiroCentroDeCusto FinanceiroCentroDeCusto { get; set; }
+
+        public Int64 OperacaoId { get; set; }
+        public Generic.Operacao Operacao { get; set; }
+
 
         public TipoMovimentacao TipoMovimentacaoEnum { get; set; }
 

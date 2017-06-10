@@ -24,7 +24,7 @@
         <div class="form-group">
             @Html.Label("Centro de Custo", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("CentroCustoId", (IEnumerable<SelectListItem>)ViewBag.CentroCustoId, "Selecione...", new { @class = "form-control combobox" })
+                @Html.DropDownList("FinanceiroCentroDeCustoId", (IEnumerable<SelectListItem>)ViewBag.CentroCustoId, "Selecione...", new { @class = "form-control combobox" })
                 @Html.ValidationMessageFor(model => model.FinanceiroCentroDeCustoId)
             </div>
         </div>
@@ -32,7 +32,7 @@
         <div class="form-group">
             @Html.Label("Forma Pagamento", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("FormaPagamentoId", (IEnumerable<SelectListItem>)ViewBag.FormaPagamentoId, "Selecione...", new { @class = "form-control combobox" })
+                @Html.DropDownList("FinanceiroPlanoDePagamentoId", (IEnumerable<SelectListItem>)ViewBag.FormaPagamentoId, "Selecione...", new { @class = "form-control combobox" })
                 @Html.ValidationMessageFor(model => model.FinanceiroPlanoDePagamentoId)
             </div>
         </div>
