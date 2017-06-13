@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Domain.Entidades.Operacao.Financeiro;
 using Repository;
 using Repository.Repositories;
+using SisVetWeb.Models;
 
 namespace SisVetWeb.Controllers {
     public class FinanceiroContasReceberController : Controller {
@@ -21,7 +20,7 @@ namespace SisVetWeb.Controllers {
             return View();
         }
 
-        public ActionResult Create() {
+        public ActionResult GerarParcelasDuplicata() {
             ViewBag.CentroCustoId = new SelectList(
              centroCustoRepo.GetAll().OrderBy(x => x.Descricao),
              "Id",
@@ -43,9 +42,26 @@ namespace SisVetWeb.Controllers {
         }
 
         [HttpPost]
-        public ActionResult Create(FinanceiroContasReceberParcelas financeiroContasReceberParcelas) {
+        public ActionResult GerarParcelasDuplicata(FinanceiroTipoRecebimento financeiroTipoRecebimento) {
             try {
-                return View("DemonstrativoParcelas", null);
+                var financeiroContasReceberParcelasList = new List<FinanceiroContasReceberParcelas>();
+
+                for (var parcela = 1; parcela <= financeiroTipoRecebimento.QuantidadeParcelas; parcela++) {
+
+                    var financeiroContasReceberParcela = new FinanceiroContasReceberParcelas();
+                    financeiroContasReceberParcela.DataEmissao = financeiroTipoRecebimento.DataEmissao;
+                    financeiroContasReceberParcela.Parcela = parcela;
+                    financeiroContasReceberParcela.ValorTotalBruto = financeiroTipoRecebimento.ValorTotal / financeiroTipoRecebimento.QuantidadeParcelas;
+                    financeiroContasReceberParcela.NumeroDocumento = string.Format("{0}{1}", parcela, financeiroTipoRecebimento.ClienteId);
+                    financeiroContasReceberParcelasList.Add(financeiroContasReceberParcela);
+
+                }
+
+                var demonstrativoParcelasVM = new FinanceiroDuplicataDemonstrativoDeParcelasViewModel();
+                demonstrativoParcelasVM.FinanceiroContasReceberParcelasList = financeiroContasReceberParcelasList;
+                demonstrativoParcelasVM.FinanceiroTipoRecebimento = financeiroTipoRecebimento;
+
+                return View("DemonstrativoParcelas", demonstrativoParcelasVM);
             } catch {
                 return View();
             }

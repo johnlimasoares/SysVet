@@ -1,9 +1,27 @@
-﻿@model IEnumerable<Domain.Entidades.Operacao.Financeiro.FinanceiroContasReceber>
+﻿@model SisVetWeb.Models.FinanceiroDuplicataDemonstrativoDeParcelasViewModel
 
-@{
-    ViewBag.Title = "title";
-    Layout = "_Layout";
-    
-}
 
-<h2>@Model</h2>
+<table>
+    <tr>
+        <th>Parcela</th>
+        <th>Numero Documento</th>
+        <th>Valor</th>
+        <th>Vencimento</th>
+    </tr>
+    @foreach (var item in Model.FinanceiroContasReceberParcelasList) {
+        <tr>
+            <td class="col-sm-1">
+                @Html.DisplayFor(modelItem => item.Parcela)
+            </td>
+            <td class="col-sm-3">
+                @Html.DisplayFor(modelItem => item.NumeroDocumento)
+            </td>
+            <td class="col-sm-2 text-center">
+                @Html.DisplayFor(modelItem => item.ValorTotalBruto)
+            </td>
+            <td class="col-sm-1 text-center">
+                @Html.FormatValue(Convert.ChangeType(item.DataVencimento, typeof(object)), "{0: dd/MM/yyyy}")
+            </td>
+        </tr>
+    }
+</table>
