@@ -7,7 +7,7 @@ namespace Repository.Repositories {
     public class FinanceiroPlanoDePagamentoRepository : Repository<FinanceiroPlanoDePagamento> {
 
         public void Salvar(FinanceiroPlanoDePagamento financeiroPlanoDePagamento) {
-            using (ctx){
+            using (ctx) {
                 ctx.FinanceiroPlanosDePagamentos.Add(financeiroPlanoDePagamento);
                 ctx.SaveChanges();
             }
@@ -21,7 +21,7 @@ namespace Repository.Repositories {
             }
         }
 
-        
+
         public FinanceiroPlanoDePagamento Excluir(int id) {
             var planoDePagamento = this.Find(id);
             if (planoDePagamento != null) {
@@ -31,6 +31,10 @@ namespace Repository.Repositories {
             }
 
             throw new Exception("Plano inexistente no banco de dados");
+        }
+
+        public FinanceiroPlanoDePagamento GetPlanoPagamento(long financeiroPlanoDePagamentoId) {
+            return Find(financeiroPlanoDePagamentoId);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Business.Financeiro.ContasReceber;
 using Domain.Entidades.Operacao.Financeiro;
 using Repository;
 using Repository.Repositories;
@@ -13,10 +14,6 @@ namespace SisVetWeb.Controllers {
         private FinanceiroPlanoDePagamentoRepository planoPagamentoRepo = new FinanceiroPlanoDePagamentoRepository();
 
         public ActionResult Index() {
-            return View();
-        }
-
-        public ActionResult Details(int id) {
             return View();
         }
 
@@ -44,21 +41,8 @@ namespace SisVetWeb.Controllers {
         [HttpPost]
         public ActionResult GerarParcelasDuplicata(FinanceiroTipoRecebimento financeiroTipoRecebimento) {
             try {
-                var financeiroContasReceberParcelasList = new List<FinanceiroContasReceberParcelas>();
-
-                for (var parcela = 1; parcela <= financeiroTipoRecebimento.QuantidadeParcelas; parcela++) {
-
-                    var financeiroContasReceberParcela = new FinanceiroContasReceberParcelas();
-                    financeiroContasReceberParcela.DataEmissao = financeiroTipoRecebimento.DataEmissao;
-                    financeiroContasReceberParcela.Parcela = parcela;
-                    financeiroContasReceberParcela.ValorTotalBruto = financeiroTipoRecebimento.ValorTotal / financeiroTipoRecebimento.QuantidadeParcelas;
-                    financeiroContasReceberParcela.NumeroDocumento = string.Format("{0}{1}", parcela, financeiroTipoRecebimento.ClienteId);
-                    financeiroContasReceberParcelasList.Add(financeiroContasReceberParcela);
-
-                }
-
                 var demonstrativoParcelasVM = new FinanceiroDuplicataDemonstrativoDeParcelasViewModel();
-                demonstrativoParcelasVM.FinanceiroContasReceberParcelasList = financeiroContasReceberParcelasList;
+                demonstrativoParcelasVM.FinanceiroContasReceberParcelasList = DuplicataParcelasBusiness.GerarDemostrativoParcelas(financeiroTipoRecebimento);
                 demonstrativoParcelasVM.FinanceiroTipoRecebimento = financeiroTipoRecebimento;
 
                 return View("DemonstrativoParcelas", demonstrativoParcelasVM);
@@ -67,30 +51,15 @@ namespace SisVetWeb.Controllers {
             }
         }
 
-        public ActionResult Edit(int id) {
-            return View();
-        }
-
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection) {
+        public ActionResult Confirmar() {
             try {
-                return RedirectToAction("Index");
+                var model = (FinanceiroDuplicataDemonstrativoDeParcelasViewModel)TempData["FullModel"];
             } catch {
                 return View();
             }
-        }
-
-        public ActionResult Delete(int id) {
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection) {
-            try {
-                return RedirectToAction("Index");
-            } catch {
-                return View();
-            }
-        }
     }
 }

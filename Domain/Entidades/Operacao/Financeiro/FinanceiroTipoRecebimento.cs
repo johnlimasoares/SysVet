@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using Domain.Entidades.Cadastro;
 using Domain.Entidades.Cadastro.Financeiro;
 using Domain.Enum;

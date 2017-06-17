@@ -1,27 +1,38 @@
 ﻿@model SisVetWeb.Models.FinanceiroDuplicataDemonstrativoDeParcelasViewModel
 
+@{ TempData["FullModel"] = Model; }
 
-<table>
-    <tr>
-        <th>Parcela</th>
-        <th>Numero Documento</th>
-        <th>Valor</th>
-        <th>Vencimento</th>
-    </tr>
-    @foreach (var item in Model.FinanceiroContasReceberParcelasList) {
+@using (Html.BeginForm("Confirmar", "FinanceiroContasReceber", FormMethod.Post)) {
+
+    <table>
         <tr>
-            <td class="col-sm-1">
-                @Html.DisplayFor(modelItem => item.Parcela)
-            </td>
-            <td class="col-sm-3">
-                @Html.DisplayFor(modelItem => item.NumeroDocumento)
-            </td>
-            <td class="col-sm-2 text-center">
-                @Html.DisplayFor(modelItem => item.ValorTotalBruto)
-            </td>
-            <td class="col-sm-1 text-center">
-                @Html.FormatValue(Convert.ChangeType(item.DataVencimento, typeof(object)), "{0: dd/MM/yyyy}")
-            </td>
+            <th>Parcela</th>
+            <th>Numero Documento</th>
+            <th>Valor</th>
+            <th>Vencimento</th>
         </tr>
-    }
-</table>
+        @foreach (var item in Model.FinanceiroContasReceberParcelasList) {
+            <tr>
+                <td class="col-sm-1">
+                    @Html.DisplayFor(modelItem => item.Parcela)
+                </td>
+                <td class="col-sm-3">
+                    @Html.DisplayFor(modelItem => item.NumeroDocumento)
+                </td>
+                <td class="col-sm-2 text-center">
+                    @Html.DisplayFor(modelItem => item.ValorTotalBruto)
+                </td>
+                <td class="col-sm-1 text-center">
+                    @Html.FormatValue(Convert.ChangeType(item.DataVencimento, typeof(object)), "{0: dd/MM/yyyy}")
+                </td>
+            </tr>
+        }
+    </table>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Salvar" class="btn btn-success" />
+        </div>
+    </div>
+}

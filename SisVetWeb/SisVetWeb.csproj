@@ -381,6 +381,10 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Business\Business.csproj">
+      <Project>{1eb349a5-fdf2-4b6c-9db5-1924da24bb24}</Project>
+      <Name>Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Domain\Domain.csproj">
       <Project>{2441c8da-ab42-48a2-aa1c-b3d442e289ea}</Project>
       <Name>Domain</Name>
