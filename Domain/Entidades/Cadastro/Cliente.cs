@@ -9,7 +9,7 @@ namespace Domain.Entidades.Cadastro
    public class Cliente
     {
        [Key] 
-       public int Id { get; set; }
+       public Int64 Id { get; set; }
 
         [Required(ErrorMessage = "Preencha o campo Nome!")]
         [MaxLength(100,ErrorMessage = "Máximo {0} caractéres")]

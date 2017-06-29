@@ -2,7 +2,7 @@
 using Repository.Repositories.Base;
 
 namespace Repository.Repositories {
-    public class FinanceiroContasReceberRepository : Repository<FinanceiroContasReceberParcelas> {
+    public class FinanceiroContasReceberParcelasRepository : Repository<FinanceiroContasReceberParcelas> {
 
     }
 }

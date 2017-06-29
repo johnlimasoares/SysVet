@@ -15,7 +15,22 @@ namespace Utils {
             return Regex.Replace(value, pattern, string.Empty);
         }
 
-       
+        public static string Max(this string value, int max) {
+            if (value == null) {
+                return null;
+            }
+
+            if (value == string.Empty) {
+                return string.Empty;
+            }
+
+            if (value.Length > max && max > 0) {
+                return value.Substring(0, max);
+            }
+
+            return value;
+        }
+
     }
 }
 

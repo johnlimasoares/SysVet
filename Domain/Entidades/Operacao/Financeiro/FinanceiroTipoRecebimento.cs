@@ -26,21 +26,11 @@ namespace Domain.Entidades.Operacao.Financeiro {
         public int QuantidadeParcelas { get; set; }
 
         public Decimal ValorTotal { get; set; }
-
-        public Decimal ValorPorParcela { get; set; }
-
+            
         public DateTime DataEmissao { get; set; }
 
         public TimeSpan HoraEmissao { get; set; }
-
-        public DateTime DataVencimento { get; set; }
-
-        public TimeSpan HoraVencimento { get; set; }
-
-        public DateTime? DataLiquidacao { get; set; }
-
-        public TimeSpan? HoraLiquidacao { get; set; }
-
+        
         public String Referencia { get; set; }
 
         public String Observacao { get; set; }

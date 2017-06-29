@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Business.Financeiro.ContasReceber;
@@ -12,7 +13,7 @@ namespace SisVetWeb.Controllers {
         private ClienteRepository repoCliente = new ClienteRepository();
         private FinanceiroCentroDeCustoRepository centroCustoRepo = new FinanceiroCentroDeCustoRepository();
         private FinanceiroPlanoDePagamentoRepository planoPagamentoRepo = new FinanceiroPlanoDePagamentoRepository();
-
+        
         public ActionResult Index() {
             return View();
         }
@@ -54,11 +55,12 @@ namespace SisVetWeb.Controllers {
         [HttpPost]
         public ActionResult Confirmar() {
             try {
-                var model = (FinanceiroDuplicataDemonstrativoDeParcelasViewModel)TempData["FullModel"];
-            } catch {
+                var demonstrativoParcelasVM = (FinanceiroDuplicataDemonstrativoDeParcelasViewModel)TempData["FullModel"];
+                DuplicataParcelasBusiness.ConcluirRegistroFinanceiro(demonstrativoParcelasVM.FinanceiroContasReceberParcelasList,demonstrativoParcelasVM.FinanceiroTipoRecebimento);
+            } catch(Exception ex) {
                 return View();
             }
-            return View();
+            return View("Index");
         }
 
     }

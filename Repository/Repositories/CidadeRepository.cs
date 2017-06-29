@@ -1,8 +1,7 @@
-﻿using Domain.Entidades;
-using Domain.Entidades.Cadastro.Localidade;
+﻿using Domain.Entidades.Cadastro.Localidade;
 using Repository.Repositories.Base;
 
-namespace Repository
+namespace Repository.Repositories
 {
     public class CidadeRepository : Repository<Cidade>
     {

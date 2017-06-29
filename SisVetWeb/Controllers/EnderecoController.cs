@@ -11,6 +11,7 @@ using Domain.Entidades;
 using Domain.Entidades.Cadastro.Localidade;
 using Repository;
 using Repository.Context;
+using Repository.Repositories;
 using Utils;
 
 namespace SisVetWeb.Controllers

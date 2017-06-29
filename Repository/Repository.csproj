@@ -53,9 +53,10 @@
   <ItemGroup>
     <Compile Include="Repositories\FinanceiroCentroDeCustoGrupoRepository.cs" />
     <Compile Include="Repositories\FinanceiroCentroDeCustoRepository.cs" />
-    <Compile Include="Repositories\FinanceiroContasReceberRepository.cs" />
+    <Compile Include="Repositories\FinanceiroContasReceberParcelasRepository.cs" />
     <Compile Include="Repositories\FinanceiroMovimentacoesRepository.cs" />
     <Compile Include="Repositories\FinanceiroPlanoDePagamentoRepository.cs" />
+    <Compile Include="Repositories\FinanceiroTipoRecebimentoRepository.cs" />
     <Compile Include="Repositories\Operacao.cs" />
     <Compile Include="Repositories\VacinacaoRepository.cs" />
     <Compile Include="Repositories\VacinaRepository.cs" />

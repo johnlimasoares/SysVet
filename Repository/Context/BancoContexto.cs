@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-using Domain.Entidades;
-using System;
+﻿using System;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
@@ -8,7 +6,6 @@ using Domain.Entidades.Cadastro;
 using Domain.Entidades.Cadastro.Contato;
 using Domain.Entidades.Cadastro.Financeiro;
 using Domain.Entidades.Cadastro.Localidade;
-using Domain.Entidades.Operacao;
 using Domain.Entidades.Operacao.Atendimento;
 using Domain.Entidades.Operacao.Financeiro;
 using Domain.Entidades.Operacao.Generic;
@@ -41,6 +38,7 @@ namespace Repository.Context {
         public DbSet<Vacinacao> Vacinacoes { get; set; }
         public DbSet<FinanceiroCentroDeCustoGrupo> FinaceiroCentroDeCustoGrupos { get; set; }
         public DbSet<FinanceiroCentroDeCusto> FinanceiroCentroDeCustos { get; set; }
+        public DbSet<FinanceiroTipoRecebimento> FinanceiroTipoRecebimentos { get; set; }
         public DbSet<FinanceiroContasReceberParcelas> FinanceiroContasReceberParcelas { get; set; }
         public DbSet<FinanceiroMovimentacoes> FinanceiroMovimentacoes { get; set; }
         public DbSet<FinanceiroPlanoDePagamento> FinanceiroPlanosDePagamentos { get; set; }
