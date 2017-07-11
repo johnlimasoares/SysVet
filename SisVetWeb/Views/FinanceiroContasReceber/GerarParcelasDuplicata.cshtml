@@ -11,8 +11,6 @@
         <hr />
         @Html.ValidationSummary(true)
 
-
-
         <div class="form-group">
             @Html.Label("Cliente", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -24,8 +22,8 @@
         <div class="form-group">
             @Html.Label("Centro de Custo", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("FinanceiroCentroDeCustoId", (IEnumerable<SelectListItem>)ViewBag.CentroCustoId, "Selecione...", new { @class = "form-control combobox" })
-                @Html.ValidationMessageFor(model => model.FinanceiroCentroDeCustoId)
+                @Html.DropDownList("FinanceiroCentroDeCustoId", (IEnumerable<SelectListItem>)ViewBag.CentroCustoId, "Selecione...", new { @class = "form-control combobox", required = "", title = "Este campo é obrigatório!" })
+                <span class="field-validation-valid" data-valmsg-for="FinanceiroCentroDeCustoId" data-valmsg-replace="true"></span>
             </div>
         </div>
 
@@ -38,35 +36,35 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Emissão", new { @class = "control-label col-md-2" })
-
-            @*@Html.EditorFor(model => model.DataNascimento, new { @class = "form-control form-control" })*@
+            <label class="control-label col-md-2" for="DataEmissao">Emissão</label>
             <div class="col-md-5 col-lg-pull-0" style="width:500px;">
-                <input class="form-control" data-val="true" data-val-date="Formato incorreto no campo Data de Emissão." data-val-required="O campo Data de Emissão é obrigatório." id="DataEmissao" name="DataEmissao" type="date">
-                @Html.ValidationMessageFor(model => model.DataEmissao)
+                <input class="form-control" id="DataEmissao" name="DataEmissao" type="date" required title="Este campo é obrigatório">
+                <span class="field-validation-valid" data-valmsg-for="DataEmissao" data-valmsg-replace="true"></span>
             </div>
         </div>
 
         <div class="form-group">
-            @Html.Label("Quantidade Parcelas", new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="quantidadeParcelas">Quantidade Parcelas</label>
             <div class="col-md-10" style="width: 500px">
-                @Html.TextBox("quantidadeParcelas", "", new { @class = "form-control", @type = "number" })
+                <input class="form-control" id="quantidadeParcelas" name="quantidadeParcelas" type="number" required title="Este campo é obrigatório" value="" />
+                <span class="field-validation-valid" data-valmsg-for="quantidadeParcelas" data-valmsg-replace="true"></span>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="ValorTotal">Valor</label>
+            <div class="col-md-10" style="width: 500px">
+                <input class="form-control" id="ValorTotal" name="ValorTotal" type="text" required title="Este campo é obrigatório" value="" />
+                <span class="field-validation-valid" data-valmsg-for="ValorTotal" data-valmsg-replace="true"></span>
+
             </div>
         </div>
 
         <div class="form-group">
-            @Html.Label("Valor", new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="Observacao">Oberva&#231;&#245;es</label>
             <div class="col-md-10" style="width: 500px">
-                @Html.TextBoxFor(model => model.ValorTotal, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ValorTotal)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.Label("Obervações", new { @class = "control-label col-md-2" })
-            <div class="col-md-10" style="width: 500px">
-                @Html.TextAreaFor(model => model.Observacao, new { @class = "form-control ", style = "width: 470px; max-width: 470px; height: 200px; max-height:200px " })
-                @Html.ValidationMessageFor(model => model.Observacao)
+                <textarea class="form-control " cols="20" id="Observacao" name="Observacao" rows="2" style="width: 470px; max-width: 470px; height: 200px; max-height:200px "></textarea>
             </div>
         </div>
 
@@ -84,11 +82,13 @@
 @section Scripts {
     <script src="~/Scripts/jquery.combobox.js"></script>
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/validacao")
     <script type="text/javascript">
         (function () {
             $.validator.methods.date = function (value, element) {
                 return this.optional(element) || Globalize.parseDate(value, 'dd/MM/yyyy') !== null;
-            }
+            };
         })();
+       
     </script>
 }

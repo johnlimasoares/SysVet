@@ -3,20 +3,29 @@
 @{ TempData["FullModel"] = Model; }
 
 @using (Html.BeginForm("Confirmar", "FinanceiroContasReceber", FormMethod.Post)) {
-
-    <table>
-        <tr>
-            <th>Parcela</th>
-            <th>Numero Documento</th>
-            <th>Valor</th>
-            <th>Vencimento</th>
+    <h1>Parcelas Geradas</h1>
+    <hr />
+    <br />
+    <label>
+        <span class="label-parcelas">Cliente: </span> @Model.NomeCliente
+    </label>
+    <br />
+    <label>
+        <span class="label-parcelas">Pagamento: </span> @Model.DescricaoPlanoPagamento
+    </label>
+    <table class="table table-condensed table-hover">
+        <tr class="active">
+            <th class="text-center">Parcela</th>
+            <th class="text-center">Número Documento</th>
+            <th class="text-center">Valor</th>
+            <th class="text-center">Vencimento</th>
         </tr>
         @foreach (var item in Model.FinanceiroContasReceberParcelasList) {
             <tr>
-                <td class="col-sm-1">
+                <td class="text-center col-sm-1">
                     @Html.DisplayFor(modelItem => item.Parcela)
                 </td>
-                <td class="col-sm-3">
+                <td class="text-center col-sm-3">
                     @Html.DisplayFor(modelItem => item.NumeroDocumento)
                 </td>
                 <td class="col-sm-2 text-center">
@@ -32,7 +41,16 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Salvar" class="btn btn-success" />
+            <input type="submit" value="Confirmar" class="btn btn-success" />
         </div>
     </div>
 }
+
+<style>
+    .label-parcelas {
+        color: #0000cd;
+        font-size: 18px;
+    }
+</style>
+
+

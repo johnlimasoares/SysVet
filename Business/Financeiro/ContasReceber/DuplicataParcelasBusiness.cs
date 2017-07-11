@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using Domain.Entidades.Cadastro.Financeiro;
 using Domain.Entidades.Operacao.Financeiro;
 using Domain.Enum;
+using Repository.Context;
 using Repository.Repositories;
 using Utils;
 
@@ -12,7 +14,7 @@ namespace Business.Financeiro.ContasReceber {
         public static List<FinanceiroContasReceberParcelas> GerarDemostrativoParcelas(FinanceiroTipoRecebimento financeiroTipoRecebimento) {
             var financeiroContasReceberParcelasList = new List<FinanceiroContasReceberParcelas>();
 
-            var planoDePagamento = new FinanceiroPlanoDePagamentoRepository().GetPlanoPagamento(financeiroTipoRecebimento.FinanceiroPlanoDePagamento.Id);
+            var planoDePagamento = new FinanceiroPlanoDePagamentoRepository().GetPlanoPagamento(financeiroTipoRecebimento.FinanceiroPlanoDePagamentoId);
 
             for (var parcela = 1; parcela <= financeiroTipoRecebimento.QuantidadeParcelas; parcela++) {
 
@@ -24,7 +26,7 @@ namespace Business.Financeiro.ContasReceber {
                 financeiroContasReceberParcela.Parcela = parcela;
                 financeiroContasReceberParcela.ValorTotalBruto = financeiroTipoRecebimento.ValorTotal / financeiroTipoRecebimento.QuantidadeParcelas;
                 financeiroContasReceberParcela.ValorTotalLiquido = financeiroContasReceberParcela.ValorTotalBruto;
-                financeiroContasReceberParcela.NumeroDocumento = string.Format("{0}{1}-{2}", financeiroTipoRecebimento.Cliente.Id, planoDePagamento.Id, parcela);
+                financeiroContasReceberParcela.NumeroDocumento = string.Format("{0}{1}-{2}", financeiroTipoRecebimento.ClienteId, planoDePagamento.Id, parcela);
                 financeiroContasReceberParcela.FinanceiroTipoRecebimento = financeiroTipoRecebimento;
                 financeiroContasReceberParcela.SituacaoParcelaContasReceberEnum = GetSituacaoContaReceber(planoDePagamento);
                 financeiroContasReceberParcelasList.Add(financeiroContasReceberParcela);
@@ -59,8 +61,13 @@ namespace Business.Financeiro.ContasReceber {
             return parcelaAtual == quantidadeParcelas;
         }
 
-        public static void ConcluirRegistroFinanceiro(List<FinanceiroContasReceberParcelas> financeiroContasReceberParcelasList, FinanceiroTipoRecebimento financeiroTipoRecebimento) {
-            new FinanceiroTipoRecebimentoRepository().SalvarRegistroFinanceiro(financeiroContasReceberParcelasList, financeiroTipoRecebimento);
+        public static void SalvarRegistroFinanceiro(List<FinanceiroContasReceberParcelas> financeiroContasReceberParcelasList, FinanceiroTipoRecebimento financeiroTipoRecebimento) {
+            using (var ctx = new BancoContexto()) {
+                FinanceiroTipoRecebimentoRepository.SalvarRegistroFinanceiro(ctx, financeiroTipoRecebimento);
+                FinanceiroContasReceberParcelasRepository.SalvarParcelasGeradas(ctx, financeiroContasReceberParcelasList);
+                ctx.SaveChanges();
+            }
+
 
         }
     }

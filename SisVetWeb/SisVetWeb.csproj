@@ -247,6 +247,7 @@
     <Content Include="Scripts\utilsMath\calculaIdade.js" />
     <Content Include="Scripts\utils\utils.js" />
     <Content Include="Scripts\validacao\validacaoCaracteresEspeciais.js" />
+    <Content Include="Scripts\validacao\validacaoQuantidadeMaximaParcelasPlanoPagamento.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

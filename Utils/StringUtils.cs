@@ -31,6 +31,16 @@ namespace Utils {
             return value;
         }
 
+        public static int ToInteger(this string value) {
+            value = ApenasNumeros(value);
+
+            if (string.IsNullOrEmpty(value)) {
+                return 0;
+            }
+
+            return Convert.ToInt32(value);
+        }
+
     }
 }
 

@@ -22,7 +22,6 @@ namespace Repository.Repositories.Base {
 
         public void Atualizar(TEntity obj) {
             ctx.Entry(obj).State = EntityState.Modified;
-
         }
 
         public void SalvarTodos() {
@@ -30,9 +29,7 @@ namespace Repository.Repositories.Base {
         }
 
         public void Adicionar(TEntity obj) {
-
             ctx.Set<TEntity>().Add(obj);
-
         }
 
         public void Excluir(Func<TEntity, bool> predicate) {

@@ -4,7 +4,7 @@
 <h2>Lista de Planos de Pagamentos</h2>
 @Html.Partial("ConfirmacaoExclusao")
 <p>
-    @using (Html.BeginForm("Index", "FinanceiroCentroDeCustoGrupo", FormMethod.Get)) {
+    @using (Html.BeginForm("Index", "FinanceiroPlanoDePagamento", FormMethod.Get)) {
         <div class="row">
             <div class="pull-right col-md-1">
                 @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Adicionar Plano de Pagamento", "Create", "FinanceiroPlanoDePagamento", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })

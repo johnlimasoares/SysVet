@@ -3,30 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Business.Financeiro.ContasReceber;
+using Domain.Entidades.Cadastro;
 using Domain.Entidades.Operacao.Financeiro;
 using Repository;
 using Repository.Repositories;
 using SisVetWeb.Models;
+using Utils;
 
 namespace SisVetWeb.Controllers {
     public class FinanceiroContasReceberController : Controller {
         private ClienteRepository repoCliente = new ClienteRepository();
-        private FinanceiroCentroDeCustoRepository centroCustoRepo = new FinanceiroCentroDeCustoRepository();
-        private FinanceiroPlanoDePagamentoRepository planoPagamentoRepo = new FinanceiroPlanoDePagamentoRepository();
-        
+        private FinanceiroCentroDeCustoRepository repoCentroCusto = new FinanceiroCentroDeCustoRepository();
+        private FinanceiroPlanoDePagamentoRepository repoPlanoPagamento = new FinanceiroPlanoDePagamentoRepository();
+
         public ActionResult Index() {
             return View();
         }
 
         public ActionResult GerarParcelasDuplicata() {
             ViewBag.CentroCustoId = new SelectList(
-             centroCustoRepo.GetAll().OrderBy(x => x.Descricao),
+             repoCentroCusto.GetAll().OrderBy(x => x.Descricao),
              "Id",
              "Descricao"
              );
 
             ViewBag.FormaPagamentoId = new SelectList(
-             planoPagamentoRepo.GetAll().OrderBy(x => x.Descricao),
+             repoPlanoPagamento.GetAll().OrderBy(x => x.Descricao),
              "Id",
              "Descricao"
              );
@@ -41,14 +43,21 @@ namespace SisVetWeb.Controllers {
 
         [HttpPost]
         public ActionResult GerarParcelasDuplicata(FinanceiroTipoRecebimento financeiroTipoRecebimento) {
-            try {
-                var demonstrativoParcelasVM = new FinanceiroDuplicataDemonstrativoDeParcelasViewModel();
-                demonstrativoParcelasVM.FinanceiroContasReceberParcelasList = DuplicataParcelasBusiness.GerarDemostrativoParcelas(financeiroTipoRecebimento);
-                demonstrativoParcelasVM.FinanceiroTipoRecebimento = financeiroTipoRecebimento;
+            var demonstrativoParcelasVm = new FinanceiroDuplicataDemonstrativoDeParcelasViewModel();
+            demonstrativoParcelasVm.FinanceiroContasReceberParcelasList = DuplicataParcelasBusiness.GerarDemostrativoParcelas(financeiroTipoRecebimento);
+            demonstrativoParcelasVm.FinanceiroTipoRecebimento = financeiroTipoRecebimento;
+            demonstrativoParcelasVm.NomeCliente = repoCliente.GetNomeCliente(financeiroTipoRecebimento.ClienteId);
+            demonstrativoParcelasVm.DescricaoPlanoPagamento = repoPlanoPagamento.GetDescricaoPlano(financeiroTipoRecebimento.FinanceiroPlanoDePagamentoId);
+            return View("DemonstrativoParcelas", demonstrativoParcelasVm);
+        }
 
-                return View("DemonstrativoParcelas", demonstrativoParcelasVM);
-            } catch {
-                return View();
+        [HttpPost]
+        public JsonResult ValidarQuantidadeMaximaParcelasPlano(string planoPagamentoId) {
+            try{
+                var maximoParcelas = repoPlanoPagamento.GetPlanoPagamento(planoPagamentoId.ToInteger()).QuantidadeParcelas;
+                return Json(maximoParcelas, JsonRequestBehavior.AllowGet);
+            } catch (Exception ex) {
+                return Json(ex.Message, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -56,8 +65,8 @@ namespace SisVetWeb.Controllers {
         public ActionResult Confirmar() {
             try {
                 var demonstrativoParcelasVM = (FinanceiroDuplicataDemonstrativoDeParcelasViewModel)TempData["FullModel"];
-                DuplicataParcelasBusiness.ConcluirRegistroFinanceiro(demonstrativoParcelasVM.FinanceiroContasReceberParcelasList,demonstrativoParcelasVM.FinanceiroTipoRecebimento);
-            } catch(Exception ex) {
+                DuplicataParcelasBusiness.SalvarRegistroFinanceiro(demonstrativoParcelasVM.FinanceiroContasReceberParcelasList, demonstrativoParcelasVM.FinanceiroTipoRecebimento);
+            } catch (Exception ex) {
                 return View();
             }
             return View("Index");

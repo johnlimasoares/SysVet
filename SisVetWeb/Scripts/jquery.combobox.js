@@ -23,7 +23,7 @@
               .width("448px")
               .height("22px")
               .autocomplete({
-                  delay: 700,
+                  delay: 400,
                   minLength: 2,
                   source: $.proxy(this, "_source")
               })

@@ -18,35 +18,35 @@ namespace Repository {
 
             switch (tipoPesquisa) {
                 case "Nome":
-                    clientes = clientes.Where(s => s.Nome.ToUpper().Contains(pesquisa.ToUpper()));
-                    break;
+                clientes = clientes.Where(s => s.Nome.ToUpper().Contains(pesquisa.ToUpper()));
+                break;
                 case "Cpf":
-                    clientes = clientes.Where(s => s.CpfCnpj.Contains(pesquisa));
-                    break;
+                clientes = clientes.Where(s => s.CpfCnpj.Contains(pesquisa));
+                break;
                 case "Fone":
-                    clientes = from cliente in clientes
-                               join fone in new TelefoneRepository().GetAll().ToList() on cliente.ID equals fone.ClienteId
-                               where fone.Numero.Contains(pesquisa)
-                               select cliente;
-                    break;
+                clientes = from cliente in clientes
+                           join fone in new TelefoneRepository().GetAll().ToList() on cliente.ID equals fone.ClienteId
+                           where fone.Numero.Contains(pesquisa)
+                           select cliente;
+                break;
             }
 
             switch (ordenacao) {
                 case "Id":
-                    clientes = clientes.OrderBy(x => x.ID);
-                    break;
+                clientes = clientes.OrderBy(x => x.ID);
+                break;
                 case "Id_Desc":
-                    clientes = clientes.OrderByDescending(x => x.ID);
-                    break;
+                clientes = clientes.OrderByDescending(x => x.ID);
+                break;
                 case "Nome":
-                    clientes = clientes.OrderBy(x => x.Nome);
-                    break;
+                clientes = clientes.OrderBy(x => x.Nome);
+                break;
                 case "Nome_Desc":
-                    clientes = clientes.OrderByDescending(x => x.Nome);
-                    break;
+                clientes = clientes.OrderByDescending(x => x.Nome);
+                break;
                 default:
-                    clientes = clientes.OrderBy(x => x.ID);
-                    break;
+                clientes = clientes.OrderBy(x => x.ID);
+                break;
 
             }
 
@@ -89,6 +89,15 @@ namespace Repository {
             }
 
             throw new Exception("Cliente inexistente no banco de dados");
+        }
+
+        public string GetNomeCliente(double clienteId) {
+            var cliente = this.GetAll()
+                        .Where(x => x.Id == clienteId)
+                        .Select(p => new { p.Nome })
+                        .FirstOrDefault();
+
+            return cliente == null ? string.Empty : cliente.Nome;
         }
     }
 }

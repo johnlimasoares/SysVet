@@ -42,7 +42,8 @@ namespace SisVetWeb {
                 "~/Scripts/mascaras/mascaras.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/validacao").Include(
-                "~/Scripts/validacao/validacaoCaracteresEspeciais.js"));
+                "~/Scripts/validacao/validacaoCaracteresEspeciais.js",
+                "~/Scripts/validacao/validacaoQuantidadeMaximaParcelasPlanoPagamento.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/utils").Include(
                 "~/Scripts/utils/utils.js"));

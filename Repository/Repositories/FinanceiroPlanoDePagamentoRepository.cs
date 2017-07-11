@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Linq;
 using Domain.Entidades.Cadastro.Financeiro;
 using Repository.Repositories.Base;
 
@@ -35,6 +36,15 @@ namespace Repository.Repositories {
 
         public FinanceiroPlanoDePagamento GetPlanoPagamento(long financeiroPlanoDePagamentoId) {
             return Find(financeiroPlanoDePagamentoId);
+        }
+
+        public string GetDescricaoPlano(double planoPagamentoId) {
+            var planoPagamento = this.GetAll()
+                      .Where(x => x.Id == planoPagamentoId)
+                      .Select(p => new { p.Descricao })
+                      .FirstOrDefault();
+
+            return planoPagamento == null ? string.Empty : planoPagamento.Descricao;
         }
     }
 }
