@@ -43,11 +43,11 @@ namespace SisVetWeb.Controllers {
 
         [HttpPost]
         public ActionResult GerarParcelasDuplicata(FinanceiroTipoRecebimento financeiroTipoRecebimento) {
-            var demonstrativoParcelasVm = new FinanceiroDuplicataDemonstrativoDeParcelasViewModel();
+            var demonstrativoParcelasVm = new FinanceiroDemonstrativoDeParcelasViewModel();
             demonstrativoParcelasVm.FinanceiroContasReceberParcelasList = DuplicataParcelasBusiness.GerarDemostrativoParcelas(financeiroTipoRecebimento);
             demonstrativoParcelasVm.FinanceiroTipoRecebimento = financeiroTipoRecebimento;
             demonstrativoParcelasVm.NomeCliente = repoCliente.GetNomeCliente(financeiroTipoRecebimento.ClienteId);
-            demonstrativoParcelasVm.DescricaoPlanoPagamento = repoPlanoPagamento.GetDescricaoPlano(financeiroTipoRecebimento.FinanceiroPlanoDePagamentoId);
+            demonstrativoParcelasVm.DescricaoPlanoPagamento = repoPlanoPagamento.GetDescricaoPlano(financeiroTipoRecebimento.FinanceiroPlanoDePagamentoId);            
             return View("DemonstrativoParcelas", demonstrativoParcelasVm);
         }
 
@@ -64,7 +64,7 @@ namespace SisVetWeb.Controllers {
         [HttpPost]
         public ActionResult Confirmar() {
             try {
-                var demonstrativoParcelasVM = (FinanceiroDuplicataDemonstrativoDeParcelasViewModel)TempData["FullModel"];
+                var demonstrativoParcelasVM = (FinanceiroDemonstrativoDeParcelasViewModel)TempData["FullModel"];
                 DuplicataParcelasBusiness.SalvarRegistroFinanceiro(demonstrativoParcelasVM.FinanceiroContasReceberParcelasList, demonstrativoParcelasVM.FinanceiroTipoRecebimento);
             } catch (Exception ex) {
                 return View();

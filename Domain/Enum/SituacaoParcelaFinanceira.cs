@@ -1,5 +1,5 @@
 ﻿namespace Domain.Enum {
-    public enum SituacaoParcelaContasReceber{
+    public enum SituacaoParcelaFinanceira{
         Aberto = 1,
         Cancelado = 2,
         Liquidado = 3,

@@ -14,7 +14,7 @@ namespace Domain.Entidades.Operacao.Financeiro {
         public Generic.Operacao Operacao { get; set; }
 
 
-        public TipoMovimentacao TipoMovimentacaoEnum { get; set; }
+        public TipoMovimentacao TipoMovimentacao { get; set; }
 
         public DateTime DataHora { get; set; }
 
@@ -27,7 +27,7 @@ namespace Domain.Entidades.Operacao.Financeiro {
         public FinanceiroMovimentacoes GerarMovimentacaoDebito(FinanceiroCentroDeCusto financeiroCentroDeCusto, Generic.Operacao operacao, DateTime dataHora, decimal debito) {
             this.FinanceiroCentroDeCusto = financeiroCentroDeCusto;
             this.Operacao = operacao;
-            this.TipoMovimentacaoEnum = TipoMovimentacao.Debito;
+            this.TipoMovimentacao = TipoMovimentacao.Debito;
             this.DataHora = dataHora;
             this.Debito = debito;
             return this;
@@ -36,7 +36,7 @@ namespace Domain.Entidades.Operacao.Financeiro {
         public FinanceiroMovimentacoes GerarMovimentacaoCredito(FinanceiroCentroDeCusto financeiroCentroDeCusto, Generic.Operacao operacao, DateTime dataHora, decimal credito) {
             this.FinanceiroCentroDeCusto = financeiroCentroDeCusto;
             this.Operacao = operacao;
-            this.TipoMovimentacaoEnum = TipoMovimentacao.Credito;
+            this.TipoMovimentacao = TipoMovimentacao.Credito;
             this.DataHora = dataHora;
             this.Credito = credito;
             return this;

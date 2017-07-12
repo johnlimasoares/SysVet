@@ -65,7 +65,7 @@
         <div class="form-group">
             @Html.Label("Proprietário", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("ClienteID", (IEnumerable<SelectListItem>)ViewBag.ClienteID, "Selecione...", new { @class = "form-control combobox" })
+                @Html.DropDownList("ClienteId", (IEnumerable<SelectListItem>)ViewBag.ClienteID, "Selecione...", new { @class = "form-control combobox" })
                 @Html.ValidationMessageFor(model => model.ClienteId)
 
             </div>
@@ -114,8 +114,6 @@
                 <input type="submit" value="Confirmar" class="btn btn-success" />
             </div>
         </div>
-
-
     </div>
 }
 

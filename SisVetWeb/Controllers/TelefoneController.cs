@@ -52,7 +52,7 @@ namespace SisVetWeb.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Numero,ClienteID")] Telefone telefone, int tipoTelefoneId) {
+        public ActionResult Create([Bind(Include = "ID,Numero,ClienteId")] Telefone telefone, int tipoTelefoneId) {
             var tipoTelefoneID = new TipoTelefone() { Id = tipoTelefoneId };
             if (ModelState.IsValid) {
                 using (var ctx = new BancoContexto()) {
@@ -96,7 +96,7 @@ namespace SisVetWeb.Controllers {
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "ID,Numero,ClienteID,Cliente,TipoTelefone")] Telefone telefone, int tipoTelefoneId) {
+        public async Task<ActionResult> Edit([Bind(Include = "ID,Numero,ClienteId,Cliente,TipoTelefone")] Telefone telefone, int tipoTelefoneId) {
             if (ModelState.IsValid) {
                 using (var ctx = new BancoContexto()) {
                     telefone.Numero = telefone.Numero.ApenasNumeros(); ;

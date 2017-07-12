@@ -56,7 +56,7 @@ namespace SisVetWeb.Controllers
   
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public  ActionResult Create([Bind(Include="ID,Logradouro,Cep,Complemento,Numero,ClienteID,CidadeId")] Endereco endereco)
+        public  ActionResult Create([Bind(Include="ID,Logradouro,Cep,Complemento,Numero,ClienteId,CidadeId")] Endereco endereco)
         {
             if (ModelState.IsValid)
             {
@@ -90,7 +90,7 @@ namespace SisVetWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include="ID,Logradouro,Cep,Complemento,Numero,ClienteID,CidadeId")] Endereco endereco)
+        public async Task<ActionResult> Edit([Bind(Include="ID,Logradouro,Cep,Complemento,Numero,ClienteId,CidadeId")] Endereco endereco)
         {
             if (ModelState.IsValid)
             {

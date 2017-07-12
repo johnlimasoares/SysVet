@@ -20,7 +20,7 @@ namespace Domain.Entidades.Operacao.Financeiro {
         public Decimal? ValorTotalJuros { get; set; }
         public Decimal? PercentualJuros { get; set; }
         public Decimal? ValorLiquidado { get; set; }
-        public SituacaoParcelaContasReceber SituacaoParcelaContasReceberEnum { get; set; }
+        public SituacaoParcelaFinanceira SituacaoParcelaFinanceira { get; set; }
         public DateTime DataEmissao { get; set; }
         public TimeSpan HoraEmissao { get; set; }
         public DateTime DataVencimento { get; set; }

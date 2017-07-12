@@ -90,7 +90,7 @@
             @Html.Label("Proprietário", new { @class = "control-label col-md-2" })
 
             <div class="col-md-5 col-lg-pull-0" style="width:500px;">
-                @Html.DropDownList("ClienteID", (IEnumerable<SelectListItem>)ViewBag.Clientes, new { @class = "form-control combobox", required = true })
+                @Html.DropDownList("ClienteId", (IEnumerable<SelectListItem>)ViewBag.Clientes, new { @class = "form-control combobox", required = true })
                 @Html.ValidationMessageFor(model => model.ClienteId)
             </div>
             <div class="col-sm-pull-1">

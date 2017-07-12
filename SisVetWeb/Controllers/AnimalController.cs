@@ -107,7 +107,7 @@ namespace SisVetWeb.Controllers {
             //        animal.RacaId
             //    );
 
-            //ViewBag.ClienteID = new SelectList(
+            //ViewBag.ClienteId = new SelectList(
             //    repoCliente.GetAll(),
             //    "ID",
             //    "Nome",

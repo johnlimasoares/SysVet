@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using Domain.Entidades.Cadastro.Financeiro;
 using Domain.Entidades.Operacao.Financeiro;
+using Domain.Entidades.Operacao.Generic;
 using Domain.Enum;
 using Repository.Context;
 using Repository.Repositories;
@@ -28,7 +29,7 @@ namespace Business.Financeiro.ContasReceber {
                 financeiroContasReceberParcela.ValorTotalLiquido = financeiroContasReceberParcela.ValorTotalBruto;
                 financeiroContasReceberParcela.NumeroDocumento = string.Format("{0}{1}-{2}", financeiroTipoRecebimento.ClienteId, planoDePagamento.Id, parcela);
                 financeiroContasReceberParcela.FinanceiroTipoRecebimento = financeiroTipoRecebimento;
-                financeiroContasReceberParcela.SituacaoParcelaContasReceberEnum = GetSituacaoContaReceber(planoDePagamento);
+                financeiroContasReceberParcela.SituacaoParcelaFinanceira = GetSituacaoContaReceber(planoDePagamento);
                 financeiroContasReceberParcelasList.Add(financeiroContasReceberParcela);
 
                 if (IsUltimaParcela(parcela, financeiroTipoRecebimento.QuantidadeParcelas)) {
@@ -39,10 +40,10 @@ namespace Business.Financeiro.ContasReceber {
             return financeiroContasReceberParcelasList;
         }
 
-        private static SituacaoParcelaContasReceber GetSituacaoContaReceber(FinanceiroPlanoDePagamento planoDePagamento) {
+        private static SituacaoParcelaFinanceira GetSituacaoContaReceber(FinanceiroPlanoDePagamento planoDePagamento) {
             return planoDePagamento.IntervaloDias == 0 && planoDePagamento.QuantidadeParcelas == 1
-                ? SituacaoParcelaContasReceber.Liquidado
-                : SituacaoParcelaContasReceber.Aberto;
+                ? SituacaoParcelaFinanceira.Liquidado
+                : SituacaoParcelaFinanceira.Aberto;
         }
 
         private static void CalcularSobra(List<FinanceiroContasReceberParcelas> financeiroContasReceberParcelasList, decimal valorTotal) {
@@ -63,12 +64,11 @@ namespace Business.Financeiro.ContasReceber {
 
         public static void SalvarRegistroFinanceiro(List<FinanceiroContasReceberParcelas> financeiroContasReceberParcelasList, FinanceiroTipoRecebimento financeiroTipoRecebimento) {
             using (var ctx = new BancoContexto()) {
-                FinanceiroTipoRecebimentoRepository.SalvarRegistroFinanceiro(ctx, financeiroTipoRecebimento);
-                FinanceiroContasReceberParcelasRepository.SalvarParcelasGeradas(ctx, financeiroContasReceberParcelasList);
+                var operacao = OperacaoRepository.GerarOperacao(ctx);
+                FinanceiroTipoRecebimentoRepository.SalvarTipoRecebimentoFinanceiro(ctx, operacao, financeiroTipoRecebimento);
+                FinanceiroContasReceberParcelasRepository.SalvarParcelasGeradas(ctx, operacao, financeiroContasReceberParcelasList, financeiroTipoRecebimento.FinanceiroCentroDeCustoId);
                 ctx.SaveChanges();
             }
-
-
         }
     }
 }

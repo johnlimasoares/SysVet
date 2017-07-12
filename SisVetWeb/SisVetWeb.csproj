@@ -155,7 +155,7 @@
     </Compile>
     <Compile Include="Helpers\MyHelper.cs" />
     <Compile Include="Models\AnimalViewModel.cs" />
-    <Compile Include="Models\FinanceiroDuplicataDemonstrativoDeParcelasViewModel.cs" />
+    <Compile Include="Models\FinanceiroDemonstrativoDeParcelasViewModel.cs" />
     <Compile Include="Models\Paginacao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

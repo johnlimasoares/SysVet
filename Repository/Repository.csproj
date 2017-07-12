@@ -57,7 +57,7 @@
     <Compile Include="Repositories\FinanceiroMovimentacoesRepository.cs" />
     <Compile Include="Repositories\FinanceiroPlanoDePagamentoRepository.cs" />
     <Compile Include="Repositories\FinanceiroTipoRecebimentoRepository.cs" />
-    <Compile Include="Repositories\Operacao.cs" />
+    <Compile Include="Repositories\OperacaoRepository.cs" />
     <Compile Include="Repositories\VacinacaoRepository.cs" />
     <Compile Include="Repositories\VacinaRepository.cs" />
     <Compile Include="Repositories\AtendimentoRepository.cs" />

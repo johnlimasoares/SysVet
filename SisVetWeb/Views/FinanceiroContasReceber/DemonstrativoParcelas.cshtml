@@ -1,24 +1,31 @@
-﻿@model SisVetWeb.Models.FinanceiroDuplicataDemonstrativoDeParcelasViewModel
+﻿@model SisVetWeb.Models.FinanceiroDemonstrativoDeParcelasViewModel
 
 @{ TempData["FullModel"] = Model; }
 
 @using (Html.BeginForm("Confirmar", "FinanceiroContasReceber", FormMethod.Post)) {
     <h1>Parcelas Geradas</h1>
     <hr />
-    <br />
-    <label>
-        <span class="label-parcelas">Cliente: </span> @Model.NomeCliente
-    </label>
-    <br />
-    <label>
-        <span class="label-parcelas">Pagamento: </span> @Model.DescricaoPlanoPagamento
-    </label>
-    <table class="table table-condensed table-hover">
-        <tr class="active">
-            <th class="text-center">Parcela</th>
-            <th class="text-center">Número Documento</th>
-            <th class="text-center">Valor</th>
-            <th class="text-center">Vencimento</th>
+    <button id="btn-alterar-documento" class="btn btn-info">Alterar</button>
+    <table id="table-cabecalho" cellpadding="5">
+        <tr>
+            <td class="parcelas-cabecalho-label fonte">Cliente: </td>
+            <td class="parcelas-cabecalho-value fonte">@Model.NomeCliente</td>
+        </tr>
+        <tr>
+            <td class="parcelas-cabecalho-label fonte">Forma Pagamento: </td>
+            <td class="parcelas-cabecalho-value fonte">@Model.DescricaoPlanoPagamento</td>
+        </tr>
+        <tr id="linha-total">
+            <td id="parcelas-cabecalho-label-total" class="fonte">Total: </td>
+            <td id="parcelas-cabecalho-value-total" class="fonte">R$@Model.ValorTotal</td>
+        </tr>
+    </table>
+    <table class="table table-condensed ">
+        <tr id="info-documento-row">
+            <th class="text-center info-documento fonte">Parcela</th>
+            <th class="text-center info-documento fonte">Número Documento</th>
+            <th class="text-center info-documento fonte">Valor</th>
+            <th class="text-center info-documento fonte">Vencimento</th>
         </tr>
         @foreach (var item in Model.FinanceiroContasReceberParcelasList) {
             <tr>
@@ -40,17 +47,70 @@
 
 
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
+        <div class="pull-right">
+            <button class="btn btn-danger">Cancelar</button>
             <input type="submit" value="Confirmar" class="btn btn-success" />
         </div>
     </div>
 }
 
+<script>
+    document.getElementById('btn-alterar-documento').addEventListener('click', onClickDelegate, false);
+    function onClickDelegate() {
+        window.history.go(-1);
+    }
+</script>
+
 <style>
-    .label-parcelas {
-        color: #0000cd;
-        font-size: 18px;
+    .fonte {
+        font-family: Arial,Helvetica,Verdana,sans-serif;
+        text-transform: uppercase;
+    }
+
+    .parcelas-cabecalho-label {
+        color: #666;
+        font-size: 11px;
+        width: auto;
+        text-align: right;
+    }
+
+    .parcelas-cabecalho-value {
+        color: #00adef;
+        font-size: 14px;
+        width: auto;
+    }
+
+    #linha-total {
+        border-top: 1pt solid #e5e5e5;
+    }
+
+    #table-cabecalho {
+        float: right;
+        background-color: #eeeeee;
+        margin-bottom: 5px;
+        padding: 10px;
+    }
+
+    #parcelas-cabecalho-label-total {
+        width: auto;
+        text-align: right;
+        color: #00adef;
+        font-size: 20px;
+    }
+
+    #parcelas-cabecalho-value-total {
+        width: auto;
+        text-align: right;
+        color: #00adef;
+        font-size: 20px;
+    }
+
+    .info-documento {
+        color: #ffffff;
+    }
+
+    #info-documento-row {
+        background: #33c5ff;
     }
 </style>
-
 
