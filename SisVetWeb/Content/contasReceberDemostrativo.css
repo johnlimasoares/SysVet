@@ -1,0 +1,50 @@
+﻿.fonte {
+    font-family: Arial,Helvetica,Verdana,sans-serif;
+    text-transform: uppercase;
+}
+
+.demostrativo-parcelas-cabecalho-label {
+    color: #666;
+    font-size: 11px;
+    width: auto;
+    text-align: right;
+}
+
+.demostrativo-parcelas-cabecalho-value {
+    color: #00adef;
+    font-size: 14px;
+    width: auto;
+}
+
+#demostrativo-linha-total {
+    border-top: 1pt solid #e5e5e5;
+}
+
+#demostrativo-table-cabecalho {
+    float: right;
+    background-color: #eeeeee;
+    margin-bottom: 5px;
+    padding: 10px;
+}
+
+#demostrativo-parcelas-cabecalho-label-total {
+    width: auto;
+    text-align: right;
+    color: #00adef;
+    font-size: 20px;
+}
+
+#demostrativo-parcelas-cabecalho-value-total {
+    width: auto;
+    text-align: right;
+    color: #00adef;
+    font-size: 20px;
+}
+
+.demostrativo-info-documento {
+    color: #ffffff;
+}
+
+.info-documento-row {
+    background: #33c5ff;
+}

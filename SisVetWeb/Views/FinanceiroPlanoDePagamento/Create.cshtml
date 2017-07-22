@@ -20,7 +20,7 @@
         <div class="form-group">
             @Html.Label("Quantidade Parcelas", new { @class = "control-label col-md-2" })
             <div class="col-md-10" style="width: 500px">
-                @Html.TextBoxFor(model => model.QuantidadeParcelas, new { @class = "form-control", id = "input", @type = "number" })
+                @Html.TextBoxFor(model => model.QuantidadeParcelas, new { @class = "form-control", id = "input", @type = "number", @min = 1 , @step = 1})
                 @Html.ValidationMessageFor(model => model.QuantidadeParcelas)
             </div>
         </div>

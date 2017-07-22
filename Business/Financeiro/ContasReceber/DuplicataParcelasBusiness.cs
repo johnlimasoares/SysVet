@@ -21,13 +21,12 @@ namespace Business.Financeiro.ContasReceber {
 
                 var financeiroContasReceberParcela = new FinanceiroContasReceberParcelas();
                 financeiroContasReceberParcela.DataEmissao = financeiroTipoRecebimento.DataEmissao;
-                financeiroContasReceberParcela.HoraEmissao = financeiroContasReceberParcela.DataEmissao.TimeOfDay;
+                financeiroContasReceberParcela.HoraEmissao = DateTime.Now.TimeOfDay;
                 financeiroContasReceberParcela.DataVencimento = financeiroContasReceberParcela.DataEmissao.AddDays(planoDePagamento.IntervaloDias * parcela);
-                financeiroContasReceberParcela.HoraVencimento = financeiroContasReceberParcela.DataVencimento.TimeOfDay;
                 financeiroContasReceberParcela.Parcela = parcela;
                 financeiroContasReceberParcela.ValorTotalBruto = financeiroTipoRecebimento.ValorTotal / financeiroTipoRecebimento.QuantidadeParcelas;
                 financeiroContasReceberParcela.ValorTotalLiquido = financeiroContasReceberParcela.ValorTotalBruto;
-                financeiroContasReceberParcela.NumeroDocumento = string.Format("{0}{1}-{2}", financeiroTipoRecebimento.ClienteId, planoDePagamento.Id, parcela);
+                financeiroContasReceberParcela.NumeroDocumento = string.Format("{0}{1}{2}-{3}", financeiroTipoRecebimento.ClienteId, planoDePagamento.Id, GetDataParaNumetoDocumento(), parcela);
                 financeiroContasReceberParcela.FinanceiroTipoRecebimento = financeiroTipoRecebimento;
                 financeiroContasReceberParcela.SituacaoParcelaFinanceira = GetSituacaoContaReceber(planoDePagamento);
                 financeiroContasReceberParcelasList.Add(financeiroContasReceberParcela);
@@ -62,6 +61,10 @@ namespace Business.Financeiro.ContasReceber {
             return parcelaAtual == quantidadeParcelas;
         }
 
+        private static string GetDataParaNumetoDocumento() {
+            var dataAtual = DateTime.Now;
+            return dataAtual.DayOfYear.ToString() + dataAtual.Hour + dataAtual.Minute + dataAtual.Second;
+        }
         public static void SalvarRegistroFinanceiro(List<FinanceiroContasReceberParcelas> financeiroContasReceberParcelasList, FinanceiroTipoRecebimento financeiroTipoRecebimento) {
             using (var ctx = new BancoContexto()) {
                 var operacao = OperacaoRepository.GerarOperacao(ctx);

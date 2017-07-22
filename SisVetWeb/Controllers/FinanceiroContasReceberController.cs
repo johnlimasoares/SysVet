@@ -15,9 +15,12 @@ namespace SisVetWeb.Controllers {
         private ClienteRepository repoCliente = new ClienteRepository();
         private FinanceiroCentroDeCustoRepository repoCentroCusto = new FinanceiroCentroDeCustoRepository();
         private FinanceiroPlanoDePagamentoRepository repoPlanoPagamento = new FinanceiroPlanoDePagamentoRepository();
+        private FinanceiroContasReceberParcelasRepository repoContasReceber = new FinanceiroContasReceberParcelasRepository();
 
         public ActionResult Index() {
-            return View();
+            var parcelasEtotalizadores = new FinanceiroParcelasETotalizadoresViewModel();
+            parcelasEtotalizadores.FinanceiroContasReceberParcelasDapperList = repoContasReceber.GetAllContasReceberDapper().ToList();
+            return View(parcelasEtotalizadores);
         }
 
         public ActionResult GerarParcelasDuplicata() {
@@ -47,13 +50,13 @@ namespace SisVetWeb.Controllers {
             demonstrativoParcelasVm.FinanceiroContasReceberParcelasList = DuplicataParcelasBusiness.GerarDemostrativoParcelas(financeiroTipoRecebimento);
             demonstrativoParcelasVm.FinanceiroTipoRecebimento = financeiroTipoRecebimento;
             demonstrativoParcelasVm.NomeCliente = repoCliente.GetNomeCliente(financeiroTipoRecebimento.ClienteId);
-            demonstrativoParcelasVm.DescricaoPlanoPagamento = repoPlanoPagamento.GetDescricaoPlano(financeiroTipoRecebimento.FinanceiroPlanoDePagamentoId);            
+            demonstrativoParcelasVm.DescricaoPlanoPagamento = repoPlanoPagamento.GetDescricaoPlano(financeiroTipoRecebimento.FinanceiroPlanoDePagamentoId);
             return View("DemonstrativoParcelas", demonstrativoParcelasVm);
         }
 
         [HttpPost]
         public JsonResult ValidarQuantidadeMaximaParcelasPlano(string planoPagamentoId) {
-            try{
+            try {
                 var maximoParcelas = repoPlanoPagamento.GetPlanoPagamento(planoPagamentoId.ToInteger()).QuantidadeParcelas;
                 return Json(maximoParcelas, JsonRequestBehavior.AllowGet);
             } catch (Exception ex) {
@@ -65,9 +68,10 @@ namespace SisVetWeb.Controllers {
         public ActionResult Confirmar() {
             try {
                 var demonstrativoParcelasVM = (FinanceiroDemonstrativoDeParcelasViewModel)TempData["FullModel"];
+                //validar quantidade parcelas do plano
                 DuplicataParcelasBusiness.SalvarRegistroFinanceiro(demonstrativoParcelasVM.FinanceiroContasReceberParcelasList, demonstrativoParcelasVM.FinanceiroTipoRecebimento);
             } catch (Exception ex) {
-                return View();
+                return null;
             }
             return View("Index");
         }

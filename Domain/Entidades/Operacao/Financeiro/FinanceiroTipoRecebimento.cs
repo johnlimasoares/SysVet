@@ -12,7 +12,7 @@ namespace Domain.Entidades.Operacao.Financeiro {
         public Int64 OperacaoId { get; set; }
         public Generic.Operacao Operacao { get; set; }
 
-        public Int64 ClienteId { get; set; }
+        public int ClienteId { get; set; }
         public Cliente Cliente { get; set; }
 
         public Int64 FinanceiroCentroDeCustoId { get; set; }

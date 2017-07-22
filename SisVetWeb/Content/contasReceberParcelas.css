@@ -1,0 +1,15 @@
+﻿
+
+#contas-receber-parcelas-corpo {
+    height: 820px;
+    margin-bottom:75px;
+    overflow: auto;
+}
+
+#contas-receber-parcelas-rodape {
+    position: fixed;
+    bottom: 0px;
+    height: 75px;
+    width: 100%;
+    background: #33c5ff;
+}
