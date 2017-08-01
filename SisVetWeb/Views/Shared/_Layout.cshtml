@@ -56,21 +56,8 @@
         </div>
     </div>
 
-    @*<div>
-            @if (TempData["mensagem"] != null) {
-                <div class="alert" id="mensagem  alert-success ">TempData["mensagem"]</div>
-            }
-        </div>*@
-
-    <div class="container body-content">
+    <div id="div-principal-conteudo" class="container body-content">
         @RenderBody()
-
-        <div id="rodape" style="display: none">
-            <hr />
-            <footer>
-                <p>&copy; Green Tecnologia</p>
-            </footer>
-        </div>
     </div>
 
     @Scripts.Render("~/bundles/bootstrap")

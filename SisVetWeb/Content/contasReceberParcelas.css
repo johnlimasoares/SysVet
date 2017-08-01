@@ -1,15 +1,49 @@
 ﻿
+html, body {
+    height: 100%;
+}
+
+#div-principal-conteudo {
+    height: 100%;
+}
 
 #contas-receber-parcelas-corpo {
-    height: 820px;
-    margin-bottom:75px;
+    height: 88%;
+    width: 100%;
     overflow: auto;
 }
 
 #contas-receber-parcelas-rodape {
-    position: fixed;
-    bottom: 0px;
-    height: 75px;
-    width: 100%;
+  height: 12%;/*define 12% de altura*/
+  min-height: 12%;/*impede que a altura seje menor que isso*/
+  overflow: auto;/*cria barra de rolagem vertical caso necessite*/
+  display: -webkit-flex;/*define que os filhos deste elemento deverao agir como flexbox - compatibilidade SAFARI*/
+  display: flex;/*define que os filhos deste elemento deverao agir como flexbox*/
+  -webkit-align-items: center;/*Centraliza os elementos na vertical - compatibilidade SAFARI*/
+  align-items: center;/*Centraliza os elementos na vertical*/
+  -webkit-justify-content: center;/*Centraliza os elementos na horizontal - compatibilidade SAFARI*/
+  justify-content: flex-start;/*Centraliza os elementos na horizontal*/
+  padding: 5px;
+}
+
+.background-blue {
     background: #33c5ff;
+}
+
+.contas-receber-parcelas-rodape-totalizadores {
+    margin-right: 60px;
+}
+
+.fonte {
+    font-size: 1.0em;
+    color: #ffffff;
+}
+
+tr:hover {
+    background: #e6f9ff;
+}
+
+#total-geral {
+    position: absolute;    
+    right:5px;
 }

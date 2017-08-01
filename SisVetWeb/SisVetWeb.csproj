@@ -211,6 +211,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\site.css" />
+    <Content Include="Images\img_check_ok.png" />
+    <Content Include="Images\img_exclamation_blue.png" />
+    <Content Include="Images\img_exclamation_green.png" />
+    <Content Include="Images\img_exclamation_red.png" />
+    <Content Include="Images\img_launch.png" />
     <Content Include="Scripts\bootstrap.js" />
     <None Include="Properties\PublishProfiles\SysVetWeb.pubxml" />
     <None Include="Properties\PublishProfiles\websys.pubxml" />
