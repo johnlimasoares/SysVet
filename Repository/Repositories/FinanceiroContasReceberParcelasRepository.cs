@@ -31,8 +31,10 @@ namespace Repository.Repositories {
                         CRP.DataRecebimento,
                         CRP.DataCancelamento,
                         CRP.DataVencimento,
+                        CRP.SituacaoParcelaFinanceira,
                         CRP.ValorTotalLiquido,
-                        CRP.ValorLiquidado
+                        CRP.ValorLiquidado,
+                        (SELECT SUM(_CRP.ValorTotalLiquido) FROM FinanceiroContasReceberParcelas _CRP) AS ValorTotalEmitidas
                         FROM FinanceiroContasReceberParcelas CRP
                         INNER JOIN FinanceiroTipoRecebimento FTR ON CRP.FinanceiroTipoRecebimentoId = FTR.Id
                         INNER JOIN Cliente C ON FTR.ClienteId = C.Id

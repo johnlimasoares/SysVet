@@ -1,4 +1,5 @@
 ﻿using System;
+using Domain.Enum;
 
 namespace Domain.EntidadesLeitura.Operacao.Financeiro {
     public class FinanceiroContasReceberParcelasDapper {
@@ -11,7 +12,9 @@ namespace Domain.EntidadesLeitura.Operacao.Financeiro {
         public DateTime DataVencimento { get; set; }
         public DateTime DataRecebimento{ get; set; }
         public DateTime DataCancelamento{ get; set; }
+        public SituacaoParcelaFinanceira SituacaoParcelaFinanceira { get; set; }
         public decimal ValorTotalLiquido { get; set; }
         public decimal ValorLiquidado { get; set; }
+        public decimal ValorTotalEmitidas { get; set; }
     }
 }

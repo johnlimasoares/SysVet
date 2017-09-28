@@ -211,6 +211,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\site.css" />
+    <Content Include="Images\arrow-down.png" />
+    <Content Include="Images\arrow-right.png" />
+    <Content Include="Images\arrow-up.png" />
     <Content Include="Images\img_check_ok.png" />
     <Content Include="Images\img_exclamation_blue.png" />
     <Content Include="Images\img_exclamation_green.png" />

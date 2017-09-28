@@ -26,8 +26,8 @@ html, body {
   padding: 5px;
 }
 
-.background-blue {
-    background: #33c5ff;
+.background-blue{
+    background: #33c5ff;    
 }
 
 .contas-receber-parcelas-rodape-totalizadores {
@@ -45,5 +45,6 @@ tr:hover {
 
 #total-geral {
     position: absolute;    
-    right:5px;
+    right:7px;
+    font-size: 3em;
 }

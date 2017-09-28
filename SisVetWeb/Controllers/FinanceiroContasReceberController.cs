@@ -20,7 +20,7 @@ namespace SisVetWeb.Controllers {
         public ActionResult Index() {
             var parcelasEtotalizadores = new FinanceiroParcelasETotalizadoresViewModel();
             parcelasEtotalizadores.FinanceiroContasReceberParcelasDapperList = repoContasReceber.GetAllContasReceberDapper().ToList();
-            return View(parcelasEtotalizadores);
+            return View(parcelasEtotalizadores.PreencherTotalizadores());
         }
 
         public ActionResult GerarParcelasDuplicata() {
@@ -73,8 +73,7 @@ namespace SisVetWeb.Controllers {
             } catch (Exception ex) {
                 return null;
             }
-            return View("Index");
+            return RedirectToAction("Index");
         }
-
     }
 }

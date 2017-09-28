@@ -2,7 +2,6 @@
     public enum SituacaoParcelaFinanceira{
         Aberto = 1,
         Cancelado = 2,
-        Liquidado = 3,
-        Vencido = 4
+        Liquidado = 3
     }
 }

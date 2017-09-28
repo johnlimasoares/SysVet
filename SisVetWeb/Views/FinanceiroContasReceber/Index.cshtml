@@ -1,11 +1,21 @@
-﻿@using SisVetWeb.Helpers
+﻿@using Domain.Enum
+@using SisVetWeb.Helpers
 @model SisVetWeb.Models.FinanceiroParcelasETotalizadoresViewModel
 <link href="~/Content/contasReceberParcelas.css" rel="stylesheet" />
 
 <div id="contas-receber-parcelas-corpo">
     <h2>Contas Receber</h2>
+
+    <div class="row">
+        <div class="pull-right col-md-1">
+            @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Lançar", "GerarParcelasDuplicata", "FinanceiroContasReceber", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
+        </div>
+    </div>
+
     <table class="table table-condensed">
         <tr class="background-blue">
+            <th class="text-left fonte"></th>
+            <th class="text-left fonte">Status</th>
             <th class="text-left fonte">Cliente</th>
             <th class="text-center fonte">Parcela</th>
             <th class="text-center fonte">Total Parcela</th>
@@ -20,12 +30,41 @@
         @foreach (var parcela in @Model.FinanceiroContasReceberParcelasDapperList)
         {
             <tr>
+                @{
+            string pathIcon = "";
+            string status = "";
+            string colorStatus = "";
+            switch (parcela.SituacaoParcelaFinanceira)
+            {
+                case SituacaoParcelaFinanceira.Aberto:
+                    pathIcon = "\\Images\\arrow-right.png";
+                    status = "Aberta";
+                    break;
+                case SituacaoParcelaFinanceira.Liquidado:
+                    pathIcon = "\\Images\\arrow-up.png";
+                    status = "Recebida";
+                    colorStatus = "Color:green";
+                    break;
+                case SituacaoParcelaFinanceira.Cancelado:
+                    pathIcon = "\\Images\\arrow-down.png";
+                    status = "Cancelada";
+                    colorStatus = "Color:red";
+                    break;
+
+
+            }
+
+            var isVencida = parcela.DataVencimento < DateTime.Now && parcela.SituacaoParcelaFinanceira == SituacaoParcelaFinanceira.Aberto;
+            var dataRecebimento = parcela.DataRecebimento.ToString() == "01/01/0001 00:00:00" ? string.Empty : parcela.DataRecebimento.ToString("d");
+                }
+                <td><img src=@(pathIcon) /></td>
+                <td style="@(colorStatus)">@(status)</td>
                 <td class="text-left">@string.Format("{0}-{1}", @parcela.ClienteId, @parcela.ClienteNome)</td>
                 <td class="text-center">@parcela.Parcela</td>
                 <td class="text-center">@parcela.TotalParcelas</td>
                 <td class="text-center">@parcela.DataEmissao.ToString("d")</td>
-                <td class="text-center">@parcela.DataVencimento.ToString("d")</td>
-                <td class="text-center">@(parcela.DataRecebimento.ToString() == "01/01/0001 00:00:00" ? string.Empty : parcela.DataRecebimento.ToString("d"))</td>
+                <td class="text-center" style="@(isVencida ? "Color:red" : "")">@parcela.DataVencimento.ToString("d")</td>
+                <td class="text-center" style="@(!string.IsNullOrEmpty(dataRecebimento) ? "Color:green":"")">@(dataRecebimento)</td>
                 <td class="text-center">@parcela.ValorTotalLiquido.ToString("N")</td>
                 <td class="text-center">@parcela.ValorLiquidado.ToString("N")</td>
                 <td class="col-sm-2">
@@ -42,17 +81,17 @@
         <div class="fonte">
             <img src="\Images\img_exclamation_red.png" />
             <label>Vencidas</label>
-            <label>R$:1200,00</label>
+            <label>R$:@Model.TotalVencidas.ToString("N")</label>
         </div>
         <div class="fonte">
             <img src="\Images\img_exclamation_green.png" />
             <label>A Vencer</label>
-            <label>R$:1200,00</label>
+            <label>R$:@Model.TotalAVencer.ToString("N")</label>
         </div>
         <div class="fonte">
             <img src="\Images\img_exclamation_blue.png" />
             <label>Vence hoje</label>
-            <label>R$:1200,00</label>
+            <label>R$:@Model.TotalVenceHoje.ToString("N")</label>
         </div>
     </div>
 
@@ -60,17 +99,17 @@
         <div class="fonte">
             <img src="\Images\img_launch.png" />
             <label class="fonte">Emitidas</label>
-            <label>R$:1200,00</label>
+            <label>R$:@Model.TotalEmitidas.ToString("N")</label>
         </div>
         <div class="fonte">
             <img src="\Images\img_check_ok.png" />
             <label class="fonte">Recebidas</label>
-            <label>R$:1200,00</label>
+            <label>R$:@Model.TotalRecebidas.ToString("N")</label>
         </div>
     </div>
     <div id="total-geral" class="fonte">
         <label>R$</label>
-        <label>10000,00</label>
+        <label>@Model.TotalAReceber.ToString("N")</label>
     </div>
 </div>
 

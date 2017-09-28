@@ -50,6 +50,16 @@
                         </ul>
                     </li>
 
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Financeiro<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                            <li>@Html.ActionLink("Grupo Centro de Custo", "Index", "FinanceiroCentroDeCustoGrupo")</li>
+                            <li>@Html.ActionLink("Centro de Custo", "Index", "FinanceiroCentroDeCusto")</li>
+                            <li>@Html.ActionLink("Planos de Pagamento", "Index", "FinanceiroPlanoDePagamento")</li>
+                            <li>@Html.ActionLink("Contas a Receber", "Index", "FinanceiroContasReceber")</li>
+                        </ul>
+                    </li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
