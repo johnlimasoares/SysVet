@@ -1,0 +1,31 @@
+﻿@model SisVetWeb.Models.BaixaDeParcelaViewModel
+
+
+<div>
+    <span><img src="\Images\arrow-right.png" /> Recebimento</span>    
+</div>
+
+<label>Dados da parcela</label>
+
+<table id="demostrativo-table-cabecalho" cellpadding="5">
+    <tr>
+        <td class="demostrativo-parcelas-cabecalho-label fonte">Cliente: </td>
+        <td class="demostrativo-parcelas-cabecalho-value fonte">@Model.NomeCliente</td>
+    </tr>
+    <tr>
+        <td class="demostrativo-parcelas-cabecalho-label fonte">Número Documento: </td>
+        <td class="demostrativo-parcelas-cabecalho-value fonte">@Model.NumeroDocumento</td>
+    </tr>
+    <tr >
+        <td id="demostrativo-parcelas-cabecalho-label-total" class="fonte">Data Vencimento: </td>
+        <td id="demostrativo-parcelas-cabecalho-value-total" class="fonte">@Model.DataVencimento</td>
+    </tr>
+    <tr>
+        <td id="demostrativo-parcelas-cabecalho-label-total" class="fonte">Data Recebimento: </td>
+        <td id="demostrativo-parcelas-cabecalho-value-total" class="fonte">@Model.DataRecebimento</td>
+    </tr>
+    <tr>
+        <td id="demostrativo-parcelas-cabecalho-label-total" class="fonte">Valor Total: </td>
+        <td id="demostrativo-parcelas-cabecalho-value-total" class="fonte">@Model.ValorTotalLiquido</td>
+    </tr>
+</table>

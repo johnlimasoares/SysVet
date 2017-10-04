@@ -23,6 +23,7 @@ namespace Repository.Repositories {
 
         public IEnumerable<FinanceiroContasReceberParcelasDapper> GetAllContasReceberDapper() {
             var sql = @"SELECT
+                        CRP.Id AS ParcelaId,
                         C.Id AS ClienteId,
                         C.Nome AS ClienteNome,
                         CRP.Parcela,

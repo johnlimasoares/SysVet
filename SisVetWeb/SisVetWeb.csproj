@@ -155,6 +155,7 @@
     </Compile>
     <Compile Include="Helpers\MyHelper.cs" />
     <Compile Include="Models\AnimalViewModel.cs" />
+    <Compile Include="Models\BaixaDeParcelaViewModel.cs" />
     <Compile Include="Models\FinanceiroDemonstrativoDeParcelasViewModel.cs" />
     <Compile Include="Models\FinanceiroParcelasETotalizadoresViewModel.cs" />
     <Compile Include="Models\Paginacao.cs" />
@@ -381,6 +382,7 @@
     <Content Include="Views\FinanceiroContasReceber\GerarParcelasDuplicata.cshtml" />
     <Content Include="Views\FinanceiroContasReceber\DemonstrativoParcelas.cshtml" />
     <Content Include="Views\FinanceiroContasReceber\Index.cshtml" />
+    <Content Include="Views\FinanceiroContasReceber\BaixaParcela.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

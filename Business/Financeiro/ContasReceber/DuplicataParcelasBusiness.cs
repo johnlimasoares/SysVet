@@ -64,7 +64,7 @@ namespace Business.Financeiro.ContasReceber
             var valorSobra = valorTotal - valorTotalParcelas;
             if (valorSobra != 0)
             {
-                financeiroContasReceberParcelasList[UltimaParcela(financeiroContasReceberParcelasList)].ValorTotalBruto += valorSobra;
+                financeiroContasReceberParcelasList[UltimaParcela(financeiroContasReceberParcelasList)].ValorTotalBruto += valorSobra;               
             }
         }
 

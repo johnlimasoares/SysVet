@@ -4,6 +4,7 @@ using Domain.Enum;
 namespace Domain.EntidadesLeitura.Operacao.Financeiro {
     public class FinanceiroContasReceberParcelasDapper {
         
+        public int ParcelaId { get; set; }
         public int ClienteId { get; set; }
         public string ClienteNome { get; set; }
         public int Parcela{ get; set; }

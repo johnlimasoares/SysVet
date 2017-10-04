@@ -36,8 +36,7 @@ $(function () {
                     $("#divExcluir").data(data.responseText);
                 },
                 error: function(data) { 
-                    $("#deleteModal").modal('hide');
-                    console(data)
+                    $("#deleteModal").modal('hide');                   
                 }
             });
         });
