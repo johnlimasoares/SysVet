@@ -14,11 +14,7 @@ namespace Utils {
         public static Decimal Round(this Decimal value, int decimals) {
             return Math.Round(value, decimals);
         }
-
-        public static Decimal RoundD(this Decimal value, int decimals = 2) {
-            return Math.Round(value, decimals);
-        }
-
+        
         public static Decimal Round(this Decimal value) {
             return Math.Round(value, 2);
         }

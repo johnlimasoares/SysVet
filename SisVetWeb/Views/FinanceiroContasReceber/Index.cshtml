@@ -4,9 +4,19 @@
 <link href="~/Content/contasReceberParcelas.css" rel="stylesheet" />
 
 <div id="contas-receber-parcelas-corpo">
-    <h2>Contas Receber</h2>
+    <h2>Contas a Receber</h2>
 
     <div class="row">
+        <div class="col-md-1 pull-left">
+            @Html.DropDownList("tipoPesquisa",
+                new List<SelectListItem>{
+                    new SelectListItem{Text = "Abertas",Value = "Abertas",Selected = true},
+                    new SelectListItem{Text = "Recebidas",Value = "Recebidas"},
+                    new SelectListItem{Text = "Vencidas",Value = "Vencidas"},
+                    new SelectListItem{Text = "Todas",Value = "Todas"}
+                }, new { @class = "form-control" })
+        </div>
+
         <div class="pull-right col-md-1">
             @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Novo documento a receber", "GerarParcelasDuplicata", "FinanceiroContasReceber", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
         </div>
@@ -31,32 +41,33 @@
         {
             <tr>
                 @{
-                    string pathIcon = "";
-                    string status = "";
-                    string colorStatus = "";
-                    switch (parcela.SituacaoParcelaFinanceira)
-                    {
-                        case SituacaoParcelaFinanceira.Aberto:
-                            pathIcon = "\\Images\\arrow-right.png";
-                            status = "Aberta";
-                            break;
-                        case SituacaoParcelaFinanceira.Liquidado:
-                            pathIcon = "\\Images\\arrow-up.png";
-                            status = "Recebida";
-                            colorStatus = "Color:green";
-                            break;
-                        case SituacaoParcelaFinanceira.Cancelado:
-                            pathIcon = "\\Images\\arrow-down.png";
-                            status = "Cancelada";
-                            colorStatus = "Color:red";
-                            break;
+            string pathIcon = "";
+            string status = "";
+            string colorStatus = "";
+            switch (parcela.SituacaoParcelaFinanceira)
+            {
+                case SituacaoParcelaFinanceira.Aberto:
+                    pathIcon = "\\Images\\arrow-right.png";
+                    status = "Aberta";
+                    break;
+                case SituacaoParcelaFinanceira.Liquidado:
+                    pathIcon = "\\Images\\arrow-up.png";
+                    status = "Recebida";
+                    colorStatus = "Color:green";
+                    break;
+                case SituacaoParcelaFinanceira.Cancelado:
+                    pathIcon = "\\Images\\arrow-down.png";
+                    status = "Cancelada";
+                    colorStatus = "Color:red";
+                    break;
 
 
-                    }
+            }
 
-                    var isVencida = parcela.DataVencimento < DateTime.Now && parcela.SituacaoParcelaFinanceira == SituacaoParcelaFinanceira.Aberto;
-                    var dataRecebimento = parcela.DataRecebimento.ToString() == "01/01/0001 00:00:00" ? string.Empty : parcela.DataRecebimento.ToString("d");
-                    var isParcelaLiquidada = (parcela.SituacaoParcelaFinanceira == SituacaoParcelaFinanceira.Liquidado);
+            var isVencida = parcela.DataVencimento < DateTime.Now && parcela.SituacaoParcelaFinanceira == SituacaoParcelaFinanceira.Aberto;
+            var dataRecebimento = parcela.DataRecebimento.ToString() == "01/01/0001 00:00:00" ? string.Empty : parcela.DataRecebimento.ToString("d");
+            var isParcelaLiquidada = (parcela.SituacaoParcelaFinanceira == SituacaoParcelaFinanceira.Liquidado);
+            var isParcelaCancelada = (parcela.SituacaoParcelaFinanceira == SituacaoParcelaFinanceira.Cancelado);
                 }
                 <td><img src=@(pathIcon) /></td>
                 <td style="@(colorStatus)">@(status)</td>
@@ -68,10 +79,15 @@
                 <td class="text-center" style="@(!string.IsNullOrEmpty(dataRecebimento) ? "Color:green":"")">@(dataRecebimento)</td>
                 <td class="text-center">@parcela.ValorTotalLiquido.ToString("N")</td>
                 <td class="text-center">@parcela.ValorLiquidado.ToString("N")</td>
-                <td class="text-center">
-                    <div class="pull-right disabled">
-                        @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-arrow-up'></span>", "Baixar", "BaixarParcela", "FinanceiroContasReceber", routeValues: new { id = parcela.ParcelaId }, htmlAttributes: new { data_modal = "", @class = isParcelaLiquidada ? "btn btn-success disabled" : "btn btn-success" })
+                <td class="text-center" >
+                    <div class="pull-right disabled" >
+                        @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-arrow-up'></span>", "Baixar parcela", "InformacaoParcelaBaixa", "FinanceiroContasReceber", routeValues: new { id = parcela.ParcelaId }, htmlAttributes: new { data_modal = "", @class = isParcelaLiquidada ? "btn btn-success btn-xs disabled" : "btn btn-xs btn-success" })
+                        &nbsp;
+                        @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-arrow-left'></span>", "Cancelar baixa", "InformacaoParcelaCancelamentoBaixa", "FinanceiroContasReceber", routeValues: new { id = parcela.ParcelaId }, htmlAttributes: new { data_modal = "", @class = isParcelaLiquidada ? "btn btn-xs btn-warning " : "btn btn-warning btn-xs disabled" })
+                        &nbsp;
+                        @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-arrow-down'></span>", "Cancelar parcela", "InformacaoParcelaCancelamento", "FinanceiroContasReceber", routeValues: new { id = parcela.ParcelaId }, htmlAttributes: new { data_modal = "", @class = "btn btn-xs btn-danger " })
                     </div>
+
                 </td>
             </tr>
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using Business.Financeiro.ContasReceber;
@@ -54,7 +55,7 @@ namespace SisVetWeb.Controllers
         public ActionResult GerarParcelasDuplicata(FinanceiroTipoRecebimento financeiroTipoRecebimento)
         {
             var demonstrativoParcelasVm = new FinanceiroDemonstrativoDeParcelasViewModel();
-            demonstrativoParcelasVm.FinanceiroContasReceberParcelasList = DuplicataParcelasBusiness.GerarDemostrativoParcelas(financeiroTipoRecebimento);
+            demonstrativoParcelasVm.DemonstrativoParcelasList = ParcelasBusiness.GerarDemonstrativoParcelas(financeiroTipoRecebimento);
             demonstrativoParcelasVm.FinanceiroTipoRecebimento = financeiroTipoRecebimento;
             demonstrativoParcelasVm.NomeCliente = repoCliente.GetNomeCliente(financeiroTipoRecebimento.ClienteId);
             demonstrativoParcelasVm.DescricaoPlanoPagamento = repoPlanoPagamento.GetDescricaoPlano(financeiroTipoRecebimento.FinanceiroPlanoDePagamentoId);
@@ -82,7 +83,7 @@ namespace SisVetWeb.Controllers
             {
                 var demonstrativoParcelasVM = (FinanceiroDemonstrativoDeParcelasViewModel)TempData["FullModel"];
                 //validar quantidade parcelas do plano
-                DuplicataParcelasBusiness.SalvarRegistroFinanceiro(demonstrativoParcelasVM.FinanceiroContasReceberParcelasList, demonstrativoParcelasVM.FinanceiroTipoRecebimento);
+                ParcelasBusiness.SalvarRegistroFinanceiro(demonstrativoParcelasVM.DemonstrativoParcelasList, demonstrativoParcelasVM.FinanceiroTipoRecebimento);
             }
             catch (Exception ex)
             {
@@ -91,32 +92,78 @@ namespace SisVetWeb.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult BaixarParcela(int id)
+        public ActionResult InformacaoParcelaBaixa(int id){
+            var informacaoDeParcela = InformacaoDeParcelaViewModel(id);
+            return View("BaixaParcela", informacaoDeParcela);
+        }
+
+        public ActionResult InformacaoParcelaCancelamentoBaixa(int id)
         {
-            var model = new BaixaDeParcelaViewModel();
+            var informacaoDeParcela = InformacaoDeParcelaViewModel(id);
+            return View("CancelarBaixa", informacaoDeParcela);
+        }
+
+        public ActionResult InformacaoParcelaCancelamento(int id)
+        {
+            var informacaoDeParcela = InformacaoDeParcelaViewModel(id);
+            return View("CancelarParcela", informacaoDeParcela);
+        }
+
+        [HttpPost]
+        public ActionResult BaixarParcela(InformacaoDeParcelaViewModel baixaDeParcelaViewModel){
+                var financeiroParcelaRecebida = new FinanceiroContasReceberParcelas();
+                financeiroParcelaRecebida.Id = baixaDeParcelaViewModel.ParcelaId;
+                financeiroParcelaRecebida.DataRecebimento = baixaDeParcelaViewModel.DataRecebimento;
+                financeiroParcelaRecebida.HoraRecebimento = DateTime.Now.TimeOfDay;
+                financeiroParcelaRecebida.Observacoes = baixaDeParcelaViewModel.Observacoes;
+                ParcelasBusiness.BaixarParcela(financeiroParcelaRecebida);
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult CancelarBaixa(InformacaoDeParcelaViewModel baixaDeParcelaViewModel){
+            ParcelasBusiness.CancelarBaixa(baixaDeParcelaViewModel.ParcelaId);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult CancelarParcela(InformacaoDeParcelaViewModel baixaDeParcelaViewModel)
+        {
+            ParcelasBusiness.CancelarParcela(baixaDeParcelaViewModel.ParcelaId);
+            return RedirectToAction("Index");
+        }
+
+        private static InformacaoDeParcelaViewModel InformacaoDeParcelaViewModel(int id)
+        {
+            var informacaoDeParcela = new InformacaoDeParcelaViewModel();
             using (var ctx = new BancoContexto())
             {
                 var contaReceberParcela = ctx.FinanceiroContasReceberParcelas
-               .Join(ctx.FinanceiroTipoRecebimentos, parcela => parcela.FinanceiroTipoRecebimentoId, tipoRecebimento => tipoRecebimento.Id, (parcela, tipoRecebimento) => new { parcela, tipoRecebimento })
-               .Join(ctx.Clientes, tipoRecebimento => tipoRecebimento.tipoRecebimento.ClienteId, cliente => cliente.Id, (tipoRecebimento, cliente) => new { tipoRecebimento, cliente })
-               .Select(x => new
-               {
-                   x.tipoRecebimento.parcela.NumeroDocumento,
-                   x.tipoRecebimento.parcela.DataVencimento,
-                   x.tipoRecebimento.parcela.DataRecebimento,
-                   x.tipoRecebimento.parcela.ValorTotalLiquido,
-                   x.tipoRecebimento.parcela.Id,
-                   x.cliente.Nome
-               }).Single(x => x.Id == id);
+                    .Join(ctx.FinanceiroTipoRecebimentos, parcela => parcela.FinanceiroTipoRecebimentoId,
+                        tipoRecebimento => tipoRecebimento.Id, (parcela, tipoRecebimento) => new { parcela, tipoRecebimento })
+                    .Join(ctx.Clientes, tipoRecebimento => tipoRecebimento.tipoRecebimento.ClienteId, cliente => cliente.Id,
+                        (tipoRecebimento, cliente) => new { tipoRecebimento, cliente })
+                    .Select(x => new
+                    {
+                        x.tipoRecebimento.parcela.NumeroDocumento,
+                        x.tipoRecebimento.parcela.DataVencimento,
+                        x.tipoRecebimento.parcela.DataRecebimento,
+                        x.tipoRecebimento.parcela.ValorTotalLiquido,
+                        x.tipoRecebimento.parcela.Observacoes,
+                        x.tipoRecebimento.parcela.Id,
+                        x.cliente.Nome
+                    }).AsNoTracking().Single(x => x.Id == id);
 
-                model.ParcelaId = (int)contaReceberParcela.Id;
-                model.DataRecebimento = contaReceberParcela.DataRecebimento;
-                model.DataVencimento = contaReceberParcela.DataVencimento;
-                model.NomeCliente = contaReceberParcela.Nome;
-                model.NumeroDocumento = contaReceberParcela.NumeroDocumento;
-                model.ValorTotalLiquido = contaReceberParcela.ValorTotalLiquido;
+                informacaoDeParcela.ParcelaId = (int)contaReceberParcela.Id;
+                informacaoDeParcela.DataRecebimento = contaReceberParcela.DataRecebimento ?? DateTime.Now;
+                informacaoDeParcela.DataVencimento = contaReceberParcela.DataVencimento;
+                informacaoDeParcela.NomeCliente = contaReceberParcela.Nome;
+                informacaoDeParcela.NumeroDocumento = contaReceberParcela.NumeroDocumento;
+                informacaoDeParcela.ValorTotalLiquido = contaReceberParcela.ValorTotalLiquido;
+                informacaoDeParcela.Observacoes = contaReceberParcela.Observacoes;
             }
-            return View("BaixaParcela", model);
+            return informacaoDeParcela;
         }
     }
 }

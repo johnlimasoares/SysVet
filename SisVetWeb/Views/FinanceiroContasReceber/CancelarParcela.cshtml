@@ -1,14 +1,15 @@
 ﻿@using System.Globalization
 @model SisVetWeb.Models.InformacaoDeParcelaViewModel
 
-@using (Html.BeginForm("BaixarParcela", "FinanceiroContasReceber"))
+@using (Html.BeginForm("CancelarBaixa", "FinanceiroContasReceber"))
 {
     <div>
         <span><img src="\Images\arrow-right.png" /> Recebimento</span>
     </div>
 
     <label>Dados da parcela</label>
-
+    <h2>Atenção</h2>
+    <h3>Após o cancelamento a processo não poderá ser revertido</h3>
     <table id="demostrativo-table-cabecalho" cellpadding="5">
         <tr>
             <td class="demostrativo-parcelas-cabecalho-label fonte">Cliente: </td>
@@ -24,14 +25,7 @@
         </tr>
         <tr>
             <td id="demostrativo-parcelas-cabecalho-label-total" class="fonte">Data Recebimento: </td>
-            @*<td id="demostrativo-parcelas-cabecalho-value-total" class="fonte">@Model.DataRecebimento</td>*@
-            <td>
-                <div>
-                    @Html.EditorFor(model => model.DataRecebimento)
-                    @Html.ValidationMessageFor(model => model.DataRecebimento)
-                </div>
-            </td>
-
+            <td id="demostrativo-parcelas-cabecalho-value-total" class="fonte">@Model.DataRecebimento.ToString("D", new CultureInfo("pt-BR"))</td>
         </tr>
         <tr>
             <td id="demostrativo-parcelas-cabecalho-label-total" class="fonte">Valor Total: </td>
@@ -44,7 +38,7 @@
     <hr />
     <div class="row" style="padding-left: 10px">
         @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-danger" })
-        <input type="submit" value="Confirmar Baixa" class="btn btn-success" />
+        <input type="submit" value="Cancelar Parcela" class="btn btn-warning" />
     </div>
 
 }

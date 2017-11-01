@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Financeiro\ContasReceber\DuplicataParcelasBusiness.cs" />
+    <Compile Include="Financeiro\ContasReceber\ParcelasBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
