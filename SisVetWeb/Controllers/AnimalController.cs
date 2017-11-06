@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Core.Metadata.Edm;
+﻿using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using Domain.Entidades;
 using Domain.Entidades.Cadastro;
-using Microsoft.Ajax.Utilities;
 using PagedList;
 using Repository.Context;
 using Repository;
 using Repository.Repositories;
-using SisVetWeb.Models;
 
 namespace SisVetWeb.Controllers {
     public class AnimalController : Controller {

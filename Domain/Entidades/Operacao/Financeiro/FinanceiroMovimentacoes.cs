@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Domain.Entidades.Cadastro.Financeiro;
 using Domain.Enum;
 using Domain.Entidades.Operacao.Generic;
@@ -13,7 +14,6 @@ namespace Domain.Entidades.Operacao.Financeiro {
         public Int64 OperacaoId { get; set; }
         public Generic.Operacao Operacao { get; set; }
 
-
         public TipoMovimentacao TipoMovimentacao { get; set; }
 
         public DateTime DataHora { get; set; }
@@ -24,22 +24,7 @@ namespace Domain.Entidades.Operacao.Financeiro {
 
         public Decimal Saldo { get; set; }
 
-        public FinanceiroMovimentacoes GerarMovimentacaoDebito(FinanceiroCentroDeCusto financeiroCentroDeCusto, Generic.Operacao operacao, DateTime dataHora, decimal debito) {
-            this.FinanceiroCentroDeCusto = financeiroCentroDeCusto;
-            this.Operacao = operacao;
-            this.TipoMovimentacao = TipoMovimentacao.Debito;
-            this.DataHora = dataHora;
-            this.Debito = debito;
-            return this;
-        }
-
-        public FinanceiroMovimentacoes GerarMovimentacaoCredito(FinanceiroCentroDeCusto financeiroCentroDeCusto, Generic.Operacao operacao, DateTime dataHora, decimal credito) {
-            this.FinanceiroCentroDeCusto = financeiroCentroDeCusto;
-            this.Operacao = operacao;
-            this.TipoMovimentacao = TipoMovimentacao.Credito;
-            this.DataHora = dataHora;
-            this.Credito = credito;
-            return this;
-        }
+        [StringLength(1000)]
+        public string  Observacao { get; set; }
     }
 }

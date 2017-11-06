@@ -155,6 +155,7 @@
     </Compile>
     <Compile Include="Helpers\MyHelper.cs" />
     <Compile Include="Models\AnimalViewModel.cs" />
+    <Compile Include="Models\BotaoContasReceberStatus.cs" />
     <Compile Include="Models\InformacaoDeParcelaViewModel.cs" />
     <Compile Include="Models\FinanceiroDemonstrativoDeParcelasViewModel.cs" />
     <Compile Include="Models\FinanceiroParcelasETotalizadoresViewModel.cs" />

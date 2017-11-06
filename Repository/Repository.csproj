@@ -90,6 +90,10 @@
       <Project>{2441c8da-ab42-48a2-aa1c-b3d442e289ea}</Project>
       <Name>Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Utils\Utils.csproj">
+      <Project>{330FE2E4-9558-4FD4-B43B-9512CAD10AF0}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

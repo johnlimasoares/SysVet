@@ -1,27 +1,55 @@
-﻿@using Domain.Enum
+﻿@using System.Web.UI.HtmlControls
+@using System.Web.UI.WebControls
+@using Domain.Enum
 @using SisVetWeb.Helpers
+@using SisVetWeb.Models
 @model SisVetWeb.Models.FinanceiroParcelasETotalizadoresViewModel
 <link href="~/Content/contasReceberParcelas.css" rel="stylesheet" />
 
 <div id="contas-receber-parcelas-corpo">
     <h2>Contas a Receber</h2>
 
-    <div class="row">
-        <div class="col-md-1 pull-left">
-            @Html.DropDownList("tipoPesquisa",
-                new List<SelectListItem>{
-                    new SelectListItem{Text = "Abertas",Value = "Abertas",Selected = true},
-                    new SelectListItem{Text = "Recebidas",Value = "Recebidas"},
-                    new SelectListItem{Text = "Vencidas",Value = "Vencidas"},
-                    new SelectListItem{Text = "Todas",Value = "Todas"}
-                }, new { @class = "form-control" })
-        </div>
+    @using (Html.BeginForm("Index", "FinanceiroContasReceber", FormMethod.Get))
+    {
+        <div class="row">
+            <div class="col-md-1 pull-left">
+                @Html.DropDownList("tipoPesquisa",
+                    new List<SelectListItem>{
+                        new SelectListItem{Text = "Abertas", Value = "Abertas", Selected = true},
+                        new SelectListItem{Text = "Recebidas", Value = "Recebidas"},
+                        new SelectListItem{Text = "Vencidas", Value = "Vencidas"},
+                        new SelectListItem{Text = "Todas", Value = "Todas"}
+                    }, new { @class = "form-control input-sm " })
+            </div>
+            <div class="col-sm-1" style="width: 165px">
+                <input class="form-control input-sm " id="dataInicial" name="dataInicial" type="date">
+            </div>
 
-        <div class="pull-right col-md-1">
-            @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Novo documento a receber", "GerarParcelasDuplicata", "FinanceiroContasReceber", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
-        </div>
-    </div>
+            <div class="col-sm-1" style="width: 165px">
+                <input class="form-control input-sm" id="dataFinal" name="dataFinal" type="date">
+            </div>
 
+            <div class="col-md-2">
+                <input type="submit" value="Filtrar" class="btn btn-primary pull-left input-sm " />
+            </div>
+
+            <div class="pull-right col-md-1">
+                @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Novo documento a receber", "GerarParcelasDuplicata", "FinanceiroContasReceber", routeValues: null, htmlAttributes: new { @class = "btn btn-primary" })
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-1 pull-left">
+                @Html.DropDownList("tipoPesquisaCliente",
+                    new List<SelectListItem>{
+                        new SelectListItem{Text = "Código", Value = "Codigo", Selected = true},
+                        new SelectListItem{Text = "Nome", Value = "Nome"},
+                    }, new { @class = "form-control input-sm " })
+            </div>
+            <div class="col-sm-1" style="width: 330px">
+                <input class="form-control input-sm" id="pesquisaCliente" name="pesquisaCliente" placeholder="pesquise o cliente..." type="text">
+            </div>
+        </div>
+    }
     <table class="table table-condensed">
         <tr class="background-blue">
             <th class="text-left fonte"></th>
@@ -41,51 +69,25 @@
         {
             <tr>
                 @{
-            string pathIcon = "";
-            string status = "";
-            string colorStatus = "";
-            switch (parcela.SituacaoParcelaFinanceira)
-            {
-                case SituacaoParcelaFinanceira.Aberto:
-                    pathIcon = "\\Images\\arrow-right.png";
-                    status = "Aberta";
-                    break;
-                case SituacaoParcelaFinanceira.Liquidado:
-                    pathIcon = "\\Images\\arrow-up.png";
-                    status = "Recebida";
-                    colorStatus = "Color:green";
-                    break;
-                case SituacaoParcelaFinanceira.Cancelado:
-                    pathIcon = "\\Images\\arrow-down.png";
-                    status = "Cancelada";
-                    colorStatus = "Color:red";
-                    break;
-
-
-            }
-
-            var isVencida = parcela.DataVencimento < DateTime.Now && parcela.SituacaoParcelaFinanceira == SituacaoParcelaFinanceira.Aberto;
-            var dataRecebimento = parcela.DataRecebimento.ToString() == "01/01/0001 00:00:00" ? string.Empty : parcela.DataRecebimento.ToString("d");
-            var isParcelaLiquidada = (parcela.SituacaoParcelaFinanceira == SituacaoParcelaFinanceira.Liquidado);
-            var isParcelaCancelada = (parcela.SituacaoParcelaFinanceira == SituacaoParcelaFinanceira.Cancelado);
+            var botao = BotaoContasReceberStatus.GetBotaoContasReceberStatus(parcela.SituacaoParcelaFinanceira);
                 }
-                <td><img src=@(pathIcon) /></td>
-                <td style="@(colorStatus)">@(status)</td>
+                <td><img src=@(botao.PathIcon) /></td>
+                <td style="@(botao.ColorStatus)">@(botao.Status)</td>
                 <td class="text-left">@string.Format("{0}-{1}", @parcela.ClienteId, @parcela.ClienteNome)</td>
                 <td class="text-center">@parcela.Parcela</td>
                 <td class="text-center">@parcela.TotalParcelas</td>
                 <td class="text-center">@parcela.DataEmissao.ToString("d")</td>
-                <td class="text-center" style="@(isVencida ? "Color:red" : "")">@parcela.DataVencimento.ToString("d")</td>
-                <td class="text-center" style="@(!string.IsNullOrEmpty(dataRecebimento) ? "Color:green":"")">@(dataRecebimento)</td>
+                <td class="text-center" style="@(MyHelper.GetColorColumnDataVencimento(parcela))">@parcela.DataVencimento.ToString("d")</td>
+                <td class="text-center" style="@(MyHelper.GetColorColumnDataRecebimento(parcela))">@(MyHelper.GetDataFormatada(parcela.DataRecebimento))</td>
                 <td class="text-center">@parcela.ValorTotalLiquido.ToString("N")</td>
                 <td class="text-center">@parcela.ValorLiquidado.ToString("N")</td>
-                <td class="text-center" >
-                    <div class="pull-right disabled" >
-                        @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-arrow-up'></span>", "Baixar parcela", "InformacaoParcelaBaixa", "FinanceiroContasReceber", routeValues: new { id = parcela.ParcelaId }, htmlAttributes: new { data_modal = "", @class = isParcelaLiquidada ? "btn btn-success btn-xs disabled" : "btn btn-xs btn-success" })
+                <td class="text-center">
+                    <div class="pull-right disabled">
+                        @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-arrow-up'></span>", "Baixar parcela", "InformacaoParcelaBaixa", "FinanceiroContasReceber", routeValues: new { id = parcela.ParcelaId }, htmlAttributes: new { data_modal = "", @class = MyHelper.GetStatusBotaoBaixarParcela(parcela.SituacaoParcelaFinanceira) })
                         &nbsp;
-                        @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-arrow-left'></span>", "Cancelar baixa", "InformacaoParcelaCancelamentoBaixa", "FinanceiroContasReceber", routeValues: new { id = parcela.ParcelaId }, htmlAttributes: new { data_modal = "", @class = isParcelaLiquidada ? "btn btn-xs btn-warning " : "btn btn-warning btn-xs disabled" })
+                        @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-arrow-left'></span>", "Cancelar baixa", "InformacaoParcelaCancelamentoBaixa", "FinanceiroContasReceber", routeValues: new { id = parcela.ParcelaId }, htmlAttributes: new { data_modal = "", @class = MyHelper.GetStatusBotaoCancelarBaixa(parcela.SituacaoParcelaFinanceira) })
                         &nbsp;
-                        @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-arrow-down'></span>", "Cancelar parcela", "InformacaoParcelaCancelamento", "FinanceiroContasReceber", routeValues: new { id = parcela.ParcelaId }, htmlAttributes: new { data_modal = "", @class = "btn btn-xs btn-danger " })
+                        @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-arrow-down'></span>", "Cancelar parcela", "InformacaoParcelaCancelamento", "FinanceiroContasReceber", routeValues: new { id = parcela.ParcelaId }, htmlAttributes: new { data_modal = "", @class = MyHelper.GetStatusBotaoCancelarParcela(parcela.SituacaoParcelaFinanceira) })
                     </div>
 
                 </td>

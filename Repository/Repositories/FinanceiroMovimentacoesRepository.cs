@@ -7,13 +7,14 @@ using Repository.Repositories.Base;
 
 namespace Repository.Repositories {
     public class FinanceiroMovimentacoesRepository : Repository<FinanceiroMovimentacoes> {
-        public static void GerarMovimentacaoEntrada(BancoContexto ctx, Operacao operacao, TipoMovimentacao tipoMovimentacao, double financeiroCentroDeCustoId, decimal valor) {
+        public static void GerarMovimentacao(BancoContexto ctx, Operacao operacao, TipoMovimentacao tipoMovimentacao, double financeiroCentroDeCustoId, decimal valor, string observacao) {
 
             var movimentacaoFinanceira = new FinanceiroMovimentacoes();
             movimentacaoFinanceira.TipoMovimentacao = tipoMovimentacao;
             movimentacaoFinanceira.FinanceiroCentroDeCusto = ctx.FinanceiroCentroDeCustos.Find(financeiroCentroDeCustoId);
             movimentacaoFinanceira.Operacao = operacao;
             movimentacaoFinanceira.DataHora = DateTime.Now;
+            movimentacaoFinanceira.Observacao = observacao;
             if (tipoMovimentacao == TipoMovimentacao.Credito) {
                 movimentacaoFinanceira.Credito = valor;
             } else {
@@ -22,5 +23,6 @@ namespace Repository.Repositories {
 
             ctx.FinanceiroMovimentacoes.Add(movimentacaoFinanceira);
         }
+
     }
 }

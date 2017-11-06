@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
+using Business.Cliente;
+using Business.Financeiro.Movimentacao;
 using Domain.Entidades.Cadastro.Financeiro;
 using Domain.Entidades.Operacao.Financeiro;
+using Domain.Entidades.Operacao.Generic;
 using Domain.Enum;
 using Repository.Context;
 using Repository.Repositories;
@@ -49,6 +53,7 @@ namespace Business.Financeiro.ContasReceber
             {
                 financeiroContasReceberParcela.SituacaoParcelaFinanceira = SituacaoParcelaFinanceira.Liquidado;
                 financeiroContasReceberParcela.DataRecebimento = DateTime.Now;
+                financeiroContasReceberParcela.HoraRecebimento = DateTime.Now.TimeOfDay;
                 financeiroContasReceberParcela.ValorLiquidado = financeiroContasReceberParcela.ValorTotalLiquido;
             }
             else
@@ -84,26 +89,45 @@ namespace Business.Financeiro.ContasReceber
             return dataAtual.DayOfYear.ToString() + dataAtual.Hour + dataAtual.Minute + dataAtual.Second;
         }
 
-        public static void SalvarRegistroFinanceiro(List<FinanceiroContasReceberParcelas> financeiroContasReceberParcelasList, FinanceiroTipoRecebimento financeiroTipoRecebimento)
+        public static void SalvarParcelasGeradas(List<FinanceiroContasReceberParcelas> financeiroContasReceberParcelasList, FinanceiroTipoRecebimento financeiroTipoRecebimento)
         {
             using (var ctx = new BancoContexto())
             {
                 var operacao = OperacaoRepository.GerarOperacao(ctx);
                 FinanceiroTipoRecebimentoRepository.SalvarTipoRecebimentoFinanceiro(ctx, operacao, financeiroTipoRecebimento);
-                FinanceiroContasReceberParcelasRepository.SalvarParcelasGeradas(ctx, operacao, financeiroContasReceberParcelasList, financeiroTipoRecebimento.FinanceiroCentroDeCustoId);
+                SalvarParcelasGeradas(ctx, operacao, financeiroContasReceberParcelasList, financeiroTipoRecebimento);
                 ctx.SaveChanges();
             }
         }
 
-        public static void BaixarParcela(FinanceiroContasReceberParcelas parcelaRecebida){
-            using (var ctx = new BancoContexto()){
-                var contaReceberParcela = ctx.FinanceiroContasReceberParcelas.Find(parcelaRecebida.Id);
-                contaReceberParcela.ValorLiquidado = contaReceberParcela.ValorTotalLiquido;
-                contaReceberParcela.DataRecebimento = parcelaRecebida.DataRecebimento;
-                contaReceberParcela.SituacaoParcelaFinanceira = SituacaoParcelaFinanceira.Liquidado;
-                contaReceberParcela.HoraRecebimento = parcelaRecebida.HoraRecebimento;
-                contaReceberParcela.Observacoes = parcelaRecebida.Observacoes;
-                ctx.Entry(contaReceberParcela).State = EntityState.Modified;
+        public static void SalvarParcelasGeradas(BancoContexto ctx, Operacao operacao, List<FinanceiroContasReceberParcelas> financeiroContasReceberParcelasList, FinanceiroTipoRecebimento financeiroTipoRecebimento)
+        {
+            foreach (var parcela in financeiroContasReceberParcelasList)
+            {
+                ctx.FinanceiroContasReceberParcelas.Add(parcela);
+                if (parcela.SituacaoParcelaFinanceira == SituacaoParcelaFinanceira.Liquidado)
+                {
+                    var nomeCliente = ClienteBusiness.GetNomeCliente(ctx, financeiroTipoRecebimento.ClienteId);
+                    MovimentacaoBusiness.GerarMovimentacaoCreditoOriundasDeContasReceber(ctx, operacao, parcela.ValorTotalLiquido, parcela.Parcela, parcela.FinanceiroTipoRecebimento.QuantidadeParcelas, financeiroTipoRecebimento.FinanceiroCentroDeCustoId, nomeCliente);
+                }
+            }
+        }
+
+
+        public static void BaixarParcela(FinanceiroContasReceberParcelas parcelaRecebida)
+        {
+            using (var ctx = new BancoContexto())
+            {
+                var parcela = ctx.FinanceiroContasReceberParcelas.Find(parcelaRecebida.Id);
+                parcela.ValorLiquidado = parcela.ValorTotalLiquido;
+                parcela.DataRecebimento = parcelaRecebida.DataRecebimento;
+                parcela.SituacaoParcelaFinanceira = SituacaoParcelaFinanceira.Liquidado;
+                parcela.HoraRecebimento = parcelaRecebida.HoraRecebimento;
+                parcela.Observacoes = parcelaRecebida.Observacoes;
+                ctx.Entry(parcela).State = EntityState.Modified;
+
+                var tipoRecebimento = ctx.FinanceiroTipoRecebimentos.Where(x => x.Id == parcela.FinanceiroTipoRecebimentoId).Select(p => new { p.Id, p.Operacao, p.FinanceiroCentroDeCustoId, p.Cliente.Nome, p.QuantidadeParcelas }).First();
+                MovimentacaoBusiness.GerarMovimentacaoCreditoOriundasDeContasReceber(ctx, tipoRecebimento.Operacao, parcela.ValorTotalLiquido, parcela.Parcela, tipoRecebimento.QuantidadeParcelas, tipoRecebimento.FinanceiroCentroDeCustoId, tipoRecebimento.Nome);
                 ctx.SaveChanges();
             }
 
@@ -113,32 +137,46 @@ namespace Business.Financeiro.ContasReceber
         {
             using (var ctx = new BancoContexto())
             {
-                var contaReceberParcela = ctx.FinanceiroContasReceberParcelas.Find(parcelaId);
-                contaReceberParcela.ValorLiquidado = 0;
-                contaReceberParcela.DataRecebimento = null;
-                contaReceberParcela.SituacaoParcelaFinanceira = SituacaoParcelaFinanceira.Aberto;
-                contaReceberParcela.HoraRecebimento = null;
-                contaReceberParcela.Observacoes = null;
-                contaReceberParcela.DataCancelamento = DateTime.Now;
-                contaReceberParcela.HoraCancelamento = DateTime.Now.TimeOfDay;
-                ctx.Entry(contaReceberParcela).State = EntityState.Modified;
+                var parcela = ctx.FinanceiroContasReceberParcelas.Find(parcelaId);
+                parcela.ValorLiquidado = 0;
+                parcela.DataRecebimento = null;
+                parcela.SituacaoParcelaFinanceira = SituacaoParcelaFinanceira.Aberto;
+                parcela.HoraRecebimento = null;
+                parcela.Observacoes = null;
+                parcela.DataCancelamento = DateTime.Now;
+                parcela.HoraCancelamento = DateTime.Now.TimeOfDay;
+                ctx.Entry(parcela).State = EntityState.Modified;
+
+                var tipoRecebimento = ctx.FinanceiroTipoRecebimentos.Where(x => x.Id == parcela.FinanceiroTipoRecebimentoId).Select(p => new { p.Id, p.Operacao, p.FinanceiroCentroDeCustoId, p.Cliente.Nome, p.QuantidadeParcelas }).First();
+                MovimentacaoBusiness.GerarMovimentacaoDebitoOriundasDeContasReceber(ctx, tipoRecebimento.Operacao, parcela.ValorTotalLiquido, parcela.Parcela, tipoRecebimento.QuantidadeParcelas, tipoRecebimento.FinanceiroCentroDeCustoId, tipoRecebimento.Nome, false);
                 ctx.SaveChanges();
             }
         }
 
-        public static void CancelarParcela(int parcelaId){
+
+        public static void CancelarParcela(int parcelaId)
+        {
             using (var ctx = new BancoContexto())
             {
-                var contaReceberParcela = ctx.FinanceiroContasReceberParcelas.Find(parcelaId);
-                contaReceberParcela.ValorLiquidado = 0;
-                contaReceberParcela.DataRecebimento = null;
-                contaReceberParcela.SituacaoParcelaFinanceira = SituacaoParcelaFinanceira.Cancelado;
-                contaReceberParcela.HoraRecebimento = null;
-                contaReceberParcela.DataCancelamento = DateTime.Now;
-                contaReceberParcela.HoraCancelamento = DateTime.Now.TimeOfDay;
-                ctx.Entry(contaReceberParcela).State = EntityState.Modified;
+                var parcela = ctx.FinanceiroContasReceberParcelas.Find(parcelaId);
+                parcela.ValorLiquidado = 0;
+                parcela.DataRecebimento = null;
+                var estavaLiquidada = parcela.SituacaoParcelaFinanceira == SituacaoParcelaFinanceira.Liquidado;
+                parcela.SituacaoParcelaFinanceira = SituacaoParcelaFinanceira.Cancelado;
+                parcela.HoraRecebimento = null;
+                parcela.DataCancelamento = DateTime.Now;
+                parcela.HoraCancelamento = DateTime.Now.TimeOfDay;
+                ctx.Entry(parcela).State = EntityState.Modified;
+
+                if (estavaLiquidada)
+                {
+                    var tipoRecebimento = ctx.FinanceiroTipoRecebimentos.Where(x => x.Id == parcela.FinanceiroTipoRecebimentoId).Select(p => new { p.Id, p.Operacao, p.FinanceiroCentroDeCustoId, p.Cliente.Nome, p.QuantidadeParcelas }).First();
+                    MovimentacaoBusiness.GerarMovimentacaoDebitoOriundasDeContasReceber(ctx, tipoRecebimento.Operacao, parcela.ValorTotalLiquido, parcela.Parcela, tipoRecebimento.QuantidadeParcelas, tipoRecebimento.FinanceiroCentroDeCustoId, tipoRecebimento.Nome, true);
+                }
                 ctx.SaveChanges();
             }
         }
+
+
     }
 }

@@ -20,12 +20,11 @@ namespace SisVetWeb.Controllers
         private FinanceiroCentroDeCustoRepository repoCentroCusto = new FinanceiroCentroDeCustoRepository();
         private FinanceiroPlanoDePagamentoRepository repoPlanoPagamento = new FinanceiroPlanoDePagamentoRepository();
         private FinanceiroContasReceberParcelasRepository repoContasReceber = new FinanceiroContasReceberParcelasRepository();
-        private FinanceiroTipoRecebimentoRepository repoTipoRecebimento = new FinanceiroTipoRecebimentoRepository();
 
-        public ActionResult Index()
+        public ActionResult Index(string tipoPesquisa, DateTime? dataInicial, DateTime? dataFinal, string pesquisaCliente, string tipoPesquisaCliente)
         {
             var parcelasEtotalizadores = new FinanceiroParcelasETotalizadoresViewModel();
-            parcelasEtotalizadores.FinanceiroContasReceberParcelasDapperList = repoContasReceber.GetAllContasReceberDapper().ToList();
+            parcelasEtotalizadores.FinanceiroContasReceberParcelasDapperList = repoContasReceber.GetAllContasReceberDapper(tipoPesquisa, dataInicial, dataFinal, pesquisaCliente,tipoPesquisaCliente).ToList();
             return View(parcelasEtotalizadores.PreencherTotalizadores());
         }
 
@@ -79,20 +78,14 @@ namespace SisVetWeb.Controllers
         [HttpPost]
         public ActionResult Confirmar()
         {
-            try
-            {
-                var demonstrativoParcelasVM = (FinanceiroDemonstrativoDeParcelasViewModel)TempData["FullModel"];
-                //validar quantidade parcelas do plano
-                ParcelasBusiness.SalvarRegistroFinanceiro(demonstrativoParcelasVM.DemonstrativoParcelasList, demonstrativoParcelasVM.FinanceiroTipoRecebimento);
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
+            var demonstrativoParcelasVM = (FinanceiroDemonstrativoDeParcelasViewModel)TempData["FullModel"];
+            //validar quantidade parcelas do plano
+            ParcelasBusiness.SalvarParcelasGeradas(demonstrativoParcelasVM.DemonstrativoParcelasList, demonstrativoParcelasVM.FinanceiroTipoRecebimento);
             return RedirectToAction("Index");
         }
 
-        public ActionResult InformacaoParcelaBaixa(int id){
+        public ActionResult InformacaoParcelaBaixa(int id)
+        {
             var informacaoDeParcela = InformacaoDeParcelaViewModel(id);
             return View("BaixaParcela", informacaoDeParcela);
         }
@@ -110,19 +103,21 @@ namespace SisVetWeb.Controllers
         }
 
         [HttpPost]
-        public ActionResult BaixarParcela(InformacaoDeParcelaViewModel baixaDeParcelaViewModel){
-                var financeiroParcelaRecebida = new FinanceiroContasReceberParcelas();
-                financeiroParcelaRecebida.Id = baixaDeParcelaViewModel.ParcelaId;
-                financeiroParcelaRecebida.DataRecebimento = baixaDeParcelaViewModel.DataRecebimento;
-                financeiroParcelaRecebida.HoraRecebimento = DateTime.Now.TimeOfDay;
-                financeiroParcelaRecebida.Observacoes = baixaDeParcelaViewModel.Observacoes;
-                ParcelasBusiness.BaixarParcela(financeiroParcelaRecebida);
+        public ActionResult BaixarParcela(InformacaoDeParcelaViewModel baixaDeParcelaViewModel)
+        {
+            var financeiroParcelaRecebida = new FinanceiroContasReceberParcelas();
+            financeiroParcelaRecebida.Id = baixaDeParcelaViewModel.ParcelaId;
+            financeiroParcelaRecebida.DataRecebimento = baixaDeParcelaViewModel.DataRecebimento;
+            financeiroParcelaRecebida.HoraRecebimento = DateTime.Now.TimeOfDay;
+            financeiroParcelaRecebida.Observacoes = baixaDeParcelaViewModel.Observacoes;
+            ParcelasBusiness.BaixarParcela(financeiroParcelaRecebida);
 
             return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public ActionResult CancelarBaixa(InformacaoDeParcelaViewModel baixaDeParcelaViewModel){
+        public ActionResult CancelarBaixa(InformacaoDeParcelaViewModel baixaDeParcelaViewModel)
+        {
             ParcelasBusiness.CancelarBaixa(baixaDeParcelaViewModel.ParcelaId);
             return RedirectToAction("Index");
         }
@@ -165,5 +160,6 @@ namespace SisVetWeb.Controllers
             }
             return informacaoDeParcela;
         }
+
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Domain.Enum {
     public enum TipoMovimentacao {
-        Credito = 0,
-        Debito = 1
+        Credito = 1,
+        Debito = 0
     }
 }

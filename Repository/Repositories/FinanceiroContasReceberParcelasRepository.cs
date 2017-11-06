@@ -2,26 +2,16 @@
 using System.Collections.Generic;
 using Dapper;
 using Domain.Entidades.Operacao.Financeiro;
-using Domain.Entidades.Operacao.Generic;
 using Domain.EntidadesLeitura.Operacao.Financeiro;
-using Domain.Enum;
-using Repository.Context;
 using Repository.Repositories.Base;
+using Utils;
 
-namespace Repository.Repositories {
-    public class FinanceiroContasReceberParcelasRepository : Repository<FinanceiroContasReceberParcelas> {
-        public static void SalvarParcelasGeradas(BancoContexto ctx, Operacao operacao,
-            List<FinanceiroContasReceberParcelas> financeiroContasReceberParcelasList, double financeiroCentroDeCustoId) {
-            foreach (var parcela in financeiroContasReceberParcelasList) {
-                ctx.FinanceiroContasReceberParcelas.Add(parcela);
-                if (parcela.SituacaoParcelaFinanceira == SituacaoParcelaFinanceira.Liquidado) {
-                    FinanceiroMovimentacoesRepository.GerarMovimentacaoEntrada(ctx, operacao, TipoMovimentacao.Credito,
-                        financeiroCentroDeCustoId, parcela.ValorTotalLiquido);
-                }
-            }
-        }
-
-        public IEnumerable<FinanceiroContasReceberParcelasDapper> GetAllContasReceberDapper() {
+namespace Repository.Repositories
+{
+    public class FinanceiroContasReceberParcelasRepository : Repository<FinanceiroContasReceberParcelas>
+    {
+        public IEnumerable<FinanceiroContasReceberParcelasDapper> GetAllContasReceberDapper(string tipoPesquisa, DateTime? dataInicial, DateTime? dataFinal, string pesquisaCliente, string tipoPesquisaCliente)
+        {
             var sql = @"SELECT
                         CRP.Id AS ParcelaId,
                         C.Id AS ClienteId,
@@ -39,19 +29,56 @@ namespace Repository.Repositories {
                         FROM FinanceiroContasReceberParcelas CRP
                         INNER JOIN FinanceiroTipoRecebimento FTR ON CRP.FinanceiroTipoRecebimentoId = FTR.Id
                         INNER JOIN Cliente C ON FTR.ClienteId = C.Id
-                        WHERE 1 = 1";
-            using (var db = ctx.Database.Connection) {
-                try {
+                        WHERE 1 = 1 ";
+
+
+            switch (tipoPesquisa)
+            {
+                case "Abertas":
+                    sql = sql.GetSqlParcelasAbertas(dataInicial, dataFinal);
+                    break;
+                case "":
+                    sql = sql.GetSqlParcelasAbertas(dataInicial, dataFinal);
+                    break;
+                case "Recebidas":
+                    sql = sql.GetSqlParcelasRecebidas(dataInicial, dataFinal);
+                    break;
+                case "Vencidas":
+                    sql = sql.GetSqlParcelasVencidas(dataInicial, dataFinal);
+                    break;
+
+            }
+
+            switch (tipoPesquisaCliente)
+            {
+                case "Codigo":
+                    sql = sql.GetSqlParcelasPorCodigoCliente(pesquisaCliente);
+                    break;              
+                case "Nome":
+                    sql = sql.GetSqlParcelasPorNomeCliente(pesquisaCliente);
+                    break;
+            }
+
+            using (var db = ctx.Database.Connection)
+            {
+                try
+                {
                     db.Open();
                     var cliente = db.Query<FinanceiroContasReceberParcelasDapper>(sql);
                     return cliente;
-                } catch (Exception ex) {
+                }
+                catch (Exception ex)
+                {
                     throw ex;
-                } finally {
+                }
+                finally
+                {
                     db.Close();
                 }
 
             }
         }
+
+
     }
 }

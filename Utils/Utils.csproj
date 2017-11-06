@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="FormatUtils.cs" />
     <Compile Include="MathUtils.cs" />
+    <Compile Include="SqlUtils.cs" />
     <Compile Include="StringUtils.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
