@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 using Domain.Entidades.Cadastro.Financeiro;
 using Domain.Enum;
-using Domain.Entidades.Operacao.Generic;
 
 namespace Domain.Entidades.Operacao.Financeiro {
     public class FinanceiroMovimentacoes {
@@ -26,5 +25,7 @@ namespace Domain.Entidades.Operacao.Financeiro {
 
         [StringLength(1000)]
         public string  Observacao { get; set; }
+
+        public OrigemMovimentacao OrigemMovimentacao { get; set; }
     }
 }

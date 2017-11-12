@@ -10,7 +10,7 @@ namespace Repository.Repositories
 {
     public class FinanceiroContasReceberParcelasRepository : Repository<FinanceiroContasReceberParcelas>
     {
-        public IEnumerable<FinanceiroContasReceberParcelasDapper> GetAllContasReceberDapper(string tipoPesquisa, DateTime? dataInicial, DateTime? dataFinal, string pesquisaCliente, string tipoPesquisaCliente)
+        public IEnumerable<FinanceiroContasReceberParcelasDapper> GetContasReceberDapper(string tipoPesquisa, DateTime? dataInicial, DateTime? dataFinal, string pesquisaCliente, string tipoPesquisaCliente)
         {
             var sql = @"SELECT
                         CRP.Id AS ParcelaId,
@@ -35,16 +35,16 @@ namespace Repository.Repositories
             switch (tipoPesquisa)
             {
                 case "Abertas":
-                    sql = sql.GetSqlParcelasAbertas(dataInicial, dataFinal);
+                    sql += GetWhereParcelasAbertas(dataInicial, dataFinal);
                     break;
                 case "":
-                    sql = sql.GetSqlParcelasAbertas(dataInicial, dataFinal);
+                    sql += GetWhereParcelasAbertas(dataInicial, dataFinal);
                     break;
                 case "Recebidas":
-                    sql = sql.GetSqlParcelasRecebidas(dataInicial, dataFinal);
+                    sql += GetWhereParcelasRecebidas(dataInicial, dataFinal);
                     break;
                 case "Vencidas":
-                    sql = sql.GetSqlParcelasVencidas(dataInicial, dataFinal);
+                    sql += GetWhereParcelasVencidas(dataInicial, dataFinal);
                     break;
 
             }
@@ -52,10 +52,10 @@ namespace Repository.Repositories
             switch (tipoPesquisaCliente)
             {
                 case "Codigo":
-                    sql = sql.GetSqlParcelasPorCodigoCliente(pesquisaCliente);
-                    break;              
+                    sql += GetWhereParcelasPorCodigoCliente(pesquisaCliente);
+                    break;
                 case "Nome":
-                    sql = sql.GetSqlParcelasPorNomeCliente(pesquisaCliente);
+                    sql += GetWhereParcelasPorNomeCliente(pesquisaCliente);
                     break;
             }
 
@@ -64,8 +64,7 @@ namespace Repository.Repositories
                 try
                 {
                     db.Open();
-                    var cliente = db.Query<FinanceiroContasReceberParcelasDapper>(sql);
-                    return cliente;
+                    return db.Query<FinanceiroContasReceberParcelasDapper>(sql);
                 }
                 catch (Exception ex)
                 {
@@ -79,6 +78,81 @@ namespace Repository.Repositories
             }
         }
 
+        private string GetWhereParcelasAbertas(DateTime? dataInicial, DateTime? dataFinal)
+        {
+            string where = string.Empty;
+            where += " AND CRP.SituacaoParcelaFinanceira = 1 ";
+            if (dataInicial != null)
+            {
+                where += string.Format(" AND CAST(CRP.DataEmissao AS DATE) >= '{0}'", dataInicial.Value.ToString(SqlUtils.GetAmericanFormatDate()));
+            }
+            if (dataFinal != null)
+            {
+                where += string.Format(" AND CAST(CRP.DataEmissao AS DATE) <= '{0}'", dataFinal.Value.ToString(SqlUtils.GetAmericanFormatDate()));
+            }
+
+            return where;
+        }
+
+        private string GetWhereParcelasVencidas(DateTime? dataInicial, DateTime? dataFinal)
+        {
+            string where = string.Empty;
+            where += " AND CRP.SituacaoParcelaFinanceira = 1 ";
+            if (dataInicial != null)
+            {
+                where += string.Format(" AND CAST(CRP.DataVencimento AS DATE) >= '{0}'", dataInicial.Value.ToString(SqlUtils.GetAmericanFormatDate()));
+            }
+
+            var dataFinalFiltro = " < CAST(GETDATE() AS DATE)";
+            if (dataFinal != null)
+                dataFinalFiltro = string.Format(" <= '{0}'", dataFinal.Value.ToString(SqlUtils.GetAmericanFormatDate()));
+
+            where += string.Format(" AND CAST(CRP.DataVencimento AS DATE) {0}", dataFinalFiltro);
+
+            return where;
+        }
+
+        private string GetWhereParcelasRecebidas(DateTime? dataInicial, DateTime? dataFinal)
+        {
+            string where = string.Empty;
+            where += " AND CRP.SituacaoParcelaFinanceira = 3 ";
+            if (dataInicial != null)
+            {
+                where += string.Format(" AND CAST(CRP.DataRecebimento AS DATE) >= '{0}'", dataInicial.Value.ToString(SqlUtils.GetAmericanFormatDate()));
+            }
+            if (dataFinal != null)
+            {
+                where += string.Format(" AND CAST(CRP.DataRecebimento AS DATE) <= '{0}'", dataFinal.Value.ToString(SqlUtils.GetAmericanFormatDate()));
+            }
+
+            return where;
+        }
+
+        private string GetWhereParcelasPorCodigoCliente(string pesquisaCliente)
+        {
+            string where = string.Empty;
+            int codigoCliente = 0;
+            if (string.IsNullOrEmpty(pesquisaCliente) || !Int32.TryParse(pesquisaCliente, out codigoCliente))
+            {
+                return where;
+            }
+
+            where += string.Format(" AND C.Id = {0}", codigoCliente);
+
+            return where;
+        }
+
+        private string GetWhereParcelasPorNomeCliente(string pesquisaCliente)
+        {
+            string where = string.Empty;
+            if (string.IsNullOrEmpty(pesquisaCliente))
+            {
+                return where;
+            }
+
+            where += string.Format(" AND C.Nome like '%{0}%'", pesquisaCliente);
+            return where;
+        }
 
     }
 }

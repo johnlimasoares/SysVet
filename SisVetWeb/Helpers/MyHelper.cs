@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -61,20 +62,21 @@ namespace SisVetWeb.Helpers
             return MvcHtmlString.Create(builder.ToString());
         }
 
-        public static string GetColorColumnDataVencimento(FinanceiroContasReceberParcelasDapper parcela){
+        public static string GetColorColumnDataVencimento(FinanceiroContasReceberParcelasDapper parcela)
+        {
             var isVencida = parcela.DataVencimento < DateTime.Now && parcela.SituacaoParcelaFinanceira == SituacaoParcelaFinanceira.Aberto;
             return isVencida ? "Color:red" : "";
         }
 
-        public static string GetColorColumnDataRecebimento(FinanceiroContasReceberParcelasDapper parcela){
+        public static string GetColorColumnDataRecebimento(FinanceiroContasReceberParcelasDapper parcela)
+        {
             return !string.IsNullOrEmpty(GetDataFormatada(parcela.DataRecebimento)) ? "Color:green" : "";
         }
 
-        public static string GetDataFormatada(DateTime data){
+        public static string GetDataFormatada(DateTime data)
+        {
             return data.ToString() == "01/01/0001 00:00:00" ? string.Empty : data.ToString("d");
         }
-
-
 
         public static string GetStatusBotaoBaixarParcela(SituacaoParcelaFinanceira situacaoParcelaFinanceira)
         {
@@ -101,6 +103,20 @@ namespace SisVetWeb.Helpers
                 : "btn btn-xs btn-danger";
         }
 
-      
+        public static string GetColorDescricaoDebitoCredito(TipoMovimentacao tipo)
+        {
+            return tipo == TipoMovimentacao.Debito ? "red" : "green";
+        }
+
+        public static string GetStringLimitada(this string value, int limite)
+        {
+            if (string.IsNullOrEmpty(value))
+                return string.Empty;
+
+            if (value.Length > limite)
+                return value.Substring(0, limite);
+            return value;
+        }
+
     }
 }

@@ -38,6 +38,9 @@ namespace SisVetWeb {
             bundles.Add(new ScriptBundle("~/bundles/modalexclusao").Include(
                "~/Scripts/modalexclusao.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/modalObservacoesMovimentacao").Include(
+               "~/Scripts/modalObservacoesMovimentacao.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/mascaras").Include(
                 "~/Scripts/mascaras/mascaras.js"));
 
@@ -50,6 +53,9 @@ namespace SisVetWeb {
 
             bundles.Add(new ScriptBundle("~/bundles/utilsMath").Include(
                 "~/Scripts/utilsMath/calculaIdade.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/formataValoresMonetarios").Include(
+                "~/Scripts/utilsMath/formataValoresMonetarios.js"));
         }
     }
 }

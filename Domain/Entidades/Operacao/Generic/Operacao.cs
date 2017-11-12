@@ -8,9 +8,5 @@ namespace Domain.Entidades.Operacao.Generic {
 
         public DateTime Data { get; set; }
 
-        public Operacao GerarOperacao() {
-            this.Data = DateTime.Now;
-            return this;
-        }
     }
 }

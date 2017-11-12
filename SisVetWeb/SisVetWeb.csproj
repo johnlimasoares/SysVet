@@ -139,6 +139,7 @@
     <Compile Include="Controllers\FinanceiroCentroDeCustoController.cs" />
     <Compile Include="Controllers\FinanceiroCentroDeCustoGrupoController.cs" />
     <Compile Include="Controllers\FinanceiroContasReceberController.cs" />
+    <Compile Include="Controllers\FinanceiroMovimentacaoCaixaController.cs" />
     <Compile Include="Controllers\FinanceiroPlanoDePagamentoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MedicamentoController.cs" />
@@ -156,6 +157,8 @@
     <Compile Include="Helpers\MyHelper.cs" />
     <Compile Include="Models\AnimalViewModel.cs" />
     <Compile Include="Models\BotaoContasReceberStatus.cs" />
+    <Compile Include="Models\FinanceiroMovimentacaoViewModel.cs" />
+    <Compile Include="Models\FinanceiroMovimentacoesInfoViewModel.cs" />
     <Compile Include="Models\InformacaoDeParcelaViewModel.cs" />
     <Compile Include="Models\FinanceiroDemonstrativoDeParcelasViewModel.cs" />
     <Compile Include="Models\FinanceiroParcelasETotalizadoresViewModel.cs" />
@@ -165,8 +168,10 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\combobox.css" />
+    <Content Include="Content\contasReceberBaixa.css" />
     <Content Include="Content\contasReceberDemostrativo.css" />
     <Content Include="Content\contasReceberParcelas.css" />
+    <Content Include="Content\movimentacaoCaixa.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -220,6 +225,7 @@
     <Content Include="Images\img_exclamation_blue.png" />
     <Content Include="Images\img_exclamation_green.png" />
     <Content Include="Images\img_exclamation_red.png" />
+    <Content Include="Images\img_exclamation_yellow.png" />
     <Content Include="Images\img_launch.png" />
     <Content Include="Scripts\bootstrap.js" />
     <None Include="Properties\PublishProfiles\SysVetWeb.pubxml" />
@@ -254,10 +260,12 @@
     <Content Include="Scripts\methods_pt.js" />
     <Content Include="Scripts\modalexclusao.js" />
     <Content Include="Scripts\modalform.js" />
+    <Content Include="Scripts\modalObservacoesMovimentacao.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\utilsMath\calculaIdade.js" />
+    <Content Include="Scripts\utilsMath\formataValoresMonetarios.js" />
     <Content Include="Scripts\utils\utils.js" />
     <Content Include="Scripts\validacao\validacaoCaracteresEspeciais.js" />
     <Content Include="Scripts\validacao\validacaoQuantidadeMaximaParcelasPlanoPagamento.js" />
@@ -386,6 +394,9 @@
     <Content Include="Views\FinanceiroContasReceber\BaixaParcela.cshtml" />
     <Content Include="Views\FinanceiroContasReceber\CancelarBaixa.cshtml" />
     <Content Include="Views\FinanceiroContasReceber\CancelarParcela.cshtml" />
+    <Content Include="Views\FinanceiroMovimentacaoCaixa\Index.cshtml" />
+    <Content Include="Views\FinanceiroMovimentacaoCaixa\GerarMovimentacaoManual.cshtml" />
+    <Content Include="Views\FinanceiroMovimentacaoCaixa\ModalObservacoes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,50 +1,61 @@
 ﻿@using System.Globalization
 @model SisVetWeb.Models.InformacaoDeParcelaViewModel
+<link href="~/Content/contasReceberBaixa.css" rel="stylesheet" />
 
 @using (Html.BeginForm("BaixarParcela", "FinanceiroContasReceber"))
 {
-    <div>
-        <span><img src="\Images\arrow-right.png" /> Recebimento</span>
+    <div id="div-principal">
+        <div>
+            <span class="glyphicon glyphicon-usd" id="icon-dolar"></span>
+            <label id="labelRecebimento">Recebimento</label>
+        </div>
+        <br/>
+        <label id="dadosParcelaLabel">Dados da parcela</label>
+
+        <table id="demostrativo-table-cabecalho" cellpadding="5">
+            <tr>
+                <td class="fonte-label">Cliente: </td>
+                <td>@Model.NomeCliente</td>
+            </tr>
+
+            <tr>
+                <td class="fonte-label">Número Documento: </td>
+                <td>@Model.NumeroDocumento</td>
+            </tr>
+
+            <tr>
+                <td class="fonte-label">Data Vencimento: </td>
+                <td>@Model.DataVencimento.ToString("D", new CultureInfo("pt-BR"))</td>
+            </tr>
+
+            <tr>
+                <td class="fonte-label">Data Recebimento: </td>
+                <td>
+                    <div>
+                        @Html.EditorFor(model => model.DataRecebimento)
+                        @Html.ValidationMessageFor(model => model.DataRecebimento)
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="fonte-label label-total">Valor Total: </td>
+                <td class="fonte-label label-total">R$ @Model.ValorTotalLiquido.ToString("N")</td>
+            </tr>
+
+            <tr>
+                <td class="fonte-label"> Observações: </td>
+                <td><textarea class="form-control " cols="20" id="Observacao" name="Observacoes" rows="2" maxlength="200" style="width: 300px; height: 150px;"></textarea></td>
+            </tr>
+
+        </table>
+
+        @*//Campo retornado no corpo juntamente com a data de recebimento digitado*@
+        @Html.HiddenFor(x => x.ParcelaId)
+        <hr />
+        <div class="row" style="padding-left: 10px">
+            @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
+            <input type="submit" value="Confirmar Baixa" class="btn btn-warning" />
+        </div>
     </div>
-
-    <label>Dados da parcela</label>
-
-    <table id="demostrativo-table-cabecalho" cellpadding="5">
-        <tr>
-            <td class="demostrativo-parcelas-cabecalho-label fonte">Cliente: </td>
-            <td class="demostrativo-parcelas-cabecalho-value fonte">@Model.NomeCliente</td>
-        </tr>
-        <tr>
-            <td class="demostrativo-parcelas-cabecalho-label fonte">Número Documento: </td>
-            <td class="demostrativo-parcelas-cabecalho-value fonte">@Model.NumeroDocumento</td>
-        </tr>
-        <tr>
-            <td id="demostrativo-parcelas-cabecalho-label-total" class="fonte">Data Vencimento: </td>
-            <td id="demostrativo-parcelas-cabecalho-value-total" class="fonte">@Model.DataVencimento.ToString("D", new CultureInfo("pt-BR"))</td>
-        </tr>
-        <tr>
-            <td id="demostrativo-parcelas-cabecalho-label-total" class="fonte">Data Recebimento: </td>
-            @*<td id="demostrativo-parcelas-cabecalho-value-total" class="fonte">@Model.DataRecebimento</td>*@
-            <td>
-                <div>
-                    @Html.EditorFor(model => model.DataRecebimento)
-                    @Html.ValidationMessageFor(model => model.DataRecebimento)
-                </div>
-            </td>
-
-        </tr>
-        <tr>
-            <td id="demostrativo-parcelas-cabecalho-label-total" class="fonte">Valor Total: </td>
-            <td id="demostrativo-parcelas-cabecalho-value-total" class="fonte">@Model.ValorTotalLiquido.ToString("N")</td>           
-        </tr>
-    </table>
-    
-    //Campo retornado no corpo juntamente com a data de recebimento digitado
-    @Html.HiddenFor(x => x.ParcelaId)
-    <hr />
-    <div class="row" style="padding-left: 10px">
-        @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-danger" })
-        <input type="submit" value="Confirmar Baixa" class="btn btn-success" />
-    </div>
-
 }

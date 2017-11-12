@@ -1,0 +1,79 @@
+﻿@using SisVetWeb.Helpers
+@model SisVetWeb.Models.FinanceiroMovimentacoesInfoViewModel
+<link href="~/Content/movimentacaoCaixa.css" rel="stylesheet" />
+<link href="~/Content/site.css" rel="stylesheet" />
+@Html.Partial("ModalObservacoes")
+
+<div id="movimentacoes-cabecalho" class="bloco-filtros">
+    @using (Html.BeginForm("Index", "FinanceiroMovimentacaoCaixa", FormMethod.Get))
+    {
+        <input class="form-control input-sm form-override " id="dataInicial" name="dataInicial" type="date">
+        <input class="form-control input-sm form-override " id="dataFinal" name="dataFinal" type="date">
+        <br />
+        <select name="tipoPesquisa" id="tipoPesquisa" class="form-control input-sm form-override">
+            <option selected="selected" value="CentroCusto">CentroCusto</option>
+            <option value="Observacao">Observação</option>
+        </select>
+
+        <input type="text" class="form-control input-sm form-override" name="pesquisaTexto" id="pesquisaTexto" placeholder="Pesquise por descrição de Centro de Custo ou Observações" />
+        <button type="submit" class="btn btn-primary input-lg "> Pesquisar</button>
+        @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Lançar movimentação manual", "GerarMovimentacaoManual", "FinanceiroMovimentacaoCaixa", routeValues: null, htmlAttributes: new { @class = "btn btn-primary pull-right" })
+    }
+</div>
+
+<div id="movimentacoes-corpo">
+    <table class="table table-condensed impedir-quebra-linha">
+        <tr class="background-blue">
+            <th class="text-left fonte color-white">Centro Custo</th>
+            <th class="text-center fonte color-white">Data</th>
+            <th class="text-center fonte color-white">Descrição Complementares</th>
+            <th class="text-center fonte color-white">Crédito/Débito</th>
+            <th class="text-center fonte color-white">Valor</th>
+            <th class="text-center fonte color-white">Ações</th>
+        </tr>
+
+        @foreach (var registro in @Model.GetListMovimentacoes())
+        {
+            <tr>
+                <td class="text-center col-sm-1 ">@registro.CentroCusto</td>
+                <td class="text-center col-sm-2">@registro.DataHora.ToString("g")</td>
+                <td class="text-center col-sm-5">@registro.Observacao.GetStringLimitada(100)</td>
+                <td class="text-center col-sm-1" style="color: @(MyHelper.GetColorDescricaoDebitoCredito(registro.TipoMovimentacao))">@registro.TipoMovimentacaoDescricao</td>
+                <td class="text-center col-sm-2">@registro.Valor.ToString("N")</td>
+                <td class="text-center col-sm-1">
+                    @*@Html.NoEncodeActionLink("<span class='glyphicon glyphicon-eye-open'></span>", "Informações", "InformacaoParcelaCancelamento", "FinanceiroContasReceber")*@
+                    <a href="javascript:void(0)" id="linkVisualizarObservacao" class="consulta-color-orange" title="Visualizar Observações">
+                        <input value="@registro.Observacao" type="hidden"/>
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                    </a>
+
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<div id="movimentacoes-rodape">
+    <div class="movimentacoes-rodape-totalizadores">
+        <label id="descricao-info"> Movimentações do período</label>
+        <div class="fonte">
+            <label> <span class='glyphicon glyphicon-minus' style="color: red"></span></label>
+            <label>Débitos</label>
+            <label class="fonte color-white">R$: @Model.TotalDebitos.ToString("N")</label>
+        </div>
+        <div class="fonte">
+            <label> <span class='glyphicon glyphicon-plus' style="color: green"></span></label>
+            <label>Créditos</label>
+            <label class="fonte color-white">R$: @Model.TotalCreditos.ToString("N")</label>
+        </div>
+        <div class="fonte">
+            <label> <span class='glyphicon glyphicon-share-alt' style="color: white"></span></label>
+            <label>Saldo</label>
+            <label class="fonte color-white">R$: @Model.Saldo.ToString("N")</label>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/modalObservacoesMovimentacao")
+}

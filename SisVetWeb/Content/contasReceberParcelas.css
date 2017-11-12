@@ -7,8 +7,12 @@ html, body {
     height: 100%;
 }
 
+#contas-receber-parcelas-cabecalho {
+    height: 15%;
+}
+
 #contas-receber-parcelas-corpo {
-    height: 88%;
+    height: 73%;
     width: 100%;
     overflow: auto;
 }
@@ -23,29 +27,17 @@ html, body {
   align-items: center;/*Centraliza os elementos na vertical*/
   -webkit-justify-content: center;/*Centraliza os elementos na horizontal - compatibilidade SAFARI*/
   justify-content: flex-start;/*Centraliza os elementos na horizontal*/
-  padding: 5px;
+  padding: 5px;  
 }
 
-.background-blue{
-    background: #33c5ff;    
-}
+
 
 .contas-receber-parcelas-rodape-totalizadores {
     margin-right: 60px;
 }
 
 .fonte {
-    font-size: 1.0em;
+    font-size: 0.9em;
     color: #ffffff;
 }
 
-
-tr:hover {
-    background: #e6f9ff;
-}
-
-#total-geral {
-    position: absolute;    
-    right:7px;
-    font-size: 3em;
-}

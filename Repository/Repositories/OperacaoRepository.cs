@@ -5,8 +5,6 @@ namespace Repository.Repositories
 {
     public class OperacaoRepository : Repository<Operacao>
     {
-        public static Operacao GerarOperacao(BancoContexto ctx){
-            return ctx.Operacoes.Add(new Operacao().GerarOperacao());
-        }
+      
     }
 }

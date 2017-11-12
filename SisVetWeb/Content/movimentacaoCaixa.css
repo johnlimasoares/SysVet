@@ -1,0 +1,78 @@
+﻿html, body {
+    height: 100%;
+}
+
+.bloco-filtros {
+    padding: 10px;
+    background-color: #eeeeee;
+}
+
+.impedir-quebra-linha{
+    white-space: nowrap
+}
+.form-override {
+    display: inline;
+    width: 10.3%;
+    margin-top: 1px;
+}
+
+.fonte {
+    font-family: Arial,Helvetica,Verdana,sans-serif;        
+}
+
+#descricao-info {
+    font-size: 1.2rem;           
+}
+
+.color-white {
+    color: #ffffff;
+}
+
+.consulta-color-orange{
+    color:darkorange;
+}
+
+.movimentacoes-rodape-totalizadores {
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-right: 5px;
+    background: #00adef;
+    font-size: 1.1rem;
+}
+
+#pesquisaTexto, #pesquisaCliente{
+    width: 20.8%;    
+}
+
+
+#div-principal-conteudo {
+    height: 100%;
+}
+
+#movimentacoes-cabecalho {
+    height: 14%;    
+}
+
+#movimentacoes-corpo {
+    height: 71%;
+    width: 100%;
+    overflow: auto;
+}
+
+tr:hover {
+    background: #e6f9ff;
+}
+
+#movimentacoes-rodape {
+  height: 14%;/*define 12% de altura*/
+  min-height: 14%;/*impede que a altura seje menor que isso*/
+  overflow: auto;/*cria barra de rolagem vertical caso necessite*/
+  display: -webkit-flex;/*define que os filhos deste elemento deverao agir como flexbox - compatibilidade SAFARI*/
+  display: flex;/*define que os filhos deste elemento deverao agir como flexbox*/
+  -webkit-align-items: center;/*Centraliza os elementos na vertical - compatibilidade SAFARI*/
+  align-items: center;/*Centraliza os elementos na vertical*/
+  -webkit-justify-content: center;/*Centraliza os elementos na horizontal - compatibilidade SAFARI*/
+  justify-content: flex-end;/*Centraliza os elementos na horizontal*/
+ 
+  background: #33c5ff; 
+}

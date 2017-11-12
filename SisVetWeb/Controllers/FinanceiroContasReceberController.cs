@@ -16,20 +16,19 @@ namespace SisVetWeb.Controllers
 {
     public class FinanceiroContasReceberController : Controller
     {
-        private ClienteRepository repoCliente = new ClienteRepository();
-        private FinanceiroCentroDeCustoRepository repoCentroCusto = new FinanceiroCentroDeCustoRepository();
-        private FinanceiroPlanoDePagamentoRepository repoPlanoPagamento = new FinanceiroPlanoDePagamentoRepository();
-        private FinanceiroContasReceberParcelasRepository repoContasReceber = new FinanceiroContasReceberParcelasRepository();
-
         public ActionResult Index(string tipoPesquisa, DateTime? dataInicial, DateTime? dataFinal, string pesquisaCliente, string tipoPesquisaCliente)
         {
+            var repoContasReceber = new FinanceiroContasReceberParcelasRepository();
             var parcelasEtotalizadores = new FinanceiroParcelasETotalizadoresViewModel();
-            parcelasEtotalizadores.FinanceiroContasReceberParcelasDapperList = repoContasReceber.GetAllContasReceberDapper(tipoPesquisa, dataInicial, dataFinal, pesquisaCliente,tipoPesquisaCliente).ToList();
+            parcelasEtotalizadores.FinanceiroContasReceberParcelasDapperList = repoContasReceber.GetContasReceberDapper(tipoPesquisa, dataInicial, dataFinal, pesquisaCliente, tipoPesquisaCliente).ToList();
             return View(parcelasEtotalizadores.PreencherTotalizadores());
         }
 
         public ActionResult GerarParcelasDuplicata()
         {
+            var repoCliente = new ClienteRepository();
+            var repoCentroCusto = new FinanceiroCentroDeCustoRepository();
+            var repoPlanoPagamento = new FinanceiroPlanoDePagamentoRepository();
             ViewBag.CentroCustoId = new SelectList(
              repoCentroCusto.GetAll().OrderBy(x => x.Descricao),
              "Id",
@@ -53,6 +52,8 @@ namespace SisVetWeb.Controllers
         [HttpPost]
         public ActionResult GerarParcelasDuplicata(FinanceiroTipoRecebimento financeiroTipoRecebimento)
         {
+            var repoCliente = new ClienteRepository();
+            var repoPlanoPagamento = new FinanceiroPlanoDePagamentoRepository();
             var demonstrativoParcelasVm = new FinanceiroDemonstrativoDeParcelasViewModel();
             demonstrativoParcelasVm.DemonstrativoParcelasList = ParcelasBusiness.GerarDemonstrativoParcelas(financeiroTipoRecebimento);
             demonstrativoParcelasVm.FinanceiroTipoRecebimento = financeiroTipoRecebimento;
@@ -64,6 +65,7 @@ namespace SisVetWeb.Controllers
         [HttpPost]
         public JsonResult ValidarQuantidadeMaximaParcelasPlano(string planoPagamentoId)
         {
+            var repoPlanoPagamento = new FinanceiroPlanoDePagamentoRepository();
             try
             {
                 var maximoParcelas = repoPlanoPagamento.GetPlanoPagamento(planoPagamentoId.ToInteger()).QuantidadeParcelas;

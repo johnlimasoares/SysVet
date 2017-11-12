@@ -1,0 +1,46 @@
+﻿
+html, body {
+    height: 100%;
+}
+
+#div-principal-conteudo {
+    height: 100%;
+}
+
+#icon-dolar {
+    background: #33c5ff;
+    color: white;
+    font-size: 80px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    border-radius: 50%;
+}
+
+#labelRecebimento {
+    font-size: 30px;
+    top: 50%;
+    color: #00adef; 
+}
+
+
+#dadosParcelaLabel {
+    background-color:#eeeeee;
+    width: 100%;
+    color: #666;
+    padding: 3px;
+    font-size: 1.3rem;
+}
+
+.fonte-label {
+    color: #666;
+    font-weight: bold;
+}
+
+.label-total {
+    color: #00adef;
+    font-size: 2rem;
+}
+
+#div-principal {
+    padding: 5px;
+}

@@ -1,6 +1,5 @@
-﻿@model Domain.Entidades.Operacao.Financeiro.FinanceiroTipoRecebimento
-
-<h3>Inclusão Contas Receber</h3>
+﻿@model SisVetWeb.Models.FinanceiroMovimentacaoViewModel
+<h3>Lançar movimentação manual</h3>
 
 <link href="~/Content/combobox.css" rel="stylesheet" />
 
@@ -13,10 +12,13 @@
         @Html.ValidationSummary(true)
 
         <div class="form-group">
-            @Html.Label("Cliente", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ClienteId", (IEnumerable<SelectListItem>)ViewBag.ClienteId, "Selecione...", new { @class = "form-control combobox" })
-                @Html.ValidationMessageFor(model => model.ClienteId)
+            @Html.Label("Tipo", new { @class = "control-label col-md-2" })
+            <div class="col-md-5 col-lg-pull-0" style="width:500px;">
+                @Html.DropDownList("TipoMovimentacao",
+                new List<SelectListItem>{
+                    new SelectListItem{Text = "Crédito", Value = "1", Selected = true},
+                    new SelectListItem{Text = "Débito", Value = "0"},
+                }, new { @class = "form-control" })
             </div>
         </div>
 
@@ -29,34 +31,17 @@
         </div>
 
         <div class="form-group">
-            @Html.Label("Forma Pagamento", new { @class = "control-label col-md-2" })
-            <div class="col-md-5 col-lg-pull-0" style="width:500px;">
-                @Html.DropDownList("FinanceiroPlanoDePagamentoId", (IEnumerable<SelectListItem>)ViewBag.FormaPagamentoId, "Selecione...", new { @class = "form-control " })
-                @Html.ValidationMessageFor(model => model.FinanceiroPlanoDePagamentoId)
-            </div>
-        </div>
-
-        <div class="form-group">
             <label class="control-label col-md-2" for="DataEmissao">Emissão</label>
             <div class="col-md-5 col-lg-pull-0" style="width:500px;">
-                <input class="form-control" id="DataEmissao" name="DataEmissao" type="date" required title="Este campo é obrigatório">
+                <input class="form-control" id="DataEmissao" name="DataLancamento" type="date" required title="Este campo é obrigatório">
                 <span class="field-validation-valid" data-valmsg-for="DataEmissao" data-valmsg-replace="true"></span>
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label col-md-2" for="quantidadeParcelas">Quantidade Parcelas</label>
-            <div class="col-md-10" style="width: 500px">
-                <input class="form-control" id="quantidadeParcelas" name="quantidadeParcelas" type="number" required title="Este campo é obrigatório" value="" />
-                <span class="field-validation-valid" data-valmsg-for="quantidadeParcelas" data-valmsg-replace="true"></span>
-            </div>
-        </div>
-
-
-        <div class="form-group">
             <label class="control-label col-md-2 moeda" for="ValorTotal">Valor</label>
             <div class="col-md-10" style="width: 500px">
-                <input class="form-control" onkeydown="formataValorDelegate(this, 11, event, 2, '', ',');" id="ValorTotal" name="ValorTotal" type="text" required title="Este campo é obrigatório" value="" />
+                <input class="form-control" onkeydown="formataValorDelegate(this, 11, event, 2, '', ',');" id="ValorTotal" name="Valor" type="text" required title="Este campo é obrigatório" value="" />
                 <span class="field-validation-valid" data-valmsg-for="ValorTotal" data-valmsg-replace="true"></span>
 
             </div>
@@ -65,7 +50,7 @@
         <div class="form-group">
             <label class="control-label col-md-2" for="Observacao">Obervações</label>
             <div class="col-md-10" style="width: 500px">
-                <textarea class="form-control " cols="20" id="Observacao" name="Observacao" rows="2" style="width: 470px; max-width: 470px; height: 200px; max-height:200px "></textarea>
+                <textarea class="form-control " cols="20" id="Observacao" name="Observacao" rows="2" maxlength="700" style="width: 470px; max-width: 470px; height: 200px; max-height:200px "></textarea>
             </div>
         </div>
 
@@ -80,7 +65,6 @@
 @section Scripts {
     <script src="~/Scripts/jquery.combobox.js"></script>
     @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/validacao")
     @Scripts.Render("~/bundles/formataValoresMonetarios")
     <script type="text/javascript">
         (function () {

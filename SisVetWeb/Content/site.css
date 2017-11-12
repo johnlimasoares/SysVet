@@ -18,6 +18,10 @@ textarea {
     max-width: 100%;
 }
 
+.background-blue{
+    background: #33c5ff;    
+}
+
 /* styles for validation helpers */
 .field-validation-error {
     color: #b94a48;

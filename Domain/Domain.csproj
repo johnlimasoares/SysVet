@@ -46,6 +46,7 @@
     <Compile Include="EntidadesLeitura\Cadastro\AnimalDapper.cs" />
     <Compile Include="EntidadesLeitura\Cadastro\ClienteDapper.cs" />
     <Compile Include="EntidadesLeitura\Operacao\Financeiro\FinanceiroContasReceberParcelasDapper.cs" />
+    <Compile Include="EntidadesLeitura\Operacao\Financeiro\FinanceiroMovimentacoesDapper.cs" />
     <Compile Include="EntidadesLeitura\WidGet\VacinacaoVencidasWidGet.cs" />
     <Compile Include="EntidadesLeitura\WidGet\VacinacaoAVencerWidGet.cs" />
     <Compile Include="Entidades\Cadastro\Animal.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Entidades\Operacao\Financeiro\FinanceiroMovimentacoes.cs" />
     <Compile Include="Entidades\Operacao\Generic\Operacao.cs" />
     <Compile Include="Entidades\Operacao\Vacinacao\Vacinacao.cs" />
+    <Compile Include="Enum\OrigemMovimentacao.cs" />
     <Compile Include="Enum\TipoOperacaoFinanceira.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Enum\SituacaoAtendimento.cs" />
