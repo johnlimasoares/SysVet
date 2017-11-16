@@ -20,7 +20,7 @@ namespace SisVetWeb.Controllers
         {
             var repoContasReceber = new FinanceiroContasReceberParcelasRepository();
             var parcelasEtotalizadores = new FinanceiroParcelasETotalizadoresViewModel();
-            parcelasEtotalizadores.FinanceiroContasReceberParcelasDapperList = repoContasReceber.GetContasReceberDapper(tipoPesquisa, dataInicial, dataFinal, pesquisaCliente, tipoPesquisaCliente).ToList();
+            parcelasEtotalizadores.FinanceiroContasReceberParcelasDapperList = repoContasReceber.GetContasReceberDapper(tipoPesquisa ?? "Abertas", dataInicial, dataFinal, pesquisaCliente, tipoPesquisaCliente).ToList();
             return View(parcelasEtotalizadores.PreencherTotalizadores());
         }
 
@@ -80,16 +80,25 @@ namespace SisVetWeb.Controllers
         [HttpPost]
         public ActionResult Confirmar()
         {
-            var demonstrativoParcelasVM = (FinanceiroDemonstrativoDeParcelasViewModel)TempData["FullModel"];
-            //validar quantidade parcelas do plano
-            ParcelasBusiness.SalvarParcelasGeradas(demonstrativoParcelasVM.DemonstrativoParcelasList, demonstrativoParcelasVM.FinanceiroTipoRecebimento);
-            return RedirectToAction("Index");
+            try
+            {
+                var demonstrativoParcelasVM = (FinanceiroDemonstrativoDeParcelasViewModel)TempData["FullModel"];
+                //validar quantidade parcelas do plano
+                ParcelasBusiness.SalvarParcelasGeradas(demonstrativoParcelasVM.DemonstrativoParcelasList, demonstrativoParcelasVM.FinanceiroTipoRecebimento);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
         }
 
         public ActionResult InformacaoParcelaBaixa(int id)
         {
             var informacaoDeParcela = InformacaoDeParcelaViewModel(id);
-            return View("BaixaParcela", informacaoDeParcela);
+            return View("BaixarParcela", informacaoDeParcela);
         }
 
         public ActionResult InformacaoParcelaCancelamentoBaixa(int id)

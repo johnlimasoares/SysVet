@@ -6,6 +6,7 @@
 @model SisVetWeb.Models.FinanceiroParcelasETotalizadoresViewModel
 <link href="~/Content/contasReceberParcelas.css" rel="stylesheet" />
 <link href="~/Content/movimentacaoCaixa.css" rel="stylesheet" />
+<link href="~/Content/form-bootstrap-override.css" rel="stylesheet" />
 <link href="~/Content/site.css" rel="stylesheet" />
 
 <div id="contas-receber-parcelas-cabecalho" class="bloco-filtros">
@@ -57,10 +58,10 @@
         {
         <tr>
             @{
-                    var botao = BotaoContasReceberStatus.GetBotaoContasReceberStatus(parcela.SituacaoParcelaFinanceira);
+                    BotaoContasReceberStatus.SetBotaoContasReceberStatus(parcela.SituacaoParcelaFinanceira);
             }
-            <td><img src=@(botao.PathIcon) /></td>
-            <td style="@(botao.ColorStatus)">@(botao.Status)</td>
+            <td><img src=@(BotaoContasReceberStatus.PathIcon) /></td>
+            <td style="@(BotaoContasReceberStatus.ColorStatus)">@(BotaoContasReceberStatus.Status)</td>
             <td class="text-left">@string.Format("{0}-{1}", @parcela.ClienteId, @parcela.ClienteNome)</td>
             <td class="text-center">@parcela.Parcela</td>
             <td class="text-center">@parcela.TotalParcelas</td>
@@ -121,20 +122,4 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

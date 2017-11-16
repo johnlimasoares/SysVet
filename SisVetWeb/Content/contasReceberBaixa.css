@@ -44,3 +44,13 @@ html, body {
 #div-principal {
     padding: 5px;
 }
+
+#atencao{    
+    font-size: 2.0rem;    
+}
+
+#div-atencao {
+    width: 100%;
+    padding: 3px; 
+    background-color: rgba(2550,0,0,0.1);       
+}

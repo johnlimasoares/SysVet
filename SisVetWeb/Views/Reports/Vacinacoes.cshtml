@@ -1,0 +1,52 @@
+﻿@using SisVetWeb.Helpers
+<link href="~/Content/relatorios.css" rel="stylesheet" />
+<link href="~/Content/form-bootstrap-override.css" rel="stylesheet" />
+<h1>Relatório de Vacinações</h1>
+<form></form>
+<div id="movimentacoes-cabecalho" class="bloco-filtros">
+    @using (Html.BeginForm("Preview", "Reports", FormMethod.Get))
+    {
+        <label class="radio-inline">
+            <input type="radio" name="status" class="check" value="Vencidas" checked>
+            Vencidas
+        </label>
+        <br />
+        <label class="radio-inline">
+            <input type="radio" name="status" class="check" value="Vencer">
+            A vencer
+        </label>
+        <br />
+        <label class="radio-inline">
+            <input type="radio" name="status" class="check" value="Todas">
+            Todas
+        </label>
+
+        <br />
+        <label for="data" id="descricaoPeriodo" >Vencimento até:</label>
+        <input class="form-control input-sm form-override" id="data" name="data" type="date">
+        <br />
+        <input type="text" class="form-control" name="pesquisaTexto" id="pesquisaTexto" placeholder="Pesquise por nome do cliente ou animal" />
+        <hr />
+        <button type="submit" class="btn btn-primary input-lg">Gerar Relatório</button>
+    }
+</div>
+
+<script>
+    
+    $(document).ready(function () {
+        $('#descricaoPeriodo').html('Vencidas apartir de:');
+    });
+    
+    $('.check').click(function (e) {
+        if (e.currentTarget.defaultValue == "Vencer") {
+            $('#data').css('display', 'inline');
+            $('#descricaoPeriodo').html('Vencimento até:');
+        } else if (e.currentTarget.defaultValue == "Vencidas") {
+            $('#data').css('display', 'inline');
+            $('#descricaoPeriodo').html('Vencidas apartir de:');
+        } else {
+            $('#data').css('display', 'none');
+            $("#descricaoPeriodo").html('');
+        }
+    });
+</script>

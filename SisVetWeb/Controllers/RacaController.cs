@@ -11,6 +11,7 @@ using Domain.Entidades.Cadastro;
 using PagedList;
 using Repository.Context;
 using Repository;
+using Repository.Repositories;
 
 namespace SisVetWeb.Controllers {
     public class RacaController : Controller {

@@ -6,33 +6,33 @@ using Domain.Enum;
 
 namespace SisVetWeb.Models
 {
-    public class BotaoContasReceberStatus
+    public static class BotaoContasReceberStatus
     {
-        public string PathIcon { get; set; }
-        public string Status { get; set; }        
-        public string ColorStatus { get; set; }
+        public static string PathIcon { get; private set; }
+        public static string Status { get; private set; }
+        public static string ColorStatus { get; private set; }
 
-        public static BotaoContasReceberStatus GetBotaoContasReceberStatus(SituacaoParcelaFinanceira situacaoParcelaFinanceira){
-            var botao = new BotaoContasReceberStatus();
+        public static void SetBotaoContasReceberStatus(SituacaoParcelaFinanceira situacaoParcelaFinanceira)
+        {
             switch (situacaoParcelaFinanceira)
             {
                 case SituacaoParcelaFinanceira.Aberto:
-                    botao.PathIcon = "\\Images\\arrow-right.png";
-                    botao.Status = "Aberta";
+                    PathIcon = "\\Images\\arrow-right.png";
+                    Status = "Aberta";
+                    ColorStatus = "";
                     break;
                 case SituacaoParcelaFinanceira.Liquidado:
-                    botao.PathIcon = "\\Images\\arrow-up.png";
-                    botao.Status = "Recebida";
-                    botao.ColorStatus = "Color:green";
+                    PathIcon = "\\Images\\arrow-up.png";
+                    Status = "Recebida";
+                    ColorStatus = "Color:green";
                     break;
                 case SituacaoParcelaFinanceira.Cancelado:
-                    botao.PathIcon = "\\Images\\arrow-down.png";
-                    botao.Status = "Cancelada";
-                    botao.ColorStatus = "Color:red";
+                    PathIcon = "\\Images\\arrow-down.png";
+                    Status = "Cancelada";
+                    ColorStatus = "Color:red";
                     break;
             }
-
-            return botao;
+            
         }
     }
 }

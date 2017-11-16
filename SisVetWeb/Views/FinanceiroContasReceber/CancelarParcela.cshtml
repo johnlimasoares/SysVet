@@ -1,44 +1,54 @@
 ﻿@using System.Globalization
 @model SisVetWeb.Models.InformacaoDeParcelaViewModel
+<link href="~/Content/contasReceberBaixa.css" rel="stylesheet" />
 
 @using (Html.BeginForm("CancelarParcela", "FinanceiroContasReceber"))
 {
-    <div>
-        <span><img src="\Images\arrow-right.png" /> Recebimento</span>
-    </div>
+    <div id="div-principal">
+        <div>
+            <span class="glyphicon glyphicon-usd" id="icon-dolar"></span>
+            <label id="labelRecebimento">Cancelamento de Parcela</label>
+        </div>
+        <br />
+        <label id="dadosParcelaLabel">Dados da parcela</label>
+        <div id="div-atencao">
+            <label id="atencao" >Atenção.</label>
+            <label class="fonte-label">Parcelas canceladas não poderão ser baixadas posteriormente</label>
+        </div>
+        <table id="demostrativo-table-cabecalho" cellpadding="5">
+            <tr>
+                <td class="fonte-label">Cliente: </td>
+                <td>@Model.NomeCliente</td>
+            </tr>
 
-    <label>Dados da parcela</label>
-    <h2>Atenção</h2>
-    <h3>Após o cancelamento a processo não poderá ser revertido</h3>
-    <table id="demostrativo-table-cabecalho" cellpadding="5">
-        <tr>
-            <td class="demostrativo-parcelas-cabecalho-label fonte">Cliente: </td>
-            <td class="demostrativo-parcelas-cabecalho-value fonte">@Model.NomeCliente</td>
-        </tr>
-        <tr>
-            <td class="demostrativo-parcelas-cabecalho-label fonte">Número Documento: </td>
-            <td class="demostrativo-parcelas-cabecalho-value fonte">@Model.NumeroDocumento</td>
-        </tr>
-        <tr>
-            <td id="demostrativo-parcelas-cabecalho-label-total" class="fonte">Data Vencimento: </td>
-            <td id="demostrativo-parcelas-cabecalho-value-total" class="fonte">@Model.DataVencimento.ToString("D", new CultureInfo("pt-BR"))</td>
-        </tr>
-        <tr>
-            <td id="demostrativo-parcelas-cabecalho-label-total" class="fonte">Data Recebimento: </td>
-            <td id="demostrativo-parcelas-cabecalho-value-total" class="fonte">@Model.DataRecebimento.ToString("D", new CultureInfo("pt-BR"))</td>
-        </tr>
-        <tr>
-            <td id="demostrativo-parcelas-cabecalho-label-total" class="fonte">Valor Total: </td>
-            <td id="demostrativo-parcelas-cabecalho-value-total" class="fonte">@Model.ValorTotalLiquido.ToString("N")</td>           
-        </tr>
-    </table>
-    
-    //Campo retornado no corpo juntamente com a data de recebimento digitado
-    @Html.HiddenFor(x => x.ParcelaId)
-    <hr />
-    <div class="row" style="padding-left: 10px">
-        @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-danger" })
-        <input type="submit" value="Cancelar Parcela" class="btn btn-warning" />
+            <tr>
+                <td class="fonte-label">Número Documento: </td>
+                <td>@Model.NumeroDocumento</td>
+            </tr>
+
+            <tr>
+                <td class="fonte-label">Data Vencimento: </td>
+                <td>@Model.DataVencimento.ToString("D", new CultureInfo("pt-BR"))</td>
+            </tr>
+
+            <tr>
+                <td class="fonte-label">Data Recebimento: </td>
+                <td>@Model.DataRecebimento.ToString("D", new CultureInfo("pt-BR"))</td>
+            </tr>
+
+            <tr>
+                <td class="fonte-label label-total">Valor Total: </td>
+                <td class="fonte-label label-total">@Model.ValorTotalLiquido.ToString("N")</td>
+            </tr>
+
+        </table>
+
+        @Html.HiddenFor(x => x.ParcelaId)
+        <hr />
+        <div class="row" style="padding-left:10px">
+            @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-default" })
+            <input type="submit" value="Cancelar Parcela" class="btn btn-warning" />
+        </div>
     </div>
 
 }

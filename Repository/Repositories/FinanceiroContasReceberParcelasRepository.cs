@@ -37,9 +37,6 @@ namespace Repository.Repositories
                 case "Abertas":
                     sql += GetWhereParcelasAbertas(dataInicial, dataFinal);
                     break;
-                case "":
-                    sql += GetWhereParcelasAbertas(dataInicial, dataFinal);
-                    break;
                 case "Recebidas":
                     sql += GetWhereParcelasRecebidas(dataInicial, dataFinal);
                     break;

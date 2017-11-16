@@ -145,6 +145,7 @@
     <Compile Include="Controllers\MedicamentoController.cs" />
     <Compile Include="Controllers\PesoController.cs" />
     <Compile Include="Controllers\RacaController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\ServicoController.cs" />
     <Compile Include="Controllers\TelefoneController.cs" />
     <Compile Include="Controllers\TipoServicoController.cs" />
@@ -171,8 +172,10 @@
     <Content Include="Content\contasReceberBaixa.css" />
     <Content Include="Content\contasReceberDemostrativo.css" />
     <Content Include="Content\contasReceberParcelas.css" />
+    <Content Include="Content\form-bootstrap-override.css" />
     <Content Include="Content\movimentacaoCaixa.css" />
     <Content Include="Content\PagedList.css" />
+    <Content Include="Content\relatorios.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -214,6 +217,7 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Content\tne_mascote.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -391,12 +395,13 @@
     <Content Include="Views\FinanceiroContasReceber\GerarParcelasDuplicata.cshtml" />
     <Content Include="Views\FinanceiroContasReceber\DemonstrativoParcelas.cshtml" />
     <Content Include="Views\FinanceiroContasReceber\Index.cshtml" />
-    <Content Include="Views\FinanceiroContasReceber\BaixaParcela.cshtml" />
+    <Content Include="Views\FinanceiroContasReceber\BaixarParcela.cshtml" />
     <Content Include="Views\FinanceiroContasReceber\CancelarBaixa.cshtml" />
     <Content Include="Views\FinanceiroContasReceber\CancelarParcela.cshtml" />
     <Content Include="Views\FinanceiroMovimentacaoCaixa\Index.cshtml" />
     <Content Include="Views\FinanceiroMovimentacaoCaixa\GerarMovimentacaoManual.cshtml" />
     <Content Include="Views\FinanceiroMovimentacaoCaixa\ModalObservacoes.cshtml" />
+    <Content Include="Views\Reports\Vacinacoes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -417,6 +422,10 @@
     <ProjectReference Include="..\Domain\Domain.csproj">
       <Project>{2441c8da-ab42-48a2-aa1c-b3d442e289ea}</Project>
       <Name>Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Reports\Reports.csproj">
+      <Project>{ae5edd53-f515-4f1a-8e98-18fe09405b94}</Project>
+      <Name>Reports</Name>
     </ProjectReference>
     <ProjectReference Include="..\Repository\Repository.csproj">
       <Project>{4b279945-3d41-48d2-922c-fd3314374e7d}</Project>

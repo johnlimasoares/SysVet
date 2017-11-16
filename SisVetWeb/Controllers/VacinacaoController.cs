@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using Domain.Entidades.Operacao;
 using Domain.Entidades.Operacao.Vacinacao;
+using Domain.EntidadesLeitura.WidGet;
 using Domain.WidGet;
 using Repository.Context;
 using Utils;
@@ -32,12 +33,12 @@ namespace SisVetWeb.Controllers {
             //var decimoDia = hoje.AddDays(dezDias);
             //var proximasVacinas = repoVacinacao.GetAll().Where(a => a.DataPrevisao >= hoje && a.DataPrevisao <= decimoDia && a.DataVacinacao == null);
             //return PartialView("WidGet/_WidGetListVacinacao", proximasVacinas.OrderBy(a => a.DataPrevisao).ToList());
-            var listVacinacoes = (List<VacinacaoAVencerWidGet>)repoVacinacao.GetAllVacinacoesAVencerDapper();
+            var listVacinacoes = (List<VacinacaoAVencerWidGet>)repoVacinacao.GetVacinacoesAVencerWidget();
             return PartialView("WidGet/_WidGetListVacinacao", SetMascaraTelefone(listVacinacoes));
         }
 
         public ActionResult WidGetListVacinacaoVencidas() {
-            var vacinasVencidas = (List<VacinacaoVencidasWidGet>)repoVacinacao.GetAllVacinacoesVencidasDapper();
+            var vacinasVencidas = (List<VacinacaoVencidasWidGet>)repoVacinacao.GetVacinacoesVencidasWidget();
             return PartialView("WidGet/_WidGetListVacinacaoVencidas", SetMascaraTelefone(vacinasVencidas));
         }
 

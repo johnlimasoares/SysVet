@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Dapper;
-using Domain.Entidades;
 using Domain.Entidades.Cadastro;
 using Domain.EntidadesLeitura.Cadastro;
 using Repository.Repositories.Base;
 
-namespace Repository {
+namespace Repository.Repositories {
     public class ClienteRepository : Repository<Cliente> {
 
         public List<ClienteDapper> GetAllClientes(string ordenacao, string pesquisa, string tipoPesquisa) {

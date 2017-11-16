@@ -1,8 +1,7 @@
-﻿using Domain.Entidades;
-using Domain.Entidades.Cadastro;
+﻿using Domain.Entidades.Cadastro;
 using Repository.Repositories.Base;
 
-namespace Repository
+namespace Repository.Repositories
 {
     public class PesoRepository : Repository<Peso>
     {

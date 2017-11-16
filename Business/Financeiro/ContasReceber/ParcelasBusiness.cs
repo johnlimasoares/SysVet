@@ -94,6 +94,7 @@ namespace Business.Financeiro.ContasReceber
             using (var ctx = new BancoContexto())
             {
                 var operacao = new Operacao();
+                operacao.Data = DateTime.Now;
                 ctx.Operacoes.Add(operacao);
 
                 SalvarTipoRecebimentoFinanceiro(ctx, operacao, financeiroTipoRecebimento);

@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using Domain.Entidades.Cadastro;
 using PagedList;
 using Repository;
+using Repository.Repositories;
 
 
 namespace SisVetWeb.Controllers

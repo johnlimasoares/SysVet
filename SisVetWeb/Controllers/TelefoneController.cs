@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Domain.Entidades.Cadastro.Contato;
 using Repository;
 using Repository.Context;
+using Repository.Repositories;
 using Utils;
 using WebGrease.Css.Extensions;
 

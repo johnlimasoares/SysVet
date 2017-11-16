@@ -11,6 +11,7 @@ using Domain.Entidades.Cadastro.Contato;
 using PagedList;
 using Repository;
 using Repository.Context;
+using Repository.Repositories;
 
 namespace SisVetWeb.Controllers
 {
