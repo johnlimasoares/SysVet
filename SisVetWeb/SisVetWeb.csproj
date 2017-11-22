@@ -130,6 +130,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Controllers\AnimalController.cs" />
     <Compile Include="Controllers\AtendimentoController.cs" />
     <Compile Include="Controllers\CidadeController.cs" />
@@ -158,6 +159,7 @@
     <Compile Include="Helpers\MyHelper.cs" />
     <Compile Include="Models\AnimalViewModel.cs" />
     <Compile Include="Models\BotaoContasReceberStatus.cs" />
+    <Compile Include="Models\ClienteViewModel.cs" />
     <Compile Include="Models\FinanceiroMovimentacaoViewModel.cs" />
     <Compile Include="Models\FinanceiroMovimentacoesInfoViewModel.cs" />
     <Compile Include="Models\InformacaoDeParcelaViewModel.cs" />
@@ -172,7 +174,10 @@
     <Content Include="Content\contasReceberBaixa.css" />
     <Content Include="Content\contasReceberDemostrativo.css" />
     <Content Include="Content\contasReceberParcelas.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\form-bootstrap-override.css" />
+    <Content Include="Content\logo_anjos.png" />
     <Content Include="Content\movimentacaoCaixa.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\relatorios.css" />
@@ -217,8 +222,8 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
-    <Content Include="Content\tne_mascote.png" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\site.css" />
@@ -232,6 +237,11 @@
     <Content Include="Images\img_exclamation_yellow.png" />
     <Content Include="Images\img_launch.png" />
     <Content Include="Scripts\bootstrap.js" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\SysVetWeb.pubxml" />
     <None Include="Properties\PublishProfiles\websys.pubxml" />
     <Content Include="Scripts\bootstrap.min.js" />

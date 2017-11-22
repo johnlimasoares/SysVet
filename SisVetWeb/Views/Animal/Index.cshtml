@@ -51,15 +51,11 @@
             Raça
         </th>
         <th>
-            Data Nasc.
+            Data Nascimento
         </th>
         <th class="text-center">
             Sexo
         </th>
-        <th class="text-center">
-            Castrado
-        </th>
-
         <th></th>
     </tr>
 
@@ -71,7 +67,7 @@
             <td class="col-sm-2">
                 @Html.DisplayFor(modelItem => item.Nome)
             </td>
-            <td class="col-sm-3">
+            <td class="col-sm-4">
                 @Html.DisplayFor(modelItem => item.ClienteNome)
             </td>
             <td class="col-sm-1">
@@ -86,10 +82,7 @@
             <td class="col-sm-1 text-center">
                 @Html.DisplayFor(modelItem => item.Sexo).ToString().ToUpper()
             </td>
-
-            <td class="col-sm-1 text-center">
-                @Html.DisplayFor(modelItem => item.Castrado)
-            </td>
+           
             <td class="col-sm-2">
                 <div class="pull-right">
                     @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-pencil'></span>", "Editar", "Edit", "Animal", routeValues: new { ID = item.ID }, htmlAttributes: new { data_modal = "", @class = "btn btn-xs btn-default" })

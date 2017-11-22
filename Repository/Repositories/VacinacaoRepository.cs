@@ -92,10 +92,11 @@ namespace Repository.Repositories
             }
         }
 
-        public IList<VacinacaoReport> GetVacinacoesReport(DateTime? data, string statusVacina, string pesquisaTexto)
+        public IList<VacinacaoReport> GetVacinacoesReport(DateTime? data, DateTime? datafinal, string statusVacina, string pesquisaTexto)
         {
             var sql = @"SELECT 
                         V.DataPrevisao,
+                        V.DataVacinacao,
                         A.Nome AS NomeAnimal,
                         C.Nome AS NomeCliente,
                         C.ID,
@@ -131,6 +132,20 @@ namespace Repository.Repositories
                     }
 
                     sql += " ORDER BY V.DataPrevisao ";
+                    break;
+                case "Aplicadas":
+                    sql += " AND V.DataVacinacao IS NOT NULL";
+                    if (data != null)
+                    {
+                        sql += string.Format(" AND V.DataVacinacao >= '{0}'", data.Value.ToString(SqlUtils.GetAmericanFormatDate()));
+                    }
+
+                    if (datafinal != null)
+                    {
+                        sql += string.Format(" AND V.DataVacinacao <= '{0}'", data.Value.ToString(SqlUtils.GetAmericanFormatDate()));
+                    }
+
+                    sql += " ORDER BY V.DataVacinacao ";
                     break;
             }
 

@@ -64,8 +64,24 @@ namespace SisVetWeb.Helpers
 
         public static string GetColorColumnDataVencimento(FinanceiroContasReceberParcelasDapper parcela)
         {
-            var isVencida = parcela.DataVencimento < DateTime.Now && parcela.SituacaoParcelaFinanceira == SituacaoParcelaFinanceira.Aberto;
-            return isVencida ? "Color:red" : "";
+            string color = string.Empty;
+            var dataAtual = DateTime.Now.Date;
+            if (parcela.SituacaoParcelaFinanceira != SituacaoParcelaFinanceira.Aberto)
+            {
+                return color;
+            }
+
+            if (parcela.DataVencimento == dataAtual)
+            {
+                color = "Color:yellow";
+            }
+
+            if (parcela.DataVencimento < dataAtual)
+            {
+                color = "Color:red";
+            }
+
+            return color;
         }
 
         public static string GetColorColumnDataRecebimento(FinanceiroContasReceberParcelasDapper parcela)

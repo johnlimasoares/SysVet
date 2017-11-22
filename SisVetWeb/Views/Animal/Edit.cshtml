@@ -1,6 +1,8 @@
 ﻿@using System.Web.Mvc.Html
 @using PagedList
 @model Domain.Entidades.Cadastro.Animal
+<link href="~/Content/form-bootstrap-override.css" rel="stylesheet" />
+<link href="~/Content/combobox.css" rel="stylesheet" />
 
 <div id="modalDetalharCliente" class="modal fade in" role="dialog">
     <div class="modal-dialog">
@@ -23,85 +25,94 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-@{
-    ViewBag.Title = "Edit";
-}
 
-<link href="~/Content/combobox.css" rel="stylesheet" />
-<h3>Edição</h3>
-
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <div class="row" style="padding-left: 10px">
-            @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-danger" })
+      <div class="row" style="margin-left: 10px">
+            <h2>Edição</h2>
+            @Html.ActionLink("Voltar", "Index", null, new { @class = "btn btn-danger" })
             <input type="submit" value="Salvar" class="btn btn-success" />
         </div>
         <hr />
 
+    <div class="container  col-sm-10 col-md-9">
+
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.Id)
 
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Nome, new { @class = "control-label col-md-2" })
-            <div class="col-md-10" style="width:500px;">
-                @Html.TextBoxFor(model => model.Nome, new { @class = "form-control", id = "input" })
-                @Html.ValidationMessageFor(model => model.Nome)
+        <div class="form-group row">
+            <label class="col-sm-4 col-md-3 col-lg-2">Nome</label>
+            <div class="input-group col-sm-8 col-md-9 col-lg-10">
+                <span class="input-group-addon">
+                    <i class="fa fa-paw"></i>
+                </span>
+                @Html.TextBoxFor(model => model.Nome, new { @class = "form-control", id = "input", placeholder = "Nome do animal" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Pelagem, new { @class = "control-label col-md-2" })
-            <div class="col-md-10" style="width:500px;">
-                @Html.TextBoxFor(model => model.Pelagem, new { @class = "form-control", id = "input" })
-                @Html.ValidationMessageFor(model => model.Pelagem)
+        <div class="form-group row">
+            <label class="col-sm-4 col-md-3 col-lg-2">Pelagem</label>
+            <div class="input-group col-sm-8 col-md-9 col-lg-10">
+                <span class="input-group-addon">
+                    <i class="fa fa-fire"></i>
+                </span>
+                @Html.TextBoxFor(model => model.Pelagem, new { @class = "form-control", id = "input", placeholder = "pelagem" })
             </div>
         </div>
 
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DataNascimento, new { @class = "control-label col-md-2" })
-            <div class="col-md-5 col-lg-pull-0" style="width:500px;">
-                @Html.EditorFor(model => model.DataNascimento, new { @class = "form-control" })
-                @*<input class="form-control" data-val="true" data-val-date="Formato incorreto no campo Data de Nascimento." data-val-required="O campo Data de Nascimento é obrigatório." id="DataNascimento" name="DataNascimento" type="date">*@
+        <div class="form-group row">
+            <label class="control-label col-sm-4 col-md-3 col-lg-2">Data Nascimento</label>
+            <div class="input-group col-sm-8 col-md-9 col-lg-10">
+                <span class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                </span>
+                @Html.EditorFor(model => model.DataNascimento)
                 @Html.ValidationMessageFor(model => model.DataNascimento)
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.Label("Idade", new { @class = "control-label col-md-2" })
-            <div class="col-md-10" style="width:500px;">
+        <div class="form-group row">
+            <label class="control-label col-sm-4 col-md-3 col-lg-2">Idade</label>
+            <div class="input-group col-sm-8 col-md-9 col-lg-10">
+                <span class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                </span>
                 @Html.TextBox("idade", "", new { @class = "form-control", @id = "idade", disabled = "disabled" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.Label("Raça", new { @class = "control-label col-md-2" })
-            <div class="col-md-10" style="width:500px;">
+        <div class="form-group row">
+            <label class="control-label col-sm-4 col-md-3 col-lg-2">Raça</label>
+            <div class="input-group col-sm-8 col-md-9 col-lg-10">
+                <span class="input-group-addon">
+                    <i class="fa fa-paw"></i>
+                </span>
                 @Html.DropDownList("RacaID", (IEnumerable<SelectListItem>)ViewBag.Racas, new { @class = "form-control combobox", required = true })
-                @Html.ValidationMessageFor(model => model.RacaId)
             </div>
         </div>
 
-        <div class="form-group">
-
-            @Html.Label("Proprietário", new { @class = "control-label col-md-2" })
-
-            <div class="col-md-5 col-lg-pull-0" style="width:500px;">
+        <div class="form-group row">
+            <label class="control-label col-sm-4 col-md-3 col-lg-2">Proprietário</label>
+            <div class="input-group col-sm-8 col-md-9 col-lg-10">
+                <span class="input-group-addon">
+                    <i class="fa fa-user"></i>
+                </span>
                 @Html.DropDownList("ClienteId", (IEnumerable<SelectListItem>)ViewBag.Clientes, new { @class = "form-control combobox", required = true })
                 @Html.ValidationMessageFor(model => model.ClienteId)
+                <div class="btn btn-info btn-sm" data-toggle="modal" style="margin-left: 2px;" title="Informações do Proprietário" data-target="#modalDetalharCliente"><span class="glyphicon glyphicon-user"></span></div>
             </div>
-            <div class="col-sm-pull-1">
-                <div class="btn btn-info btn-sm" data-toggle="modal" title="Informações do Proprietário" data-target="#modalDetalharCliente"><span class="glyphicon glyphicon-user"></span></div>
-            </div>
+              
         </div>
 
 
-        <div class="form-group">
-            @Html.Label("Sexo", new { @class = "control-label col-md-2" })
-            <div class="col-md-10" style="width:500px;">
+        <div class="form-group row">
+            <label class="control-label col-sm-4 col-md-3 col-lg-2">Sexo</label>
+            <div class="input-group col-sm-8 col-md-9 col-lg-10">
+                <span class="input-group-addon">
+                    <i class="fa fa-venus-mars"></i>
+                </span>
                 @Html.DropDownListFor(model => model.Sexo,
                                     new List<SelectListItem>{
                                         new SelectListItem{Text = "Macho",Value = "M",Selected = true},
@@ -110,25 +121,29 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Castrado, new { @class = "control-label col-md-2" })
-            <div class="col-md-10" style="width:500px;">
+        <div class="form-group row">
+            <label class="control-label col-sm-4 col-md-3 col-lg-2">Castrado</label>
+            <div class="input-group col-sm-8 col-md-9 col-lg-10">
                 @Html.EditorFor(model => model.Castrado, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Castrado)
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.Label("Óbito", new { @class = "control-label col-md-2" })
-            <div class="col-md-10" style="width:500px;">
-                @Html.EditorFor(model => model.Obito, new { @class = "form-control" })
+
+        <div class="form-group row">
+            <label class="control-label col-sm-4 col-md-3 col-lg-2">Óbito</label>
+            <div class="input-group col-sm-8 col-md-9 col-lg-10">
+                @Html.EditorFor(model => model.Obito, new { @class = "form-control", style = " height:150px;" })
                 @Html.ValidationMessageFor(model => model.Obito)
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.Label("Observação", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+        <div class="form-group row">
+            <label class="control-label col-sm-4 col-md-3 col-lg-2">Observação</label>
+            <div class="input-group col-sm-8 col-md-9 col-lg-10">
+                <span class="input-group-addon">
+                    <i class="fa fa-keyboard-o"></i>
+                </span>
                 @Html.TextAreaFor(model => model.Observacao, new { @class = "form-control", style = "width: 500px; max-width: 500px; height: 3000px; max-height:500px ", id = "observacao", placeholder = "Pressione F2 para inserir a data atual", spellcheck = "false" })
                 @Html.ValidationMessageFor(model => model.Observacao)
             </div>
@@ -139,13 +154,13 @@
 
 
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-offset-1 col-md-8">
         @{ Html.RenderAction("Index", "Peso", new { id = Model.Id }); }
     </div>
 </div>
 
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-offset-1 col-md-8">
         @{ Html.RenderAction("Index", "Vacinacao", new { id = Model.Id }); }
     </div>
 </div>

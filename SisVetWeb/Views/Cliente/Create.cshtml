@@ -1,102 +1,194 @@
-﻿@model Domain.Entidades.Cadastro.Cliente
-
+﻿@model SisVetWeb.Models.ClienteViewModel
 @{
     ViewBag.Title = "Cadastro";
 }
-
+<link href="~/Content/form-bootstrap-override.css" rel="stylesheet" />
 <h2>Cadastro Cliente</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-       
-        <hr />
-        @Html.ValidationSummary(true)
+    <div class="container  col-sm-10 col-md-9">
+        <hr>
+        <form class="col-sm-10">
+            <div class="form-group row">
+                <label class="col-sm-4 col-md-3 col-lg-2">Nome</label>
+                <div class="input-group col-sm-8 col-md-9 col-lg-10">
+                    <span class="input-group-addon">
+                        <i class="fa fa-user"></i>
+                    </span>
+                    @Html.TextBoxFor(model => model.Nome, new { @class = "form-control", id = "input", placeholder = "Nome do cliente" })
+                </div>
+            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Nome, new { @class = "control-label col-md-2" })
-            <div class="col-md-10" style="width: 500px">
-                @Html.TextBoxFor(model => model.Nome, new { @class = "form-control" ,id = "input"})
-                @Html.ValidationMessageFor(model => model.Nome)
+            <div class="form-group row">
+                <label class="control-label col-sm-4 col-md-3 col-lg-2">CPF</label>
+                <div class="input-group col-sm-8 col-md-9 col-lg-10">
+                    <span class="input-group-addon">
+                        <i class="fa fa-id-card"></i>
+                    </span>
+                    @Html.TextBoxFor(model => model.CpfCnpj, new { @class = "form-control", id = "cpf", placeholder = "Cpf ou Cnpj do cliente" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.Label("Cpf", new { @class = "control-label col-md-2" })
-            <div class="col-md-10" style="width: 500px">
-                @Html.TextBoxFor(model => model.CpfCnpj, new { @class = "form-control", id = "cpf" })
-                @Html.ValidationMessageFor(model => model.CpfCnpj)
+            <div class="form-group row">
+                <label class="control-label col-sm-4 col-md-3 col-lg-2">RG</label>
+                <div class="input-group col-sm-8 col-md-9 col-lg-10">
+                    <span class="input-group-addon">
+                        <i class="fa fa-id-card"></i>
+                    </span>
+                    @Html.TextBoxFor(model => model.RgIe, new { @class = "form-control", placeholder = "RG ou IE do cliente" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.Label("Rg", new { @class = "control-label col-md-2" })
-            <div class="col-md-10" style="width: 500px">
-                @Html.TextBoxFor(model => model.RgIe, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RgIe)
+            <div class="form-group row">
+                <label class="control-label col-sm-4 col-md-3 col-lg-2">Tipo</label>
+                <div class="input-group col-sm-8 col-md-9 col-lg-10">
+                    <span class="input-group-addon">
+                        <i class="fa fa-id-card"></i>
+                    </span>
+                    @Html.DropDownListFor(model => model.TipoPessoa,
+                        new List<SelectListItem>{
+                            new SelectListItem{Text = "Física",Value = "F",  Selected = true},
+                            new SelectListItem{Text = "Jurídica",Value = "J"}
+                        }, new { @class = "form-control" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.Label("Tipo Pessoa", new{@class = "control-label col-md-2"})
-            <div class="col-md-10" style="width: 500px">
-                @Html.DropDownListFor(model => model.TipoPessoa,
-             new List<SelectListItem>{
-                    new SelectListItem{Text = "Física",Value = "F",  Selected = true},
-                    new SelectListItem{Text = "Jurídica",Value = "J"}
-                    }, new { @class = "form-control" })
+            <div class="form-group row">
+                <label class="control-label col-sm-4 col-md-3 col-lg-2">Sexo</label>
+                <div class="input-group col-sm-8 col-md-9 col-lg-10">
+                    <span class="input-group-addon">
+                        <i class="fa fa-venus-mars"></i>
+                    </span>
+                    @Html.DropDownListFor(model => model.Sexo,
+                        new List<SelectListItem>{
+                            new SelectListItem{Text = "Masculino",Value = "M",  Selected = true},
+                            new SelectListItem{Text = "Feminino",Value = "F"}
+                        }, new { @class = "form-control" })
+                </div>
             </div>
-        </div>
-        
-        <div class="form-group">
-            @Html.Label("Sexo",new{@class="control-label col-md-2"})
-            <div class="col-md-10" style="width: 500px">
-                @Html.DropDownListFor(model => model.Sexo,
-                new List<SelectListItem>{
-                    new SelectListItem{Text = "Masculino",Value = "M",Selected = true},
-                    new SelectListItem{Text = "Feminino",Value="F"}
-                }, new { @class = "form-control" })
+
+
+            <div class="form-group row">
+                <label class="control-label col-sm-4 col-md-3 col-lg-2">Email</label>
+                <div class="input-group col-sm-8 col-md-9 col-lg-10">
+                    <span class="input-group-addon">
+                        <i class="fa fa-envelope"></i>
+                    </span>
+                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "email@email.com" })
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email , new { @class = "control-label col-md-2" })
-            <div class="col-md-10" style="width: 500px">
-                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Email)
+
+            <div class="form-group row">
+                <label class="control-label col-sm-4 col-md-3 col-lg-2">Data Nascimento</label>
+                <div class="input-group col-sm-8 col-md-9 col-lg-10">
+                    <span class="input-group-addon">
+                        <i class="fa fa-calendar"></i>
+                    </span>
+                    <input class="form-control" data-val="true" data-val-date="Formato incorreto no campo Data de Nascimento." data-val-required="O campo Data de Nascimento é obrigatório." id="DataNascimento" name="DataNascimento" type="date">
+                </div>
             </div>
-        </div>
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.DataNascimento, new { @class = "control-label col-md-2" })
-            <div class="col-md-10" style="width: 500px">
-                @*@Html.EditorFor(model => model.DataNascimento, new { @class = "form-control form-control" })*@
-                <input class="form-control" data-val="true" data-val-date="Formato incorreto no campo Data de Nascimento." data-val-required="O campo Data de Nascimento é obrigatório." id="DataNascimento" name="DataNascimento" type="date" value="13/08/2015">
-                @Html.ValidationMessageFor(model => model.DataNascimento)
-            </div>
-        </div>
-              
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Salvar" class="btn btn-success" />
-            </div>
-        </div>
+
+            <fieldset>
+                <legend style=" background-color: rgba(2550,0,0,0.1)">Endereço</legend>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-md-3 col-lg-2">CEP</label>
+                    <div class="input-group col-sm-8 col-md-9 col-lg-10">
+                        <span class="input-group-addon">
+                            <i class="fa fa-address-card"></i>
+                        </span>
+                        @Html.TextBoxFor(model => model.Cep, new { @class = "form-control", id = "cep" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-md-3 col-lg-2">Rua</label>
+                    <div class="input-group col-sm-8 col-md-9 col-lg-10">
+                        <span class="input-group-addon">
+                            <i class="fa fa-address-card"></i>
+                        </span>
+                        @Html.TextBoxFor(model => model.Rua, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-md-3 col-lg-2">Número</label>
+                    <div class="input-group col-sm-8 col-md-9 col-lg-10">
+                        <span class="input-group-addon">
+                            <i class="fa fa-address-card"></i>
+                        </span>
+                        @Html.TextBoxFor(model => model.Numero, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-md-3 col-lg-2">Complemento</label>
+                    <div class="input-group col-sm-8 col-md-9 col-lg-10">
+                        <span class="input-group-addon">
+                            <i class="fa fa-address-card"></i>
+                        </span>
+                        @Html.TextBoxFor(model => model.Complemento, new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="control-label col-sm-4 col-md-3 col-lg-2">Município</label>
+                    <div class="input-group col-sm-8 col-md-9 col-lg-10">
+                        <span class="input-group-addon">
+                            <i class="fa fa-address-card"></i>
+                        </span>
+                        @Html.DropDownList("CidadeID", (IEnumerable<SelectListItem>)ViewBag.CidadeID, "Selecione...", new { @class = "form-control", required = true })
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend style=" background-color: rgba(2550,0,0,0.1)">Telefone</legend>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-md-3 col-lg-2">Número</label>
+                    <div class="input-group col-sm-8 col-md-9 col-lg-10">
+                        <span class="input-group-addon">
+                            <i class="fa fa-phone"></i>
+                        </span>
+                        @Html.TextBoxFor(model => model.NumeroTelefone, new { @class = "form-control", id = "telefone", name = "telefone" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="control-label col-sm-4 col-md-3 col-lg-2">Tipo</label>
+                    <div class="input-group col-sm-8 col-md-9 col-lg-10">
+                        <span class="input-group-addon">
+                            <i class="fa fa-phone"></i>
+                        </span>
+                        @Html.DropDownList("TipoTelefoneID", (IEnumerable<SelectListItem>)ViewBag.TipoTelefoneID, "Selecione...", new { @class = "form-control", required = true })
+                    </div>
+                </div>
+            </fieldset>
+            
+            <hr/>
+
+            <button type="submit" class="btn btn-success col-sm-2 col-md-2">
+                Salvar
+                <i class="fa fa-paper-plane"></i>
+            </button>
+            <br/>
+            <br/>
+        </form>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Voltar", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
-        (function() {
-            $.validator.methods.date = function(value, element) {
+        (function () {
+            $.validator.methods.date = function (value, element) {
                 return this.optional(element) || Globalize.parseDate(value, 'dd/MM/yyyy') !== null;
             }
         })();
+
+        $(document).ready(function () {
+            $("#telefone").mask("(99) 99999-9999");
+            $("#cep").val("86990000");
+            $("#cep").mask("99999-999");
+
+        });
     </script>
 }

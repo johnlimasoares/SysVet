@@ -9,7 +9,7 @@ namespace Repository.Repositories
 {
     public class FinanceiroMovimentacoesRepository : Repository<FinanceiroMovimentacoes>
     {
-        public IEnumerable<FinanceiroMovimentacoesDapper> GetMovimentacoesDapper(DateTime? dataInicial, DateTime? dataFinal, string tipoPesquisa, string pesquisaTexto)
+        public IEnumerable<FinanceiroMovimentacoesDapper> GetMovimentacoesDapper(DateTime? dataInicial, DateTime? dataFinal, string tipoPesquisa, string tipoEntrada, string pesquisaTexto)
         {
             var sql = @"SELECT 
                           FM.Id
@@ -32,11 +32,13 @@ namespace Repository.Repositories
                          INNER JOIN FinanceiroCentroDeCusto CC ON FM.FinanceiroCentroDeCustoId = CC.Id
                          WHERE 1=1 ";
 
-            if (dataInicial != null){
+            if (dataInicial != null)
+            {
                 sql += GetWherePeriodoMaiorIgual(dataInicial);
             }
 
-            if (dataFinal != null){
+            if (dataFinal != null)
+            {
                 sql += GetWherePeriodoMenorIgual(dataFinal);
             }
 
@@ -47,6 +49,16 @@ namespace Repository.Repositories
                     break;
                 case "Observacao":
                     sql += GetWherePorObservacao(pesquisaTexto);
+                    break;
+            }
+
+            switch (tipoEntrada)
+            {
+                case "Credito":
+                    sql += GetWhereDebitoCredito(true);
+                    break;
+                case "Debito":
+                    sql += GetWhereDebitoCredito(false);
                     break;
             }
 
@@ -71,7 +83,17 @@ namespace Repository.Repositories
             }
         }
 
-        private string GetWherePeriodoMaiorIgual(DateTime? dataInicial){
+        private string GetWhereDebitoCredito(bool isCredito)
+        {
+            if (isCredito)
+            {
+                return " AND FM.TipoMovimentacao = 1";
+            }
+            return " AND FM.TipoMovimentacao = 0";
+        }
+
+        private string GetWherePeriodoMaiorIgual(DateTime? dataInicial)
+        {
             return string.Format(" AND CAST(FM.DataHora AS DATE) >= '{0}'", dataInicial.Value.ToString(SqlUtils.GetAmericanFormatDate()));
         }
 
@@ -80,7 +102,8 @@ namespace Repository.Repositories
             return string.Format(" AND CAST(FM.DataHora AS DATE) <= '{0}'", dataFinal.Value.ToString(SqlUtils.GetAmericanFormatDate()));
         }
 
-        private string GetWherePorCentroCusto(string pesquisaTexto){
+        private string GetWherePorCentroCusto(string pesquisaTexto)
+        {
             if (string.IsNullOrEmpty(pesquisaTexto))
                 return string.Empty;
 
@@ -94,6 +117,6 @@ namespace Repository.Repositories
 
             return string.Format(" AND FM.Observacao like '%{0}%'", pesquisaTexto);
         }
- 
+
     }
 }

@@ -30,7 +30,13 @@ namespace SisVetWeb {
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/themes/base/all.css",
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                       "~/Content/font-awesome.css",
+                      "~/Content/font-awesome.min.css"));
+
+            bundles.Add(new StyleBundle("~/Content/font-awesome").Include(
+                      "~/Content/font-awesome.css",
+                      "~/Content/font-awesome.min.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/modalform").Include(
                 "~/Scripts/modalform.js"));

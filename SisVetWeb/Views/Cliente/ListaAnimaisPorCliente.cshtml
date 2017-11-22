@@ -2,12 +2,8 @@
 @using SisVetWeb.Helpers
 @model PagedList.IPagedList<Domain.Entidades.Cadastro.Animal>
 
-@{
-    ViewBag.Title = "Lista de Animais por Cliente";
-}
-
-<h2>Animais do Cliente</h2>
-<table class="table">
+<h4 style="width: 100%; background-color: rgba(0,255,0,0.1); padding: 5px;">@(string.Format("{0}", @Model.Count > 0 ? "Lista de animais do cliente: "+@Model[0].Cliente.Nome : "Cliente não possui animais cadastrados"))</h4>
+<table style="margin-top:10px; " class="table">
     <tr class="active">
         <th>
             Id

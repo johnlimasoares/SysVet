@@ -13,11 +13,11 @@ namespace SisVetWeb.Controllers
     {
 
         [HttpGet]
-        public ActionResult Index(DateTime? dataInicial, DateTime? dataFinal, string tipoPesquisa, string pesquisaTexto)
+        public ActionResult Index(DateTime? dataInicial, DateTime? dataFinal, string tipoPesquisa, string tipoEntrada, string pesquisaTexto)
         {
             var repoMovimentacao = new FinanceiroMovimentacoesRepository();
 
-            var movimentacoesList = repoMovimentacao.GetMovimentacoesDapper(dataInicial, dataFinal, tipoPesquisa, pesquisaTexto);
+            var movimentacoesList = repoMovimentacao.GetMovimentacoesDapper(dataInicial, dataFinal, tipoPesquisa, tipoEntrada, pesquisaTexto);
             var movimentacoesViewModel = new FinanceiroMovimentacoesInfoViewModel(movimentacoesList);
 
             return View("Index", movimentacoesViewModel);

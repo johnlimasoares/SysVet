@@ -45,7 +45,7 @@ namespace SisVetWeb.Controllers {
             return View(animal);
         }
 
-        public ActionResult Create() {
+        public ActionResult Create(int? clienteId) {
             ViewBag.RacaID = new SelectList(
                 repoRaca.GetAll().OrderBy(x => x.Descricao),
                 "ID",

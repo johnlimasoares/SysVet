@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Utils {
     public static class FormatUtils {
@@ -20,6 +19,10 @@ namespace Utils {
                 default:
                     return Convert.ToInt64(value).ToString("(00)0000-0000");
             }
+        }
+
+        public static string IsValidDate(this DateTime date){
+            return date.ToString() == "01/01/0001 00:00:00" ? string.Empty : date.ToString("d");
         }
     }
 }

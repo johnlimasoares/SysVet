@@ -2,20 +2,24 @@
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using System.Web.Routing;
+using Business.Cliente;
 using Domain.Entidades.Cadastro;
+using Domain.Entidades.Cadastro.Contato;
+using Domain.Entidades.Cadastro.Localidade;
+using Microsoft.Ajax.Utilities;
 using PagedList;
 using Repository;
 using Repository.Repositories;
+using SisVetWeb.Models;
 using Utils;
 
-namespace SisVetWeb.Controllers {
-    public class ClienteController : Controller {
-        private readonly ClienteRepository repoCliente = new ClienteRepository();
-        private readonly AnimalRepository repoAnimal = new AnimalRepository();
-        private readonly TelefoneRepository repoFone = new TelefoneRepository();
-
-
-        public ActionResult Index(string ordenacao, string pesquisa, string tipoPesquisa, int pagina = 1) {
+namespace SisVetWeb.Controllers
+{
+    public class ClienteController : Controller
+    {
+        public ActionResult Index(string ordenacao, string pesquisa, string tipoPesquisa, int pagina = 1)
+        {
 
             int totalRegistros = 20;
             ViewBag.IdParam = ordenacao == "Id" ? "Id_Desc" : "Id";
@@ -25,7 +29,7 @@ namespace SisVetWeb.Controllers {
             ViewBag.tipoPesquisa = tipoPesquisa;
             ViewBag.pesquisaCorrente = pesquisa;
 
-            var clientes = repoCliente.GetAllClientes(ordenacao, pesquisa, tipoPesquisa);
+            var clientes = new ClienteRepository().GetAllClientes(ordenacao, pesquisa, tipoPesquisa);
 
             var quantidadeRegistros = clientes.Count();
             if (!string.IsNullOrEmpty(pesquisa) && quantidadeRegistros > 0)
@@ -34,57 +38,94 @@ namespace SisVetWeb.Controllers {
             return View(clientes.ToPagedList(pagina, totalRegistros));
         }
 
-
-        public ActionResult Details(int? id) {
-            if (id == null) {
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cliente cliente = repoCliente.Find(id);
-            if (cliente == null) {
+            Cliente cliente = new ClienteRepository().Find(id);
+            if (cliente == null)
+            {
                 return HttpNotFound();
             }
             return View(cliente);
         }
 
-        public ActionResult DetailsOwnerAnimal(int? id) {
-            if (id == null) {
+        public ActionResult DetailsOwnerAnimal(int? id)
+        {
+            if (id == null)
+            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Cliente cliente = repoCliente.Find(id);
-            if (cliente == null) {
+            Cliente cliente = new ClienteRepository().Find(id);
+            if (cliente == null)
+            {
                 return HttpNotFound();
             }
             return View("_DetailsOwnerAnimal", cliente);
         }
 
-
-        public ActionResult Create() {
+        public ActionResult Create()
+        {
+            ViewBag.TipoTelefoneID = new SelectList(new TipoTelefoneRepository().GetAll(), "ID", "Descricao");
+            ViewBag.CidadeID = new SelectList(new CidadeRepository().GetAll().ToList().OrderBy(x => x.Descricao), "ID", "Descricao");
             return View();
         }
 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Nome,CpfCnpj,RgIe,TipoPessoa,DataNascimento,DataCadastro,Email,Sexo")] Cliente cliente) {
-            if (ModelState.IsValid) {
-                var cpf = cliente.CpfCnpj.ApenasNumeros();
-                cliente.CpfCnpj = cpf;
-                repoCliente.Adicionar(cliente);
-                repoCliente.SalvarTodos();
-                return RedirectToAction("Index");
+        public ActionResult Create(ClienteViewModel clienteViewModel)
+        {
+            Endereco endereco = null;
+            Telefone telefone = null;
+
+            var cliente = new Cliente();
+            cliente.Nome = clienteViewModel.Nome;
+            cliente.CpfCnpj = clienteViewModel.CpfCnpj.ApenasNumeros();
+            cliente.RgIe = clienteViewModel.RgIe;
+            cliente.Sexo = clienteViewModel.Sexo;
+            cliente.DataNascimento = clienteViewModel.DataNascimento;
+            cliente.DataCadastro = DateTime.Now;
+            cliente.Email = clienteViewModel.Email;
+            cliente.TipoPessoa = clienteViewModel.TipoPessoa;
+
+            if (!clienteViewModel.Rua.IsNullOrWhiteSpace() &&
+                !clienteViewModel.CidadeId.ToString().IsNullOrWhiteSpace())
+            {
+                endereco = new Endereco();
+                endereco.Cep = clienteViewModel.Cep;
+                endereco.Logradouro = clienteViewModel.Rua;
+                endereco.CidadeId = clienteViewModel.CidadeId;
+                endereco.Numero = clienteViewModel.Numero;
+                endereco.Complemento = clienteViewModel.Complemento;
             }
-            return View(cliente);
+
+            if (!clienteViewModel.NumeroTelefone.IsNullOrWhiteSpace() &&
+                !clienteViewModel.TipoTelefoneId.ToString().IsNullOrWhiteSpace())
+            {
+                telefone = new Telefone();
+                telefone.Numero = clienteViewModel.NumeroTelefone.ApenasNumeros();
+                telefone.TipoTelefoneId = clienteViewModel.TipoTelefoneId;
+            }
+
+            var clienteId = ClienteBusiness.Save(cliente, endereco, telefone);
+            var routeValues = new RouteValueDictionary();
+            routeValues.Add("clienteId", clienteId);
+            return RedirectToAction("Create", "Animal", routeValues);
         }
 
-
-        public ActionResult Edit(int? id) {
-            if (id == null) {
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cliente cliente = repoCliente.Find(id);
+            Cliente cliente = new ClienteRepository().Find(id);
 
-            if (cliente == null) {
+            if (cliente == null)
+            {
                 return HttpNotFound();
             }
             var cpf = cliente.CpfCnpj.ApenasNumeros();
@@ -94,16 +135,14 @@ namespace SisVetWeb.Controllers {
 
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Nome,CpfCnpj,RgIe,TipoPessoa,DataNascimento,DataCadastro,Email,Sexo")] Cliente cliente) {
-            if (ModelState.IsValid) {
-                var cpf = cliente.CpfCnpj.ApenasNumeros();
-                cliente.CpfCnpj = cpf;
-                repoCliente.Atualizar(cliente);
-                repoCliente.SalvarTodos();
-                return RedirectToAction("Index");
-            }
-            return View(cliente);
+        public ActionResult Edit(Cliente cliente)
+        {
+            var cpf = cliente.CpfCnpj.ApenasNumeros();
+            cliente.CpfCnpj = cpf;
+            var repoCliente = new ClienteRepository();
+            repoCliente.Atualizar(cliente);
+            repoCliente.SalvarTodos();
+            return RedirectToAction("Index");
         }
 
 
@@ -120,26 +159,30 @@ namespace SisVetWeb.Controllers {
 
 
         [HttpPost]
-        public JsonResult Delete(int id) {
+        public JsonResult Delete(int id)
+        {
             string mensagem = string.Empty;
-            var cliente = repoCliente.Excluir(id);
+            var cliente = new ClienteRepository().Excluir(id);
             mensagem = string.Format("{0} excluido com sucesso", cliente.Nome);
             return Json(mensagem, JsonRequestBehavior.AllowGet);
         }
 
 
-        public ActionResult ListaAnimaisPorCliente(int id, int? page, string currentFilter, string searchString) {
+        public ActionResult ListaAnimaisPorCliente(int id, int? page, string currentFilter, string searchString)
+        {
 
-            var animaisCliente = repoAnimal.GetAll().Where(x => x.Cliente.Id == id).ToList();
+            var animaisCliente = new AnimalRepository().GetAll().Where(x => x.Cliente.Id == id).ToList();
 
             int pageSize = 20;
             int pageNumber = (page ?? 1);
             return View(animaisCliente.ToPagedList(pageNumber, pageSize));
         }
 
-        protected override void Dispose(bool disposing) {
-            if (disposing) {
-                repoCliente.Dispose();
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                new ClienteRepository().Dispose();
             }
             base.Dispose(disposing);
         }

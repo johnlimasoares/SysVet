@@ -31,9 +31,9 @@ $(function () {
                     });
                 },
                 complete: function (data) {
-                    $("#divExcluir").empty();
-                    $("#divExcluir").addClass("alert alert-success");
-                    $("#divExcluir").data(data.responseText);
+                    //$("#divExcluir").empty();
+                    //$("#divExcluir").addClass("alert alert-danger");
+                    //$("#divExcluir").data(data.responseText);
                 },
                 error: function(data) { 
                     $("#deleteModal").modal('hide');                   

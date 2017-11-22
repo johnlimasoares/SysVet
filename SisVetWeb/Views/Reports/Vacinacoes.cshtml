@@ -3,11 +3,11 @@
 <link href="~/Content/form-bootstrap-override.css" rel="stylesheet" />
 <h1>Relatório de Vacinações</h1>
 <form></form>
-<div id="movimentacoes-cabecalho" class="bloco-filtros">
+<div id="container">
     @using (Html.BeginForm("Preview", "Reports", FormMethod.Get))
     {
         <label class="radio-inline">
-            <input type="radio" name="status" class="check" value="Vencidas" checked>
+            <input type="radio" id="check-vencidas" name="status" class="check" value="Vencidas" checked>
             Vencidas
         </label>
         <br />
@@ -17,13 +17,14 @@
         </label>
         <br />
         <label class="radio-inline">
-            <input type="radio" name="status" class="check" value="Todas">
-            Todas
+            <input type="radio" name="status" class="check" value="Aplicadas">
+            Aplicadas
         </label>
 
         <br />
         <label for="data" id="descricaoPeriodo" >Vencimento até:</label>
         <input class="form-control input-sm form-override" id="data" name="data" type="date">
+        <input class="form-control input-sm form-override" id="datafinal" name="datafinal" type="date">
         <br />
         <input type="text" class="form-control" name="pesquisaTexto" id="pesquisaTexto" placeholder="Pesquise por nome do cliente ou animal" />
         <hr />
@@ -35,18 +36,20 @@
     
     $(document).ready(function () {
         $('#descricaoPeriodo').html('Vencidas apartir de:');
+        $('#check-vencidas').prop('checked', 'true');
+        $('#datafinal').css('display', 'none');
     });
     
     $('.check').click(function (e) {
         if (e.currentTarget.defaultValue == "Vencer") {
-            $('#data').css('display', 'inline');
             $('#descricaoPeriodo').html('Vencimento até:');
+            $('#datafinal').css('display', 'none');
         } else if (e.currentTarget.defaultValue == "Vencidas") {
-            $('#data').css('display', 'inline');
             $('#descricaoPeriodo').html('Vencidas apartir de:');
+            $('#datafinal').css('display', 'none');
         } else {
-            $('#data').css('display', 'none');
-            $("#descricaoPeriodo").html('');
+            $('#datafinal').css('display', 'inline');
+            $("#descricaoPeriodo").html('Intervalo de:');
         }
     });
 </script>

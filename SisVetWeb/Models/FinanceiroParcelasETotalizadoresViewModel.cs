@@ -19,7 +19,7 @@ namespace SisVetWeb.Models
 
         public FinanceiroParcelasETotalizadoresViewModel PreencherTotalizadores()
         {
-            var dataAtual = DateTime.Now;
+            var dataAtual = DateTime.Now.Date;
             this.TotalVencidas = FinanceiroContasReceberParcelasDapperList.Where(y => y.DataVencimento < dataAtual && y.SituacaoParcelaFinanceira == SituacaoParcelaFinanceira.Aberto).Sum(x => x.ValorTotalLiquido);
             this.TotalAVencer = FinanceiroContasReceberParcelasDapperList.Where(y => y.DataVencimento > dataAtual && y.SituacaoParcelaFinanceira == SituacaoParcelaFinanceira.Aberto).Sum(x => x.ValorTotalLiquido);
             this.TotalVenceHoje = FinanceiroContasReceberParcelasDapperList.Where(y => y.DataVencimento == dataAtual && y.SituacaoParcelaFinanceira == SituacaoParcelaFinanceira.Aberto).Sum(x => x.ValorTotalLiquido);

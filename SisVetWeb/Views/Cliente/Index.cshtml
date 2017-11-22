@@ -48,10 +48,7 @@
         </th>
         <th class="text-center">
             Sexo
-        </th>
-        <th class="text-left">
-            E-mail
-        </th>
+        </th>    
         <th class="text-center">
             Nascimento
         </th>
@@ -66,7 +63,7 @@
             <td class="col-sm-1">
                 @Html.DisplayFor(modelItem => item.ID)
             </td>
-            <td class="col-sm-3">
+            <td class="col-sm-4">
                 @Html.DisplayFor(modelItem => item.Nome)
             </td>
             <td class="col-sm-2 text-center">
@@ -75,16 +72,12 @@
             <td class="col-sm-1 text-center">
                 @Html.DisplayFor(modelItem => item.Sexo)
             </td>
-            <td class="col-sm-1">
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
             <td class="col-sm-1 text-center">
                 @Html.FormatValue(Convert.ChangeType(item.DataNascimento, typeof(object)),
                     "{0: dd/MM/yyyy}")
             </td>
             <td class="col-sm-1 text-center">
                 @Html.DisplayFor(modelItem => item.DataCadastro)
-
             </td>
             <td class="col-sm-2">
                 <div class="pull-right">

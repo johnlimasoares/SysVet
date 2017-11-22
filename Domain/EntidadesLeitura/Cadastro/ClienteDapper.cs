@@ -7,7 +7,6 @@ namespace Domain.EntidadesLeitura.Cadastro {
         public string CpfCnpj { get; set; }
         public DateTime DataNascimento { get; set; }
         public DateTime DataCadastro { get; set; }
-        public string Email { get; set; }
         public string Sexo { get; set; }
     }
 }
