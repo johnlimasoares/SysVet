@@ -411,7 +411,8 @@
     <Content Include="Views\FinanceiroMovimentacaoCaixa\Index.cshtml" />
     <Content Include="Views\FinanceiroMovimentacaoCaixa\GerarMovimentacaoManual.cshtml" />
     <Content Include="Views\FinanceiroMovimentacaoCaixa\ModalObservacoes.cshtml" />
-    <Content Include="Views\Reports\Vacinacoes.cshtml" />
+    <Content Include="Views\Reports\VacinacoesDetalhado.cshtml" />
+    <Content Include="Views\Reports\AnaliseVacinasMensal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -11,10 +11,7 @@ $(function () {
         $("#deleteModal").modal('show');
 
         $("#deleteModal .modal-footer button").click(function (es) {
-            es.preventDefault();
-
             var rowId = "#row-" + id;
-
             $.ajax({
                 url: url,
                 type: 'post',
@@ -24,22 +21,37 @@ $(function () {
                     //var loading = "<span><em>Excluindo</em>&nbsp;<i>glyphicon glyphicon-refresh icon-refresh-animate</i></span>";
                     //$('#deleteModal .modal-header h4').after(loading);
                 },
-                success: function () {
+                success: function (data) {
                     $("#deleteModal").modal('hide');
                     $(rowId).animate({ opacity: 0.0 }, 400, function () {
                         $(rowId).remove();
                     });
+
+                    $("#divExcluir").empty();
+                    $("#divExcluir").addClass("alert alert-success");
+                    $("#divExcluir").html(data);
                 },
-                complete: function (data) {
+                error: function (data) {
                     //$("#divExcluir").empty();
                     //$("#divExcluir").addClass("alert alert-danger");
-                    //$("#divExcluir").data(data.responseText);
-                },
-                error: function(data) { 
-                    $("#deleteModal").modal('hide');                   
+                    //$("#divExcluir").html(data.responseText);
+                    //$("#divExcluir").html(data.responseText);
+
+                    // $('#divExcluir').after('<input type="text" /><span class="remove">Remove    Option</span>');                    
+                    //$("#divExcluir").on('load', this, function () {
+                    //    setTimeout('$(this).parent().remove();', 3000);
+                    //});
+                    if (data.status === 409) {
+                        $("#deleteModal").modal('hide');
+                        alert(data.responseText);
+                    }
                 }
             });
+            $("#deleteModal .modal-footer button").unbind('click'); //evita requisições duplicadas
         });
+
+
+       
     });
 });
 

@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -136,11 +137,18 @@ namespace SisVetWeb.Controllers {
 
         [HttpPost]
         public JsonResult Delete(int id) {
-            string mensagem = string.Empty;
-            var animal = repoAnimal.Excluir(id);
-            mensagem = string.Format("{0} excluido com sucesso", animal.Nome);
-            TempData["success"] = "Mensagem de sucesso!!";
-            return Json(mensagem, JsonRequestBehavior.AllowGet);
+            try{
+                string mensagem = string.Empty;
+                var animal = repoAnimal.Excluir(id);
+                mensagem = string.Format("{0} excluído com sucesso", animal.Nome);
+                TempData["success"] = "Mensagem de sucesso!!";
+                return Json(mensagem, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex){
+                Response.StatusCode = (int)HttpStatusCode.Conflict;
+                return Json(ex.Message, JsonRequestBehavior.AllowGet);
+            }
+        
         }
         
         protected override void Dispose(bool disposing) {

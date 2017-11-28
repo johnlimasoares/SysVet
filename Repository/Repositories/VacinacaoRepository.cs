@@ -111,7 +111,7 @@ namespace Repository.Repositories
 
             if (!string.IsNullOrEmpty(pesquisaTexto))
             {
-                sql += string.Format(" AND (A.Nome like '%{0}%' OR C.Nome like '%{0}%')", pesquisaTexto);
+                sql += string.Format(" AND (A.Nome like '%{0}%' OR C.Nome like '%{0}%' OR VA.Descricao like '%{0}%') ", pesquisaTexto);
             }
 
             switch (statusVacina)
@@ -154,8 +154,8 @@ namespace Repository.Repositories
                 try
                 {
                     db.Open();
-                    var vacinacao = db.Query<VacinacaoReport>(sql);
-                    return vacinacao.ToList();
+                    var vacinacoes = db.Query<VacinacaoReport>(sql);
+                    return vacinacoes.ToList();
                 }
                 catch (Exception ex)
                 {
@@ -168,5 +168,53 @@ namespace Repository.Repositories
             }
         }
 
+
+        public IList<VacinasAnaliseMensal> GetVacinacoesMensalReport(DateTime? dataInicial, DateTime? dataFinal, string descricaoVacina)
+        {
+            var sql = @"SELECT 
+                        YEAR(V.DataVacinacao) AS Ano,
+                        MONTH(V.DataVacinacao) AS Mes,                        
+                        VA.Descricao AS DescricaoVacina,
+                        COUNT(V.VacinaId) AS QuantidadeAplicacoes
+                        FROM Vacinacao V
+                        INNER JOIN Vacina VA ON V.VacinaId = VA.ID
+                        WHERE 1=1 AND V.DataVacinacao IS NOT NULL ";
+
+            if (!string.IsNullOrEmpty(descricaoVacina))
+            {
+                sql += string.Format(" AND VA.Descricao like '%{0}%' ", descricaoVacina);
+            }
+
+            if (dataInicial != null)
+            {
+                sql += string.Format(" AND MONTH(V.DataVacinacao) >= MONTH('{0}') AND YEAR(V.DataVacinacao) >= YEAR('{0}')", dataInicial.Value.ToString(SqlUtils.GetAmericanFormatDate()));
+            }
+
+            if (dataFinal != null){
+                sql +=
+                    string.Format(" AND MONTH(V.DataVacinacao) <= MONTH('{0}') AND YEAR(V.DataVacinacao) <= YEAR('{0}')",dataFinal.Value.ToString(SqlUtils.GetAmericanFormatDate()));
+            }
+
+
+            sql += " GROUP BY MONTH(V.DataVacinacao),YEAR(V.DataVacinacao),VA.Descricao ORDER BY 1,2,4";
+
+            using (var db = ctx.Database.Connection)
+            {
+                try
+                {
+                    db.Open();
+                    var vacinacoes = db.Query<VacinasAnaliseMensal>(sql);
+                    return vacinacoes.ToList();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    db.Close();
+                }
+            }
+        }
     }
 }

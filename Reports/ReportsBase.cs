@@ -99,7 +99,7 @@ namespace Reports
             cell.HorizontalAlignment = alinhamento;
             cell.Padding = espacamento;
             cell.Border = borda;
-            cell.BorderColor = corBorda;
+            cell.BorderColor = corBorda;            
             cell.BackgroundColor = corFundo;
             return cell;
         }

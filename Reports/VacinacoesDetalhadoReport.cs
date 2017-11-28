@@ -7,14 +7,14 @@ using Utils;
 
 namespace Reports
 {
-    public class VacinacoesReport : ReportsBase
+    public class VacinacoesDetalhadoReport : ReportsBase
     {
         private string StatusVacina { get; set; }
         public string PesquisaTexto { get; set; }
         public DateTime? Data { get; set; }
         public DateTime? DataFinal { get; set; }
 
-        public VacinacoesReport(DateTime? data, DateTime? datafinal, string statusVacina, string pesquisaTexto)
+        public VacinacoesDetalhadoReport(DateTime? data, DateTime? datafinal, string statusVacina, string pesquisaTexto)
         {
             this.StatusVacina = statusVacina;
             this.Data = data;

@@ -4,7 +4,7 @@
 <h1>Relatório de Vacinações</h1>
 <form></form>
 <div id="container">
-    @using (Html.BeginForm("Preview", "Reports", FormMethod.Get))
+    @using (Html.BeginForm("GetRelatorioVacinacoesDetalhado", "Reports", FormMethod.Get))
     {
         <label class="radio-inline">
             <input type="radio" id="check-vencidas" name="status" class="check" value="Vencidas" checked>
@@ -26,7 +26,7 @@
         <input class="form-control input-sm form-override" id="data" name="data" type="date">
         <input class="form-control input-sm form-override" id="datafinal" name="datafinal" type="date">
         <br />
-        <input type="text" class="form-control" name="pesquisaTexto" id="pesquisaTexto" placeholder="Pesquise por nome do cliente ou animal" />
+        <input type="text" class="form-control" name="pesquisaTexto" id="pesquisaTexto" placeholder="Pesquise por nome do cliente, animal ou vacina" />
         <hr />
         <button type="submit" class="btn btn-primary input-lg">Gerar Relatório</button>
     }

@@ -9,7 +9,6 @@ using Domain.Entidades.Cadastro.Contato;
 using Domain.Entidades.Cadastro.Localidade;
 using Microsoft.Ajax.Utilities;
 using PagedList;
-using Repository;
 using Repository.Repositories;
 using SisVetWeb.Models;
 using Utils;
@@ -122,7 +121,7 @@ namespace SisVetWeb.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cliente cliente = new ClienteRepository().Find(id);
+            var cliente = new ClienteRepository().Find(id);
 
             if (cliente == null)
             {
@@ -132,7 +131,6 @@ namespace SisVetWeb.Controllers
             cliente.CpfCnpj = cpf;
             return View(cliente);
         }
-
 
         [HttpPost]
         public ActionResult Edit(Cliente cliente)
@@ -145,37 +143,32 @@ namespace SisVetWeb.Controllers
             return RedirectToAction("Index");
         }
 
-
-        //public ActionResult Delete(int? id) {
-        //    if (id == null) {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Cliente cliente = repoCliente.Find(id);
-        //    if (cliente == null) {
-        //        return HttpNotFound();
-        //    }
-        //    return View(cliente);
-        //}
-
-
         [HttpPost]
         public JsonResult Delete(int id)
         {
-            string mensagem = string.Empty;
+            if (ClienteBusiness.HaRegistrosFinanceiroDoCliente(id)){
+                Response.StatusCode = (int)HttpStatusCode.Conflict;
+                return Json("Cliente possui registros financeiros efetuados. Não permitido sua exclusão.", JsonRequestBehavior.AllowGet);
+            }
+            
+            string mensagem;
             var cliente = new ClienteRepository().Excluir(id);
-            mensagem = string.Format("{0} excluido com sucesso", cliente.Nome);
+            mensagem = string.Format("{0} excluído com sucesso.", cliente.Nome);
+            Response.StatusCode = (int)HttpStatusCode.OK;
             return Json(mensagem, JsonRequestBehavior.AllowGet);
         }
 
 
         public ActionResult ListaAnimaisPorCliente(int id, int? page, string currentFilter, string searchString)
         {
-
             var animaisCliente = new AnimalRepository().GetAll().Where(x => x.Cliente.Id == id).ToList();
-
             int pageSize = 20;
             int pageNumber = (page ?? 1);
             return View(animaisCliente.ToPagedList(pageNumber, pageSize));
+        }
+
+        public ActionResult Error(Exception ex){
+            return View("Error");
         }
 
         protected override void Dispose(bool disposing)

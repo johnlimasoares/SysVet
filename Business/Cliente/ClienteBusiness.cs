@@ -34,5 +34,14 @@ namespace Business.Cliente
 
             return cliente.Id;
         }
+
+        public static bool HaRegistrosFinanceiroDoCliente(int clienteId)
+        {
+            using (var ctx = new BancoContexto())
+            {
+                var registroFinanceiro = ctx.FinanceiroTipoRecebimentos.FirstOrDefault(c => c.ClienteId == clienteId);
+                return registroFinanceiro != null;
+            }
+        }
     }
 }
