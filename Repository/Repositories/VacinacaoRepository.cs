@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Dapper;
 using Domain.Entidades.Operacao.Vacinacao;
-using Domain.EntidadesLeitura.Reports;
+using Domain.EntidadesLeitura.ReportsModel;
 using Domain.EntidadesLeitura.WidGet;
-using Domain.WidGet;
 using Repository.Repositories.Base;
 using Utils;
 

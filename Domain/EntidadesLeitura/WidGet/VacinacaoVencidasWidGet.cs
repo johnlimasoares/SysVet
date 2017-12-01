@@ -1,5 +1,6 @@
 using System;
-namespace Domain.WidGet {
+
+namespace Domain.EntidadesLeitura.WidGet {
     public class VacinacaoVencidasWidGet {
         
         private string numeroTelefone;

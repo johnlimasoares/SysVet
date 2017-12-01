@@ -413,6 +413,7 @@
     <Content Include="Views\FinanceiroMovimentacaoCaixa\ModalObservacoes.cshtml" />
     <Content Include="Views\Reports\VacinacoesDetalhado.cshtml" />
     <Content Include="Views\Reports\AnaliseVacinasMensal.cshtml" />
+    <Content Include="Views\Reports\FinanceiroContasReceber.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

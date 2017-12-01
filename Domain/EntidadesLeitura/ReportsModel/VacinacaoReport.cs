@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Domain.EntidadesLeitura.Reports
+namespace Domain.EntidadesLeitura.ReportsModel
 {
     public class VacinacaoReport
     {

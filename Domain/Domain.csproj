@@ -47,8 +47,9 @@
     <Compile Include="EntidadesLeitura\Cadastro\ClienteDapper.cs" />
     <Compile Include="EntidadesLeitura\Operacao\Financeiro\FinanceiroContasReceberParcelasDapper.cs" />
     <Compile Include="EntidadesLeitura\Operacao\Financeiro\FinanceiroMovimentacoesDapper.cs" />
-    <Compile Include="EntidadesLeitura\Reports\VacinasAnaliseMensal.cs" />
-    <Compile Include="EntidadesLeitura\Reports\VacinacaoReport.cs" />
+    <Compile Include="EntidadesLeitura\ReportsModel\FinanceiroContasReceberReport.cs" />
+    <Compile Include="EntidadesLeitura\ReportsModel\VacinasAnaliseMensal.cs" />
+    <Compile Include="EntidadesLeitura\ReportsModel\VacinacaoReport.cs" />
     <Compile Include="EntidadesLeitura\WidGet\VacinacaoVencidasWidGet.cs" />
     <Compile Include="EntidadesLeitura\WidGet\VacinacaoAVencerWidGet.cs" />
     <Compile Include="Entidades\Cadastro\Animal.cs" />

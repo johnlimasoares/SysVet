@@ -147,13 +147,11 @@ namespace Business.Financeiro.ContasReceber
             using (var ctx = new BancoContexto())
             {
                 var parcela = ctx.FinanceiroContasReceberParcelas.Find(parcelaId);
-                parcela.ValorLiquidado = 0;
+                parcela.ValorLiquidado = null;
                 parcela.DataRecebimento = null;
                 parcela.SituacaoParcelaFinanceira = SituacaoParcelaFinanceira.Aberto;
                 parcela.HoraRecebimento = null;
                 parcela.Observacoes = null;
-                parcela.DataCancelamento = DateTime.Now;
-                parcela.HoraCancelamento = DateTime.Now.TimeOfDay;
                 ctx.Entry(parcela).State = EntityState.Modified;
 
                 var tipoRecebimento = ctx.FinanceiroTipoRecebimentos.Where(x => x.Id == parcela.FinanceiroTipoRecebimentoId).Select(p => new { p.Id, p.Operacao, p.FinanceiroCentroDeCustoId, p.Cliente.Nome, p.QuantidadeParcelas }).First();
@@ -167,7 +165,7 @@ namespace Business.Financeiro.ContasReceber
             using (var ctx = new BancoContexto())
             {
                 var parcela = ctx.FinanceiroContasReceberParcelas.Find(parcelaId);
-                parcela.ValorLiquidado = 0;
+                parcela.ValorLiquidado = null;
                 parcela.DataRecebimento = null;
                 var estavaLiquidada = parcela.SituacaoParcelaFinanceira == SituacaoParcelaFinanceira.Liquidado;
                 parcela.SituacaoParcelaFinanceira = SituacaoParcelaFinanceira.Cancelado;

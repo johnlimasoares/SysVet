@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Dapper;
 using Domain.Entidades.Operacao.Financeiro;
 using Domain.EntidadesLeitura.Operacao.Financeiro;
+using Domain.EntidadesLeitura.ReportsModel;
 using Repository.Repositories.Base;
 using Utils;
 
@@ -10,6 +11,65 @@ namespace Repository.Repositories
 {
     public class FinanceiroContasReceberParcelasRepository : Repository<FinanceiroContasReceberParcelas>
     {
+
+        public IEnumerable<FinanceiroContasReceberReport> GetContasReceberReport(DateTime? dataInicial, DateTime? dataFinal, string status, string pesquisaTexto)
+        {
+            var sql = @"SELECT 
+                         C.ID AS ClienteId
+                        ,C.Nome AS ClienteNome
+                        ,CC.Id AS CentroCustoId
+                        ,CC.Descricao AS CentroCustoDescricao
+                        ,CRP.DataEmissao
+                        ,CRP.DataCancelamento
+                        ,CRP.DataRecebimento
+                        ,CRP.DataVencimento
+                        ,CRP.SituacaoParcelaFinanceira
+                        ,CRP.ValorLiquidado
+                        ,CRP.ValorTotalLiquido                        
+                        FROM FinanceiroTipoRecebimento FTR
+                        INNER JOIN FinanceiroContasReceberParcelas CRP ON FTR.Id = CRP.FinanceiroTipoRecebimentoId
+                        INNER JOIN FinanceiroCentroDeCusto CC ON FTR.FinanceiroCentroDeCustoId = CC.Id
+                        INNER JOIN Cliente C ON FTR.ClienteId = C.ID
+                        WHERE 1=1 ";
+
+
+            switch (status)
+            {
+                case "Abertas":
+                    sql += GetWhereParcelasAbertas(dataInicial, dataFinal);
+                    break;
+                case "Recebidas":
+                    sql += GetWhereParcelasRecebidas(dataInicial, dataFinal);
+                    break;
+                case "Vencidas":
+                    sql += GetWhereParcelasVencidas(dataInicial, dataFinal);
+                    break;
+            }
+
+            if (!string.IsNullOrEmpty(pesquisaTexto))
+            {
+                sql += string.Format(" AND C.Nome like '%{0}%' OR CC.Descricao like '%{0}%'", pesquisaTexto);
+            }
+
+            using (var db = ctx.Database.Connection)
+            {
+                try
+                {
+                    db.Open();
+                    return db.Query<FinanceiroContasReceberReport>(sql);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    db.Close();
+                }
+
+            }
+        }
+
         public IEnumerable<FinanceiroContasReceberParcelasDapper> GetContasReceberDapper(string tipoPesquisa, DateTime? dataInicial, DateTime? dataFinal, string pesquisaCliente, string tipoPesquisaCliente)
         {
             var sql = @"SELECT

@@ -8,7 +8,6 @@ using System.Web.Mvc;
 using Domain.Entidades.Operacao;
 using Domain.Entidades.Operacao.Vacinacao;
 using Domain.EntidadesLeitura.WidGet;
-using Domain.WidGet;
 using Repository.Context;
 using Utils;
 using Repository.Repositories;

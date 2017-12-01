@@ -46,6 +46,7 @@
     <Compile Include="MspdfFooter.cs" />
     <Compile Include="ReportsBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FinanceiroContasReceberReport.cs" />
     <Compile Include="VacinacoesDetalhadoReport.cs" />
     <Compile Include="VacinasAnaliseMensalReport.cs" />
   </ItemGroup>
