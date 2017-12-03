@@ -1,6 +1,4 @@
-﻿@using System.Collections
-@using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder
-@using System.Web.UI.WebControls
+﻿
 @model Domain.Entidades.Cadastro.Animal
 
 @{
@@ -27,7 +25,7 @@
                 <span class="input-group-addon">
                     <i class="fa fa-paw"></i>
                 </span>
-                @Html.TextBoxFor(model => model.Nome, new { @class = "form-control", id = "input", placeholder = "Nome do animal" })
+                @Html.TextBoxFor(model => model.Nome, new { @class = "form-control", id = "input", placeholder = "Nome do animal" ,autofocus = "true"})
             </div>
         </div>
 

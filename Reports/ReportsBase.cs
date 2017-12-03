@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
@@ -18,6 +19,7 @@ namespace Reports
         public bool ImprimirCabecalhoPadrao { get; set; }
         public bool ImprimirRodapePadrao { get; set; }
         public bool Paisagem { get; set; }
+        public ListaFiltro<Filtro> ListaDeFiltros { get; set; }
 
         public ReportsBase()
         {
@@ -32,6 +34,7 @@ namespace Reports
             SubTitulo = string.Empty;
             BasePath = string.Empty;
             Paisagem = false;
+            ListaDeFiltros = new ListaFiltro<Filtro>();
         }
 
         public MemoryStream GetOutput()
@@ -81,17 +84,16 @@ namespace Reports
             doc.AddTitle(Titulo);
             doc.AddSubject(SubTitulo);
 
-            var footer = new MspdfFooter();
-            footer.Titulo = Titulo;
-            footer.SubTitulo = SubTitulo;
-            footer.BasePath = BasePath;
-            footer.ImprimirCabecalhoPadrao = ImprimirCabecalhoPadrao;
-            footer.ImprimirRodapePadrao = ImprimirRodapePadrao;
-
-            writer.PageEvent = footer;
+            var headerFooter = new HeaderFooterManager();
+            headerFooter.ListaDeFiltros = ListaDeFiltros;
+            headerFooter.Titulo = Titulo;
+            headerFooter.SubTitulo = SubTitulo;
+            headerFooter.BasePath = BasePath;
+            headerFooter.ImprimirCabecalhoPadrao = ImprimirCabecalhoPadrao;
+            headerFooter.ImprimirRodapePadrao = ImprimirRodapePadrao;
+            writer.PageEvent = headerFooter;
             doc.Open();
         }
-
 
         protected PdfPCell GetNovaCelula(string texto, Font fonte, int alinhamento, float espacamento, int borda, BaseColor corBorda, BaseColor corFundo)
         {

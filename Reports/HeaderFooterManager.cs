@@ -1,11 +1,14 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using Reports;
 
 namespace Reports
 {
-    public class MspdfFooter : PdfPageEventHelper
+    public class HeaderFooterManager : PdfPageEventHelper
     {
         public string Titulo { get; set; }
         public string SubTitulo { get; set; }
@@ -13,6 +16,8 @@ namespace Reports
         public string BasePath { get; set; }
         public bool ImprimirCabecalhoPadrao { get; set; }
         public bool ImprimirRodapePadrao { get; set; }
+
+        public ListaFiltro<Filtro> ListaDeFiltros;
 
         public override void OnOpenDocument(PdfWriter writer, Document doc)
         {
@@ -169,12 +174,23 @@ namespace Reports
                 cell.HorizontalAlignment = Element.ALIGN_RIGHT;
                 micros.AddCell(cell);
 
+                foreach (Filtro filtro in ListaDeFiltros)
+                {
+                    cell = new PdfPCell(new Phrase(string.Format("{0}:{1}\n", filtro.Nome, filtro.Valor), font));
+                    cell.Border = 0;
+                    cell.HorizontalAlignment = Element.ALIGN_RIGHT;
+                    micros.AddCell(cell);
+
+                }
+
                 cell = new PdfPCell(micros);
                 cell.HorizontalAlignment = Element.ALIGN_LEFT;
                 cell.Border = 0;
                 cell.BorderWidthTop = 1.5f;
                 cell.BorderWidthBottom = 1.5f;
                 cell.PaddingTop = 10f;
+
+
                 table.AddCell(cell);
                 #endregion
 
@@ -183,4 +199,86 @@ namespace Reports
             #endregion
         }
     }
+
+    public class Filtro
+    {
+        public string Nome { get; set; }
+        public string Valor { get; set; }
+    }
+
+}
+
+public class ListaFiltro<T> : System.Collections.IList
+{
+    private System.Collections.Generic.IList<object> list;
+
+    public ListaFiltro(){
+        list = new List<object>();
+    }
+
+    public IEnumerator GetEnumerator(){
+        return list.GetEnumerator();
+    }
+
+    public void CopyTo(Array array, int index)
+    {
+        throw new NotImplementedException();
+    }
+
+    public int Count { get; private set; }
+    public object SyncRoot { get; private set; }
+    public bool IsSynchronized { get; private set; }
+
+    public int Add(object obj)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Add(string nome, string valor)
+    {
+        if (!string.IsNullOrEmpty(nome) && !string.IsNullOrEmpty(valor))
+        {
+            var filtro = new Filtro() { Nome = nome, Valor = valor };
+            list.Add(filtro);
+        }
+    }
+
+    public bool Contains(object value)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Clear()
+    {
+        throw new NotImplementedException();
+    }
+
+    public int IndexOf(object value)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Insert(int index, object value)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void Remove(object value)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void RemoveAt(int index)
+    {
+        throw new NotImplementedException();
+    }
+
+    public object this[int index]
+    {
+        get { throw new NotImplementedException(); }
+        set { throw new NotImplementedException(); }
+    }
+
+    public bool IsReadOnly { get; private set; }
+    public bool IsFixedSize { get; private set; }
 }

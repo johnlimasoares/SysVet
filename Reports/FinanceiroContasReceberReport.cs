@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+using Domain.Enum;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using iTextSharp.text.pdf.draw;
 using Repository.Repositories;
 using Utils;
 
@@ -34,7 +36,7 @@ namespace Reports
             Font font = FontFactory.GetFont("Verdana", 8, Font.NORMAL, preto);
             Font titulo = FontFactory.GetFont("Verdana", 8, Font.BOLD, preto);
 
-            float[] colsW = { 13, 11, 7, 7, 7, 7, 5, 5 };
+            float[] colsW = { 14, 10, 7, 7, 7, 7, 5, 6 };
             table.SetWidths(colsW);
             //table.HeaderRows = 1;  repetir cabeçalho em todas paginas          
             table.WidthPercentage = 100f;
@@ -46,16 +48,19 @@ namespace Reports
 
             table.AddCell(GetNovaCelula("Cliente", titulo, Element.ALIGN_LEFT, 2, PdfPCell.BOTTOM_BORDER, preto, fundo));
             table.AddCell(GetNovaCelula("Centro Custo", titulo, Element.ALIGN_LEFT, 2, PdfPCell.BOTTOM_BORDER, preto, fundo));
-            table.AddCell(GetNovaCelula("Dt Emissão", titulo, Element.ALIGN_CENTER, 2, PdfPCell.BOTTOM_BORDER, preto, fundo));
-            table.AddCell(GetNovaCelula("Dt Recebimento", titulo, Element.ALIGN_CENTER, 2, PdfPCell.BOTTOM_BORDER, preto, fundo));
-            table.AddCell(GetNovaCelula("Dt Vencimento", titulo, Element.ALIGN_CENTER, 2, PdfPCell.BOTTOM_BORDER, preto, fundo));
+            table.AddCell(GetNovaCelula("Emissão", titulo, Element.ALIGN_CENTER, 2, PdfPCell.BOTTOM_BORDER, preto, fundo));
+            table.AddCell(GetNovaCelula("Recebimento", titulo, Element.ALIGN_CENTER, 2, PdfPCell.BOTTOM_BORDER, preto, fundo));
+            table.AddCell(GetNovaCelula("Vencimento", titulo, Element.ALIGN_CENTER, 2, PdfPCell.BOTTOM_BORDER, preto, fundo));
             table.AddCell(GetNovaCelula("Situação", titulo, Element.ALIGN_CENTER, 2, PdfPCell.BOTTOM_BORDER, preto, fundo));
-            table.AddCell(GetNovaCelula("Vl Total", titulo, Element.ALIGN_CENTER, 2, PdfPCell.BOTTOM_BORDER, preto, fundo));
-            table.AddCell(GetNovaCelula("Vl Liquidado", titulo, Element.ALIGN_CENTER, 2, PdfPCell.BOTTOM_BORDER, preto, fundo));
+            table.AddCell(GetNovaCelula("Vlr Total", titulo, Element.ALIGN_CENTER, 2, PdfPCell.BOTTOM_BORDER, preto, fundo));
+            table.AddCell(GetNovaCelula("Vlr Pago", titulo, Element.ALIGN_CENTER, 2, PdfPCell.BOTTOM_BORDER, preto, fundo));
             #endregion
 
             var parcelas = new FinanceiroContasReceberParcelasRepository().GetContasReceberReport(DataInicial, DataFinal, Status, PesquisaTexto);
-
+            decimal totalPago = 0;
+            decimal totalAberto = 0;
+            decimal totalVencidos = 0;
+            var dataAtual = DateTime.Now;
             foreach (var parcela in parcelas)
             {
                 table.AddCell(GetNovaCelula(parcela.ClienteNome, font, Element.ALIGN_LEFT, 2, PdfPCell.BOTTOM_BORDER));
@@ -66,9 +71,51 @@ namespace Reports
                 table.AddCell(GetNovaCelula(parcela.SituacaoParcelaFinanceira.ToString(), font, Element.ALIGN_CENTER, 5, PdfPCell.BOTTOM_BORDER));
                 table.AddCell(GetNovaCelula(parcela.ValorTotalLiquido.ToString("N"), font, Element.ALIGN_CENTER, 5, PdfPCell.BOTTOM_BORDER));
                 table.AddCell(GetNovaCelula(parcela.ValorLiquidado.ToString("N"), font, Element.ALIGN_CENTER, 5, PdfPCell.BOTTOM_BORDER));
-            }
 
+                totalPago += parcela.ValorLiquidado;
+
+                if (parcela.SituacaoParcelaFinanceira == SituacaoParcelaFinanceira.Aberto)
+                {
+                    totalAberto += parcela.ValorTotalLiquido;
+                }
+
+                if (parcela.DataVencimento < dataAtual && parcela.SituacaoParcelaFinanceira == SituacaoParcelaFinanceira.Aberto)
+                {
+                    totalVencidos += parcela.ValorTotalLiquido;
+                }
+            }
             doc.Add(table);
+
+            DottedLineSeparator dottedline = new DottedLineSeparator();
+            dottedline.Offset = -2;
+            dottedline.Gap = 2f;
+            var paragraph = new Paragraph();
+            paragraph.Add(dottedline);
+            doc.Add(paragraph);
+
+            Font fontTotais = FontFactory.GetFont("Arial", 8, Font.NORMAL, preto);
+            Phrase phrase;
+
+            doc.Add(new Chunk("\n\n"));
+            var totalVencidoParagraph = new Paragraph();
+            totalVencidoParagraph.Alignment = Element.ALIGN_RIGHT;
+            phrase = new Phrase(string.Format("Total Vencidas: {0}", totalVencidos.ToString("N")), fontTotais);
+            totalVencidoParagraph.Add(phrase);
+            doc.Add(totalVencidoParagraph);
+
+            var totalAbertoParagraph = new Paragraph();
+            totalAbertoParagraph.Alignment = Element.ALIGN_RIGHT;
+            phrase = new Phrase(string.Format("Total Aberto: {0}", totalAberto.ToString("N")), fontTotais);
+            totalAbertoParagraph.Add(phrase);
+            doc.Add(totalAbertoParagraph);
+
+            var totalPagoParagraph = new Paragraph();
+            totalPagoParagraph.Alignment = Element.ALIGN_RIGHT;
+            phrase = new Phrase(string.Format("Total Liquidado: {0}", totalPago.ToString("N")), fontTotais);
+            totalPagoParagraph.Add(phrase);
+            doc.Add(totalPagoParagraph);
+
+
         }
     }
 }

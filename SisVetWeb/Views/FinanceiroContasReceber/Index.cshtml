@@ -14,10 +14,10 @@
     {
         @Html.DropDownList("tipoPesquisa",
                     new List<SelectListItem>{
-                        new SelectListItem{Text = "Abertas", Value = "Abertas", Selected = true},
+                        new SelectListItem{Text = "Abertas", Value = "Abertas"},
                         new SelectListItem{Text = "Recebidas", Value = "Recebidas"},
                         new SelectListItem{Text = "Vencidas", Value = "Vencidas"},
-                        new SelectListItem{Text = "Todas", Value = "Todas"}
+                        new SelectListItem{Text = "Todas", Value = "Todas", Selected = true}
                     }, new { @class = "form-control input-sm form-override" })
 
         <input class="form-control input-sm form-override" id="datainicial" name="dataInicial" type="date" />
@@ -88,17 +88,17 @@
 <div id="contas-receber-parcelas-rodape" class="background-blue">
     <div id="grupo-1" class="contas-receber-parcelas-rodape-totalizadores">
         <div class="fonte">
-            <img src="\Images\img_exclamation_red.png" />
+            <img src="..\Images\img_exclamation_red.png" />
             <label>Vencidas</label>
             <label>R$ @Model.TotalVencidas.ToString("N")</label>
         </div>
         <div class="fonte">
-            <img src="\Images\img_exclamation_green.png" />
+            <img src="..\Images\img_exclamation_green.png" />
             <label>A Vencer</label>
             <label>R$ @Model.TotalAVencer.ToString("N")</label>
         </div>
         <div class="fonte">
-            <img src="\Images\img_exclamation_yellow.png" />
+            <img src="..\Images\img_exclamation_yellow.png" />
             <label>Vence hoje</label>
             <label>R$ @Model.TotalVenceHoje.ToString("N")</label>
         </div>
@@ -106,17 +106,17 @@
 
     <div id="grupo-2" class="contas-receber-parcelas-rodape-totalizadores">
         <div class="fonte">
-            <img src="\Images\img_launch.png" />
+            <img src="..\Images\img_launch.png" />
             <label class="fonte">Emitidas</label>
             <label>R$ @Model.TotalEmitidas.ToString("N")</label>
         </div>
         <div class="fonte">
-            <img src="\Images\img_check_ok.png" />
+            <img src="..\Images\img_check_ok.png" />
             <label class="fonte">Recebidas</label>
             <label>R$ @Model.TotalRecebidas.ToString("N")</label>
         </div>
         <div class="fonte">
-            <img src="\Images\img_exclamation_blue.png" />
+            <img src="..\Images\img_exclamation_blue.png" />
             <label class="fonte">A Receber</label>
             <label>R$ @Model.TotalAReceber.ToString("N")</label>
         </div>

@@ -20,7 +20,7 @@ namespace SisVetWeb.Controllers
         {
             var repoContasReceber = new FinanceiroContasReceberParcelasRepository();
             var parcelasEtotalizadores = new FinanceiroParcelasETotalizadoresViewModel();
-            parcelasEtotalizadores.FinanceiroContasReceberParcelasDapperList = repoContasReceber.GetContasReceberDapper(tipoPesquisa ?? "Abertas", dataInicial, dataFinal, pesquisaCliente, tipoPesquisaCliente).ToList();
+            parcelasEtotalizadores.FinanceiroContasReceberParcelasDapperList = repoContasReceber.GetContasReceberDapper(tipoPesquisa ?? "Todas", dataInicial, dataFinal, pesquisaCliente, tipoPesquisaCliente).ToList();
             return View(parcelasEtotalizadores.PreencherTotalizadores());
         }
 

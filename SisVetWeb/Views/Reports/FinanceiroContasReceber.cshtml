@@ -6,17 +6,18 @@
 <div id="container">
     @using (Html.BeginForm("GetRelatorioContasReceber", "Reports", FormMethod.Get))
     {
+        <label for="status">Situação:</label>
         @Html.DropDownList("status",
                     new List<SelectListItem>{
                         new SelectListItem{Text = "Abertas", Value = "Abertas", Selected = true},
                         new SelectListItem{Text = "Recebidas", Value = "Recebidas"},
                         new SelectListItem{Text = "Vencidas", Value = "Vencidas"},
                         new SelectListItem{Text = "Todas", Value = "Todas"}
-                    }, new { @class = "form-control input-sm form-override" })
+                    }, new { @class = "form-control input-sm form-override", id = "status" })
 
         <br />
-        <label for="datainicial">Período:</label>
-        <input class="form-control input-sm form-override" id="datainicial" name="data" type="date">
+        <label for="datainicial" id="descricaoPeriodo"></label>
+        <input class="form-control input-sm form-override" id="datainicial" name="datainicial" type="date">
         <input class="form-control input-sm form-override" id="datafinal" name="datafinal" type="date">
         <br />
         <input type="text" class="form-control" name="pesquisaTexto" id="pesquisaTexto" placeholder="Pesquise por nome do cliente ou centro de custo" />
@@ -25,3 +26,22 @@
     }
 </div>
 
+<script>
+
+    $(document).ready(function () {
+        $('#descricaoPeriodo').html('Emissão:');
+    });
+
+    $('select').on('change', function () {
+        if (this.value == "Vencidas") {
+            $('#descricaoPeriodo').html('Vencimento:');
+        } else if (this.value == "Abertas") {
+            $('#descricaoPeriodo').html('Emissão:');
+        } else if (this.value == "Recebidas") {
+            $('#descricaoPeriodo').html('Recebimento:');
+        }
+        else {
+            $("#descricaoPeriodo").html('Emissão');
+        }
+    });
+</script>

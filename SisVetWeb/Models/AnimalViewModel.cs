@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Domain.Entidades;
+﻿using System.Collections.Generic;
 using Domain.Entidades.Cadastro;
 
 namespace SisVetWeb.Models {

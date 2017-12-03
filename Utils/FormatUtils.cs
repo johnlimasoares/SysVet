@@ -22,7 +22,16 @@ namespace Utils {
         }
 
         public static string IsValidDate(this DateTime date){
-            return date.ToString() == "01/01/0001 00:00:00" ? string.Empty : date.ToString("d");
+            return CheckDate(date);
+        }
+
+        public static string IsValidDate(this DateTime? date)
+        {
+            return CheckDate(date);
+        }
+
+        private static string CheckDate(DateTime? date){
+            return ( date == null || date.ToString() == "01/01/0001 00:00:00") ? string.Empty : date.Value.ToString("d");
         }
     }
 }
