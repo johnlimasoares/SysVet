@@ -3,7 +3,7 @@ using Domain.Enum;
 
 namespace Domain.EntidadesLeitura.ReportsModel
 {
-    public class FinanceiroContasReceberReport
+    public class FinanceiroContasReceberReportModel
     {
         public int ClienteId { get; set; }
         public string ClienteNome { get; set; }

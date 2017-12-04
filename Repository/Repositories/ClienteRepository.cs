@@ -4,7 +4,9 @@ using System.Linq;
 using Dapper;
 using Domain.Entidades.Cadastro;
 using Domain.EntidadesLeitura.Cadastro;
+using Domain.EntidadesLeitura.ReportsModel;
 using Repository.Repositories.Base;
+using Utils;
 
 namespace Repository.Repositories
 {
@@ -112,6 +114,55 @@ namespace Repository.Repositories
                         .FirstOrDefault();
 
             return cliente == null ? string.Empty : cliente.Nome;
+        }
+
+        public IEnumerable<ClientesReportModel> GetClientesReport(DateTime? dataInicial, DateTime? dataFinal, string pesquisaTexto)
+        {
+            var sql = @"SELECT 
+                        C.ID AS ClienteId
+                        ,C.Nome AS ClienteNome
+                        ,C.CpfCnpj
+                        ,C.DataCadastro
+                        ,T.ID AS TelefoneId
+                        ,T.Numero AS Telefone
+                        ,TT.Descricao AS  TelefoneTipo
+                        FROM Cliente C
+                        LEFT JOIN Telefone T ON T.ClienteID = C.ID
+                        LEFT JOIN TipoTelefone TT ON T.TipoTelefoneId = TT.ID
+                        WHERE 1=1 ";
+
+            if (!string.IsNullOrEmpty(pesquisaTexto))
+            {
+                sql += string.Format(" AND C.Nome like '%{0}%' OR C.ID like '%{0}%'", pesquisaTexto);
+            }
+
+            if (dataInicial != null)
+            {
+                sql += string.Format(" AND CAST(C.DataCadastro AS DATE) >= '{0}'", dataInicial.Value.ToString(SqlUtils.GetAmericanFormatDate()));
+            }
+
+            if (dataFinal != null)
+            {
+                sql += string.Format(" AND CAST(C.DataCadastro AS DATE) <= '{0}'", dataFinal.Value.ToString(SqlUtils.GetAmericanFormatDate()));
+            }
+
+            using (var db = ctx.Database.Connection)
+            {
+                try
+                {
+                    db.Open();
+                    return db.Query<ClientesReportModel>(sql);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    db.Close();
+                }
+
+            }
         }
     }
 }

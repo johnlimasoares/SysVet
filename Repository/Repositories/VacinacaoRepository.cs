@@ -91,7 +91,7 @@ namespace Repository.Repositories
             }
         }
 
-        public IList<VacinacaoReport> GetVacinacoesReport(DateTime? data, DateTime? datafinal, string statusVacina, string pesquisaTexto)
+        public IList<VacinacaoReportModel> GetVacinacoesReport(DateTime? data, DateTime? datafinal, string statusVacina, string pesquisaTexto)
         {
             var sql = @"SELECT 
                         V.DataPrevisao,
@@ -153,7 +153,7 @@ namespace Repository.Repositories
                 try
                 {
                     db.Open();
-                    var vacinacoes = db.Query<VacinacaoReport>(sql);
+                    var vacinacoes = db.Query<VacinacaoReportModel>(sql);
                     return vacinacoes.ToList();
                 }
                 catch (Exception ex)
@@ -168,7 +168,7 @@ namespace Repository.Repositories
         }
 
 
-        public IList<VacinasAnaliseMensal> GetVacinacoesMensalReport(DateTime? dataInicial, DateTime? dataFinal, string descricaoVacina)
+        public IList<VacinasAnaliseMensalModel> GetVacinacoesMensalReport(DateTime? dataInicial, DateTime? dataFinal, string descricaoVacina)
         {
             var sql = @"SELECT 
                         YEAR(V.DataVacinacao) AS Ano,
@@ -202,7 +202,7 @@ namespace Repository.Repositories
                 try
                 {
                     db.Open();
-                    var vacinacoes = db.Query<VacinasAnaliseMensal>(sql);
+                    var vacinacoes = db.Query<VacinasAnaliseMensalModel>(sql);
                     return vacinacoes.ToList();
                 }
                 catch (Exception ex)

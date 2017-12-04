@@ -12,7 +12,7 @@ namespace Repository.Repositories
     public class FinanceiroContasReceberParcelasRepository : Repository<FinanceiroContasReceberParcelas>
     {
 
-        public IEnumerable<FinanceiroContasReceberReport> GetContasReceberReport(DateTime? dataInicial, DateTime? dataFinal, string status, string pesquisaTexto)
+        public IEnumerable<FinanceiroContasReceberReportModel> GetContasReceberReport(DateTime? dataInicial, DateTime? dataFinal, string status, string pesquisaTexto)
         {
             var sql = @"SELECT 
                          C.ID AS ClienteId
@@ -56,7 +56,7 @@ namespace Repository.Repositories
                 try
                 {
                     db.Open();
-                    return db.Query<FinanceiroContasReceberReport>(sql);
+                    return db.Query<FinanceiroContasReceberReportModel>(sql);
                 }
                 catch (Exception ex)
                 {

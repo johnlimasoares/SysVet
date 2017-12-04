@@ -1,6 +1,6 @@
 ﻿namespace Domain.EntidadesLeitura.ReportsModel
 {
-    public class VacinasAnaliseMensal
+    public class VacinasAnaliseMensalModel
     {
         public string Ano { get; set; }
         public string Mes { get; set; }

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using Reports;
 
 namespace Reports
 {
@@ -206,79 +205,78 @@ namespace Reports
         public string Valor { get; set; }
     }
 
-}
-
-public class ListaFiltro<T> : System.Collections.IList
-{
-    private System.Collections.Generic.IList<object> list;
-
-    public ListaFiltro(){
-        list = new List<object>();
-    }
-
-    public IEnumerator GetEnumerator(){
-        return list.GetEnumerator();
-    }
-
-    public void CopyTo(Array array, int index)
+    public class ListaFiltro<T> : System.Collections.IList
     {
-        throw new NotImplementedException();
-    }
+        private System.Collections.Generic.IList<object> list;
 
-    public int Count { get; private set; }
-    public object SyncRoot { get; private set; }
-    public bool IsSynchronized { get; private set; }
-
-    public int Add(object obj)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void Add(string nome, string valor)
-    {
-        if (!string.IsNullOrEmpty(nome) && !string.IsNullOrEmpty(valor))
-        {
-            var filtro = new Filtro() { Nome = nome, Valor = valor };
-            list.Add(filtro);
+        public ListaFiltro(){
+            list = new List<object>();
         }
-    }
 
-    public bool Contains(object value)
-    {
-        throw new NotImplementedException();
-    }
+        public IEnumerator GetEnumerator(){
+            return list.GetEnumerator();
+        }
 
-    public void Clear()
-    {
-        throw new NotImplementedException();
-    }
+        public void CopyTo(Array array, int index)
+        {
+            throw new NotImplementedException();
+        }
 
-    public int IndexOf(object value)
-    {
-        throw new NotImplementedException();
-    }
+        public int Count { get; private set; }
+        public object SyncRoot { get; private set; }
+        public bool IsSynchronized { get; private set; }
 
-    public void Insert(int index, object value)
-    {
-        throw new NotImplementedException();
-    }
+        public int Add(object obj)
+        {
+            throw new NotImplementedException();
+        }
 
-    public void Remove(object value)
-    {
-        throw new NotImplementedException();
-    }
+        public void Add(string nome, string valor)
+        {
+            if (!string.IsNullOrEmpty(nome) && !string.IsNullOrEmpty(valor))
+            {
+                var filtro = new Filtro() { Nome = nome, Valor = valor };
+                list.Add(filtro);
+            }
+        }
 
-    public void RemoveAt(int index)
-    {
-        throw new NotImplementedException();
-    }
+        public bool Contains(object value)
+        {
+            throw new NotImplementedException();
+        }
 
-    public object this[int index]
-    {
-        get { throw new NotImplementedException(); }
-        set { throw new NotImplementedException(); }
-    }
+        public void Clear()
+        {
+            throw new NotImplementedException();
+        }
 
-    public bool IsReadOnly { get; private set; }
-    public bool IsFixedSize { get; private set; }
+        public int IndexOf(object value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Insert(int index, object value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Remove(object value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveAt(int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        public object this[int index]
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public bool IsReadOnly { get; private set; }
+        public bool IsFixedSize { get; private set; }
+    }
 }

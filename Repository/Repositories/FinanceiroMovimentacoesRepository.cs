@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Dapper;
 using Domain.Entidades.Operacao.Financeiro;
 using Domain.EntidadesLeitura.Operacao.Financeiro;
+using Domain.EntidadesLeitura.ReportsModel;
 using Repository.Repositories.Base;
 using Utils;
 namespace Repository.Repositories
@@ -118,5 +119,58 @@ namespace Repository.Repositories
             return string.Format(" AND FM.Observacao like '%{0}%'", pesquisaTexto);
         }
 
+
+        public IEnumerable<FinanceiroMovimentacoesReportModel> GetMovimentacoesReport(DateTime? dataInicial, DateTime? dataFinal, string tipo, string pesquisaTexto)
+        {
+            var sql = @"
+                        SELECT 
+                        CC.Descricao AS CentroCustoDescricao
+                        ,FM.TipoMovimentacao
+                        ,CASE WHEN FM.TipoMovimentacao = 1 THEN 'Crédito' ELSE 'Débito' END AS TipoMovimentacaoDescricao
+                        ,FM.DataHora
+                        ,CASE WHEN FM.TipoMovimentacao = 1 THEN FM.Credito ELSE FM.Debito END AS CreditoDebito
+                        FROM FinanceiroMovimentacoes FM
+                        INNER JOIN FinanceiroCentroDeCusto CC ON FM.FinanceiroCentroDeCustoId = CC.Id
+                        WHERE 1=1";
+            switch (tipo)
+            {
+                case "Credito":
+                    sql += GetWhereDebitoCredito(true);
+                    break;
+                case "Debito":
+                    sql += GetWhereDebitoCredito(false);
+                    break;
+            }
+
+            if (dataInicial != null)
+            {
+                sql += GetWherePeriodoMaiorIgual(dataInicial);
+            }
+
+            if (dataFinal != null)
+            {
+                sql += GetWherePeriodoMenorIgual(dataFinal);
+            }
+
+            sql += GetWherePorCentroCusto(pesquisaTexto);
+
+            using (var db = ctx.Database.Connection)
+            {
+                try
+                {
+                    db.Open();
+                    return db.Query<FinanceiroMovimentacoesReportModel>(sql);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    db.Close();
+                }
+
+            }
+        }
     }
 }

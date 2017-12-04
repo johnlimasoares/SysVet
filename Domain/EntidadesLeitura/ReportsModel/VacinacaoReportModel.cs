@@ -2,7 +2,7 @@
 
 namespace Domain.EntidadesLeitura.ReportsModel
 {
-    public class VacinacaoReport
+    public class VacinacaoReportModel
     {
         public DateTime DataPrevisao { get; set; }
         public DateTime DataVacinacao { get; set; }

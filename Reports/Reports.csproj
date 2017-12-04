@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientesReport.cs" />
+    <Compile Include="FinanceiroMovimentacoesReport.cs" />
     <Compile Include="HeaderFooterManager.cs" />
     <Compile Include="ReportsBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,0 +1,26 @@
+﻿@using SisVetWeb.Helpers
+<link href="~/Content/relatorios.css" rel="stylesheet" />
+<link href="~/Content/form-bootstrap-override.css" rel="stylesheet" />
+<h1>Relatório de Movimentações</h1>
+<form></form>
+<div id="container">
+    @using (Html.BeginForm("GetRelatorioFinanceiroMovimentacoes", "Reports", FormMethod.Get))
+    {
+        <label for="tipo">Tipo:</label>
+        @Html.DropDownList("tipo",
+                    new List<SelectListItem>{
+                        new SelectListItem{Text = "Crédito", Value = "Credito", Selected = true},
+                        new SelectListItem{Text = "Débito", Value = "Debito"},
+                        new SelectListItem{Text = "Todas", Value = "Todas"},
+                    }, new { @class = "form-control input-sm form-override", id = "tipo" })
+
+        <br />
+        <label for="datainicial" id="descricaoPeriodo">Período:</label>
+        <input class="form-control input-sm form-override" id="datainicial" name="datainicial" type="date">
+        <input class="form-control input-sm form-override" id="datafinal" name="datafinal" type="date">
+        <br />
+        <input type="text" class="form-control" name="pesquisaTexto" id="pesquisaTexto" placeholder="Pesquise por centro de custo" />
+        <hr />
+        <button type="submit" class="btn btn-primary input-lg">Gerar Relatório</button>
+    }
+</div>

@@ -1,0 +1,17 @@
+﻿@using SisVetWeb.Helpers
+<link href="~/Content/relatorios.css" rel="stylesheet" />
+<link href="~/Content/form-bootstrap-override.css" rel="stylesheet" />
+<h1>Relatório de Clientes</h1>
+<form></form>
+<div id="container">
+    @using (Html.BeginForm("GetRelatorioClientes", "Reports", FormMethod.Get))
+    {
+        <input type="text" class="form-control" name="pesquisaTexto" id="pesquisaTexto" placeholder="Pesquise por nome ou id" />
+        <br/>
+         <label for="datainicial" id="descricaoPeriodo">Período de Cadastro</label>
+        <input class="form-control input-sm form-override" id="datainicial" name="datainicial" type="date">
+        <input class="form-control input-sm form-override" id="datafinal" name="datafinal" type="date">
+        <hr />
+        <button type="submit" class="btn btn-primary input-lg">Gerar Relatório</button>
+    }
+</div>
