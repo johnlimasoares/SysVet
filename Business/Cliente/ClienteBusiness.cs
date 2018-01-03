@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Domain.Entidades.Cadastro.Contato;
 using Domain.Entidades.Cadastro;
 using Domain.Entidades.Cadastro.Localidade;
@@ -13,7 +14,7 @@ namespace Business.Cliente
             return ctx.Clientes.Where(x => x.Id == clienteId).Select(p => new { p.Nome }).First().ToString();
         }
 
-        public static int Save(Domain.Entidades.Cadastro.Cliente cliente, Endereco endereco, Telefone telefone)
+        public static int Save(Domain.Entidades.Cadastro.Cliente cliente, Endereco endereco, List<Telefone> telefones)
         {
             using (var ctx = new BancoContexto())
             {
@@ -24,11 +25,14 @@ namespace Business.Cliente
                     ctx.Enderecos.Add(endereco);
                 }
 
-                if (telefone != null)
-                {
-                    telefone.Cliente = cliente;
-                    ctx.Telefones.Add(telefone);
+                foreach (var telefone in telefones){
+                    if (telefone != null)
+                    {
+                        telefone.Cliente = cliente;
+                        ctx.Telefones.Add(telefone);
+                    }
                 }
+               
                 ctx.SaveChanges();
             }
 

@@ -17,7 +17,7 @@
                     <span class="input-group-addon">
                         <i class="fa fa-user"></i>
                     </span>
-                    @Html.TextBoxFor(model => model.Nome, new { @class = "form-control", id = "input", placeholder = "Nome do cliente" })
+                    @Html.TextBoxFor(model => model.Nome, new { @class = "form-control", id = "input", placeholder = "Nome do cliente", autofocus = "true" })
                 </div>
             </div>
 
@@ -148,7 +148,7 @@
                         <span class="input-group-addon">
                             <i class="fa fa-phone"></i>
                         </span>
-                        @Html.TextBoxFor(model => model.NumeroTelefone, new { @class = "form-control", id = "telefone", name = "telefone" })
+                        @Html.TextBoxFor(model => model.NumeroTelefone, new { @class = "form-control", id = "telefone" })
                     </div>
                 </div>
 
@@ -158,19 +158,65 @@
                         <span class="input-group-addon">
                             <i class="fa fa-phone"></i>
                         </span>
-                        @Html.DropDownList("TipoTelefoneID", (IEnumerable<SelectListItem>)ViewBag.TipoTelefoneID, "Selecione...", new { @class = "form-control", required = true })
+                        @Html.DropDownList("TipoTelefoneId", (IEnumerable<SelectListItem>)ViewBag.TipoTelefoneID, "Selecione...", new { @class = "form-control", required = true })
                     </div>
                 </div>
             </fieldset>
-            
-            <hr/>
+
+            <fieldset>
+                <legend style=" background-color: rgba(0,2550,0,0.1)">Telefone Contato</legend>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-md-3 col-lg-2">Número</label>
+                    <div class="input-group col-sm-8 col-md-9 col-lg-10">
+                        <span class="input-group-addon">
+                            <i class="fa fa-phone"></i>
+                        </span>
+                        @Html.TextBoxFor(model => model.NumeroTelefoneContato, new { @class = "form-control", id = "telefone" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="control-label col-sm-4 col-md-3 col-lg-2">Tipo</label>
+                    <div class="input-group col-sm-8 col-md-9 col-lg-10">
+                        <span class="input-group-addon">
+                            <i class="fa fa-phone"></i>
+                        </span>
+                        @Html.DropDownList("TipoTelefoneContatoId", (IEnumerable<SelectListItem>)ViewBag.TipoTelefoneID, "Selecione...", new { @class = "form-control", required = true })
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend style=" background-color: rgba(0,2550,0,0.1)">Telefone Contato</legend>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-md-3 col-lg-2">Número</label>
+                    <div class="input-group col-sm-8 col-md-9 col-lg-10">
+                        <span class="input-group-addon">
+                            <i class="fa fa-phone"></i>
+                        </span>
+                        @Html.TextBoxFor(model => model.NumeroTelefoneContato2, new { @class = "form-control", id = "telefone" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="control-label col-sm-4 col-md-3 col-lg-2">Tipo</label>
+                    <div class="input-group col-sm-8 col-md-9 col-lg-10">
+                        <span class="input-group-addon">
+                            <i class="fa fa-phone"></i>
+                        </span>
+                        @Html.DropDownList("TipoTelefoneContato2Id", (IEnumerable<SelectListItem>)ViewBag.TipoTelefoneID, "Selecione...", new { @class = "form-control", required = true })
+                    </div>
+                </div>
+            </fieldset>
+
+            <hr />
 
             <button type="submit" class="btn btn-success col-sm-2 col-md-2">
                 Salvar
                 <i class="fa fa-paper-plane"></i>
             </button>
-            <br/>
-            <br/>
+            <br />
+            <br />
         </form>
     </div>
 }
@@ -185,10 +231,18 @@
         })();
 
         $(document).ready(function () {
-            $("#telefone").mask("(99) 99999-9999");
+            $("input[name^='NumeroTelefone']").mask("(99) 99999-9999");
             $("#cep").val("86990000");
             $("#cep").mask("99999-999");
 
         });
     </script>
+    
+    @*  $('td[name=tcol1]') // matches exactly 'tcol1'
+
+        $('td[name^=tcol]') // matches those that begin with 'tcol'
+
+        $('td[name$=tcol]') // matches those that end with 'tcol'
+
+        $('td[name*=tcol]') // matches those that contain 'tcol'*@
 }

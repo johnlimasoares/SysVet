@@ -12,4 +12,7 @@ function KeyCheck(e) {
 }
 
 /*força o scroll do textarea ir ao fim*/
-document.getElementById("observacao").scrollTop = document.getElementById("observacao").scrollHeight;
+if (document.getElementById("observacao") != null) {
+    document.getElementById("observacao").scrollTop = document.getElementById("observacao").scrollHeight;
+}
+

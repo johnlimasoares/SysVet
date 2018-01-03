@@ -3,10 +3,12 @@
 
 @{ TempData["FullModel"] = Model; }
 
+<h1>Parcelas Geradas</h1>
+<hr />
+<button id="btn-alterar-documento" class="btn btn-info">Alterar</button>
+
 @using (Html.BeginForm("Confirmar", "FinanceiroContasReceber", FormMethod.Post)) {
-    <h1>Parcelas Geradas</h1>
-    <hr />
-    <button id="btn-alterar-documento" class="btn btn-info">Alterar</button>
+   
     <table id="demostrativo-table-cabecalho" cellpadding="5">
         <tr>
             <td class="demostrativo-parcelas-cabecalho-label fonte">Cliente: </td>

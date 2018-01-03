@@ -24,6 +24,7 @@
         <br />
         <label for="data" id="descricaoPeriodo" >Vencimento até:</label>
         <input class="form-control input-sm form-override" id="data" name="data" type="date">
+        <label id="label" style="color: tomato; font-weight: lighter"></label>
         <input class="form-control input-sm form-override" id="datafinal" name="datafinal" type="date">
         <br />
         <input type="text" class="form-control" name="pesquisaTexto" id="pesquisaTexto" placeholder="Pesquise por nome do cliente, animal ou vacina" />
@@ -36,19 +37,26 @@
     
     $(document).ready(function () {
         $('#descricaoPeriodo').html('Vencidas apartir de:');
+        $('#label').html('<span style="color:#20b2aa; font-weight: lighter">Obs:</span> Utilizar data MENOR que a atual.');
         $('#check-vencidas').prop('checked', 'true');
         $('#datafinal').css('display', 'none');
+        $('#label').css('display', 'inline');
     });
     
     $('.check').click(function (e) {
         if (e.currentTarget.defaultValue == "Vencer") {
             $('#descricaoPeriodo').html('Vencimento até:');
             $('#datafinal').css('display', 'none');
+            $('#label').html('<span style="color:#20b2aa; font-weight: lighter">Obs:</span> Utilizar data MAIOR que a atual.');
+            $('#label').css('display', 'inline');
         } else if (e.currentTarget.defaultValue == "Vencidas") {
             $('#descricaoPeriodo').html('Vencidas apartir de:');
             $('#datafinal').css('display', 'none');
+            $('#label').html('<span style="color:#20b2aa; font-weight: lighter">Obs:</span> Utilizar data MENOR que a atual.');
+            $('#label').css('display', 'inline');
         } else {
             $('#datafinal').css('display', 'inline');
+            $('#label').css('display', 'none');
             $("#descricaoPeriodo").html('Intervalo de:');
         }
     });

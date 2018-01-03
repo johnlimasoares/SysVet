@@ -51,10 +51,6 @@
             <td class="col-sm-2">
                 <div class="pull-right">
                     @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-pencil'></span>", "Editar", "Edit", "FinanceiroCentroDeCusto", routeValues: new { ID = item.Id }, htmlAttributes: new { data_modal = "", @class = "btn btn-xs btn-default" })
-                    &nbsp;
-                    <button type="submit" class="btn btn-default btn-danger" id="@item.Id" name="@item.Descricao">
-                        <i class="glyphicon glyphicon-trash"></i>
-                    </button>
                 </div>
             </td>
         </tr>

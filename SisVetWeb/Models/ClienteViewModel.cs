@@ -34,6 +34,14 @@ namespace SisVetWeb.Models
 
         public virtual int TipoTelefoneId { get; set; }
 
+        public string NumeroTelefoneContato { get; set; }
+
+        public virtual int TipoTelefoneContatoId { get; set; }
+
+        public string NumeroTelefoneContato2 { get; set; }
+
+        public virtual int TipoTelefoneContato2Id { get; set; }
+
 
         [StringLength(50, MinimumLength = 2, ErrorMessage = "A Descrição deve ser entre 2 e 50 caracteres!")]
         public string Rua { get; set; }

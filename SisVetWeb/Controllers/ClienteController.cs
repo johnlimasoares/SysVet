@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -79,6 +80,7 @@ namespace SisVetWeb.Controllers
         {
             Endereco endereco = null;
             Telefone telefone = null;
+            var telefonesList = new List<Telefone>();
 
             var cliente = new Cliente();
             cliente.Nome = clienteViewModel.Nome;
@@ -101,15 +103,36 @@ namespace SisVetWeb.Controllers
                 endereco.Complemento = clienteViewModel.Complemento;
             }
 
+
+            
             if (!clienteViewModel.NumeroTelefone.IsNullOrWhiteSpace() &&
                 !clienteViewModel.TipoTelefoneId.ToString().IsNullOrWhiteSpace())
             {
                 telefone = new Telefone();
                 telefone.Numero = clienteViewModel.NumeroTelefone.ApenasNumeros();
                 telefone.TipoTelefoneId = clienteViewModel.TipoTelefoneId;
+                telefonesList.Add(telefone);
             }
 
-            var clienteId = ClienteBusiness.Save(cliente, endereco, telefone);
+            if (!clienteViewModel.NumeroTelefoneContato.IsNullOrWhiteSpace() &&
+               !clienteViewModel.TipoTelefoneContatoId.ToString().IsNullOrWhiteSpace())
+            {
+                telefone = new Telefone();
+                telefone.Numero = clienteViewModel.NumeroTelefoneContato.ApenasNumeros();
+                telefone.TipoTelefoneId = clienteViewModel.TipoTelefoneContatoId;
+                telefonesList.Add(telefone);
+            }
+
+            if (!clienteViewModel.NumeroTelefoneContato2.IsNullOrWhiteSpace() &&
+               !clienteViewModel.TipoTelefoneContato2Id.ToString().IsNullOrWhiteSpace())
+            {
+                telefone = new Telefone();
+                telefone.Numero = clienteViewModel.NumeroTelefoneContato2.ApenasNumeros();
+                telefone.TipoTelefoneId = clienteViewModel.TipoTelefoneContato2Id;
+                telefonesList.Add(telefone);
+            }
+
+            var clienteId = ClienteBusiness.Save(cliente, endereco, telefonesList);
             var routeValues = new RouteValueDictionary();
             routeValues.Add("clienteId", clienteId);
             return RedirectToAction("Create", "Animal", routeValues);

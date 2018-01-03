@@ -13,7 +13,9 @@ function OnBlurQuantidadeParcelasDelegate() {
 
 function callAjax(planoPagamentoId) {
     var xhr = new XMLHttpRequest();
-    xhr.open('POST', '/FinanceiroContasReceber/ValidarQuantidadeMaximaParcelasPlano', false);
+    var path = location.pathname.replace('GerarParcelasDuplicata', 'ValidarQuantidadeMaximaParcelasPlano');
+    //xhr.open('POST', '/FinanceiroContasReceber/ValidarQuantidadeMaximaParcelasPlano', false);
+    xhr.open("POST", path, false);    
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     var data = 'planoPagamentoId=' + planoPagamentoId;
     xhr.onreadystatechange = onReadyStateDelegate;

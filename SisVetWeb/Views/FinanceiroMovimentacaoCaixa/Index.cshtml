@@ -21,7 +21,7 @@
             <option value="Observacao">Observação</option>
         </select>
 
-        <input type="text" class="form-control input-sm form-override" name="pesquisaTexto" id="pesquisaTexto" placeholder="Pesquise por descrição de Centro de Custo ou Observações" />
+        <input type="text" class="form-control input-sm form-override" name="pesquisaTexto" id="pesquisaTexto" placeholder="Pesquise por Centro de Custo ou Observações" />
         <button type="submit" class="btn btn-primary input-lg "> Pesquisar</button>
         @Html.NoEncodeActionLink("<span class='glyphicon glyphicon-plus'></span>", "Lançar movimentação manual", "GerarMovimentacaoManual", "FinanceiroMovimentacaoCaixa", routeValues: null, htmlAttributes: new { @class = "btn btn-primary pull-right" })
     }
